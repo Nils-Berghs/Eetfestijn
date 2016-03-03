@@ -1,0 +1,43 @@
+﻿<Window x:Class="be.berghs.nils.eetfestijn.windows.Payment"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Betaling" Width="400" ShowInTaskbar="False" ResizeMode="NoResize" SizeToContent="Height" WindowStartupLocation="CenterOwner"
+        Loaded="Window_Loaded">
+    <Grid Margin="3">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="AUTO"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Label Content="Volgnummer:" Grid.Row="0" Margin="5"/>
+        <TextBox Name="txbVolgNr" Text="{Binding VolgNummer}" Width="100" Grid.Column="1" Margin="5"/>
+        <Label Content="Totaal:" Grid.Row="1" Margin="5"/>
+        <Label Content="{Binding Total}" Grid.Column="1" Grid.Row="1" Margin="5" HorizontalContentAlignment="Right"/>
+        <Label Content="Aantal waardebonnen:" Grid.Row="2" Margin="5"/>
+        <TextBox Text="{Binding WaardeBonCount, UpdateSourceTrigger=PropertyChanged}" Width="100" Grid.Row="2" Grid.Column="1" Margin="5"/>
+        <Label Content="Te betalen:" Grid.Row="3" Margin="5"/>
+        <Label Content="{Binding TeBetalen}" Grid.Row="3" Grid.Column="1" Margin="5" HorizontalContentAlignment="Right"/>
+        <Label Content="Betaald:" Grid.Row="4" Margin="5"/>
+        <TextBox Text="{Binding Betaald, UpdateSourceTrigger=PropertyChanged}" Width="100" Grid.Row="4" Grid.Column="1" Margin="5"/>
+        <Label Content="Terug:" Grid.Row="5" Margin="5"/>
+        <Label Content="{Binding Terug}" Grid.Row="5" Grid.Column="1" Margin="5" HorizontalContentAlignment="Right"/>
+        <Grid Grid.Row="6" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Content="OK" IsEnabled="{Binding PaymentCompleted}"  Grid.Column="1" Margin="5" Name="btnOK" HorizontalAlignment="Stretch" IsDefault="True" Click="btnOK_Click"/>
+            <Button Content="Cancel" Grid.Column="2" Margin="5" Name="btnCancel" HorizontalAlignment="Stretch" IsCancel="True" Click="btnCancel_Click"/>
+
+        </Grid>
+    </Grid>
+</Window>
