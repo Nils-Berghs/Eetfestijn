@@ -72,7 +72,8 @@
                         </Grid.ColumnDefinitions>
                         <Button Content="Overzicht bestellingen" Margin="3" Name="btnOrderOverview" Click="btnOrderOverview_Click" />
                         <Button Content="Overzicht consumptie" Name="btnProductOverview" Grid.Row="1" Margin ="3" Click="btnConsumptionOverview_Click"/>
-                        <Button Content="Data Inladen" Name="btnLoadData" Grid.Row="0" Grid.Column="1" Margin ="3" Click="btnLoadData_Click"/>
+                        <Button Content="Sessie laden" Name="btnLoadData" Grid.Row="0" Grid.Column="1" Margin ="3" Click="btnLoadData_Click"/>
+                        <Button Content="Product laden" Name="btnLoadProducts" Grid.Row="1" Grid.Column="1" Margin="3" Click="btnLoadProducts_Click" />
                     </Grid>
                 </Grid>
             </TabItem>

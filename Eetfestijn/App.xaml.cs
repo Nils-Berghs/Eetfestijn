@@ -20,14 +20,26 @@ namespace be.berghs.nils.eetfestijn
         [STAThread]
         public static void Main()
         {
-            mProductList.ReadFromXml(GetProductListFileName());
+            ReadProductListFromXml(GetProductDefaultListFileName());
+            mProductList.ReadFromXml(GetProductDefaultListFileName());
             var application = new App();
             application.InitializeComponent();
             application.Run();
             SaveData();
         }
 
-        private static string GetProductListFileName()
+        /// <summary>
+        /// This method read a product list from xml.
+        /// 
+        /// Note that this does not save the product list to file, this is only done on a clean exit
+        /// 
+        /// </summary>
+        public static void ReadProductListFromXml(string fileName)
+        {
+            mProductList.ReadFromXml(fileName);
+        }
+
+        private static string GetProductDefaultListFileName()
         {
             return Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\H6-Eetfestijn\\Products.xml";
         }
@@ -35,7 +47,7 @@ namespace be.berghs.nils.eetfestijn
        
         private static void SaveData()
         {
-            mProductList.SaveToXml(GetProductListFileName());
+            mProductList.SaveToXml(GetProductDefaultListFileName());
 
             while (true)
             {

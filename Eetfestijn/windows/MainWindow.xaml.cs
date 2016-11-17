@@ -42,9 +42,11 @@ namespace be.berghs.nils.eetfestijn.windows
 
         public MainWindow()
         {
+
+            InitializeComponent();
             mOrderList = App.mOrderList;
             mProductList = App.mProductList;
-            InitializeComponent();
+            
             //DataContext = this;
             Producten.ItemsSource = mProductList.Products;
 
@@ -112,6 +114,15 @@ namespace be.berghs.nils.eetfestijn.windows
             if ((bool)ofd.ShowDialog() == true)
             {
                 mOrderList.ReadFromXml(ofd.FileName);
+            }
+        }
+
+        private void btnLoadProducts_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            if ((bool)ofd.ShowDialog() == true)
+            {
+                App.ReadProductListFromXml(ofd.FileName);
             }
         }
     }
