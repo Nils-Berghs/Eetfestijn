@@ -74,6 +74,7 @@ namespace be.berghs.nils.eetfestijn.windows
                     {
                         mOrder.WaardeBonCount = nr;
                         UpdateTeBetalen();
+                        OnPropertyChanged("PaymentCompleted");
                     }
                 }
                 catch (Exception)
@@ -91,8 +92,8 @@ namespace be.berghs.nils.eetfestijn.windows
         {
             get
             {
-                if (mTeBetalen <= 0)
-                    return "";
+                /*if (mTeBetalen <= 0)
+                    return "";*/
                 return mTeBetalen + "€";
             }
         }
