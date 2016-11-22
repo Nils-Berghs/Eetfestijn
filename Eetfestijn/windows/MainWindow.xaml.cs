@@ -60,7 +60,8 @@ namespace be.berghs.nils.eetfestijn.windows
         private void CreateNewOrder()
         {
             CurrentOrder = new Order(mProductList.Products);
-            bestellingFood.ItemsSource = CurrentOrder.Items;
+            //bestellingFood.ItemsSource = CurrentOrder.Items;
+            CurrentOrderItemsControl.ItemsSource = CurrentOrder.Items;
         }
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
@@ -87,7 +88,7 @@ namespace be.berghs.nils.eetfestijn.windows
         {
             if (e.Key == Key.Down || e.Key == Key.Up)
             {
-                bestellingFood.CommitEdit();
+                //bestellingFood.CommitEdit();
                 
             }
         }

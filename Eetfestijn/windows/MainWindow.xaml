@@ -9,7 +9,7 @@
     </Window.Resources>
     <Grid>
         <TabControl HorizontalAlignment="Stretch" Margin="0,0,0,0" Name="tabControl1" VerticalAlignment="Stretch">
-            <TabItem Header="Bestelling" Name="tabBestelling" Selector.Selected="tabBestelling_Selected">
+            <!--<TabItem Header="Bestelling" Name="tabBestelling" Selector.Selected="tabBestelling_Selected">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
@@ -18,8 +18,8 @@
                     <DataGrid AutoGenerateColumns="false" AlternatingRowBackground="#f0f0f0" Name="bestellingFood" VerticalAlignment="Stretch" RowHeaderWidth="0" HeadersVisibility="Column" SelectionMode="Single" SelectionUnit="Cell" PreviewKeyDown="bestellingFood_PreviewKeyDown" FontSize="12">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Item" IsReadOnly="True" Width="3*" Binding="{Binding ProductName}" />
-                            <DataGridTextColumn Header="Prijs" ElementStyle="{StaticResource CellRightAlign}" IsReadOnly="True" Width="*" Binding="{Binding Price}" />
                             <DataGridTextColumn Header="Aantal" ElementStyle="{StaticResource CellRightAlign}" Width="*" Binding="{Binding Aantal}"/>
+                            <DataGridTextColumn Header="Prijs" ElementStyle="{StaticResource CellRightAlign}" IsReadOnly="True" Width="*" Binding="{Binding Price}" />
                             <DataGridTextColumn Header="Totaal" ElementStyle="{StaticResource CellRightAlign}" IsReadOnly="True" Width="*" Binding="{Binding TotalPrice}"/>
                         </DataGrid.Columns>
                     </DataGrid>
@@ -33,6 +33,57 @@
                         <Button Content="Cancel" Grid.Column="2" Margin="2" Name="btnCancel" HorizontalAlignment="Stretch" IsCancel="True" Click="btnCancel_Click"/>
                     </Grid>
                 </Grid>
+            </TabItem>-->
+            <TabItem Header="Bestelling" Name="tabBestelling" Selector.Selected="tabBestelling_Selected">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="AUTO"/>
+                    </Grid.RowDefinitions>
+                    <ItemsControl Margin="10" Name="CurrentOrderItemsControl" HorizontalAlignment="Stretch">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <!--<DataTemplate.Resources>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="FontSize" Value="18"/>
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                    </Style>
+                                </DataTemplate.Resources>-->
+                                <Grid>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                        <TextBlock Text="{Binding }" Width="100"/>
+                                        <TextBox Text="{Binding XPath=@Aantal}" Width="100"/>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemContainerStyle>
+                            <Style>
+                                <Setter Property="Control.HorizontalAlignment" Value="Stretch"/>
+                                <Setter Property="Control.Margin" Value="5"/>
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
+                        <!--<ItemsControl.GroupStyle>
+                            <GroupStyle>
+                                <GroupStyle.HeaderTemplate>
+                                    <DataTemplate>
+                                        <TextBlock FontWeight="Bold" FontSize="15" Text="{Binding Path=Name}"/>
+                                    </DataTemplate>
+                                </GroupStyle.HeaderTemplate>
+                            </GroupStyle>
+                        </ItemsControl.GroupStyle>-->
+                    </ItemsControl>
+                    <Grid Grid.Row="2" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Content="OK" Grid.Column="1" Margin="2" Name="btnOK" HorizontalAlignment="Stretch" IsDefault="True" Click="btnOK_Click"/>
+                        <Button Content="Cancel" Grid.Column="2" Margin="2" Name="btnCancel" HorizontalAlignment="Stretch" IsCancel="True" Click="btnCancel_Click"/>
+                    </Grid>
+                </Grid>
+                
             </TabItem>
             <TabItem Header="Statistiek" Name="tabStatistiek" >
                 <Grid>
