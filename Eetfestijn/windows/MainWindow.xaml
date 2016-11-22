@@ -51,8 +51,8 @@
                                 </DataTemplate.Resources>-->
                                 <Grid>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                                        <TextBlock Text="{Binding }" Width="100"/>
-                                        <TextBox Text="{Binding XPath=@Aantal}" Width="100"/>
+                                        <TextBlock Text="{Binding ProductName}" Width="100"/>
+                                        <TextBox Text="{Binding Aantal}" Width="100"/>
                                     </StackPanel>
                                 </Grid>
                             </DataTemplate>
