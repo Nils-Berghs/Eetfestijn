@@ -4,7 +4,30 @@
         
         Title="Eetfestijn" Name="thisWindow" Height="350" Width="525" DataContext="{Binding ElementName=thisWindow}" >
     <Window.Resources>
-        
+        <DataTemplate x:Key="MyItemTemplate">
+            <Grid HorizontalAlignment="Stretch" Name="ItemRow">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Name="NameBlock" Text="{Binding ProductName}" Margin="3,0,3,0" VerticalAlignment="Center" Grid.Column="0"/>
+                <TextBox Name="AantalBlock" Text="{Binding Aantal}" HorizontalAlignment="Stretch" Margin="3,0,3,0" Grid.Column="1"/>
+                <TextBlock Name="PriceBlock" Text="{Binding Price}" Margin="3,0,3,0" TextAlignment="Right" VerticalAlignment="Center" Grid.Column="2"/>
+                <TextBlock Text="{Binding TotalPrice}" Margin="3,0,3,0" TextAlignment="Right" VerticalAlignment="Center" Grid.Column="3"/>
+            </Grid>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding ElementName=AantalBlock, Path=IsFocused}" Value="True">
+                    <Setter TargetName="NameBlock" Property="Foreground" Value="red"/>
+                    <Setter TargetName="NameBlock" Property="FontWeight" Value="bold"/>
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+        <Style x:Key="MyItemStyle">
+            <Setter Property="Control.HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="Control.Margin" Value="5"/>
+        </Style>
         
     </Window.Resources>
     <Grid>
@@ -13,10 +36,16 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
                         <RowDefinition Height="AUTO"/>
                     </Grid.RowDefinitions>
-                    <ItemsControl Margin="10" Name="CurrentOrderItemsControl" HorizontalAlignment="Stretch" >
-                        <ItemsControl.ItemTemplate>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <ItemsControl Margin="10"  Name="CurrentOrderFoodControl" HorizontalAlignment="Stretch" ItemTemplate="{StaticResource MyItemTemplate}" ItemContainerStyle="{StaticResource MyItemStyle}"/>
+                    <ItemsControl Margin="10" Grid.Column="2" Grid.RowSpan="2" Name="CurrentOrderItemsControl" HorizontalAlignment="Stretch" ItemTemplate="{StaticResource MyItemTemplate}" ItemContainerStyle="{StaticResource MyItemStyle}">
+                        <!--<ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Grid HorizontalAlignment="Stretch" Name="ItemRow">
                                     <Grid.ColumnDefinitions>
@@ -37,15 +66,16 @@
                                     </DataTrigger>
                                 </DataTemplate.Triggers>
                             </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                        <ItemsControl.ItemContainerStyle>
+                        </ItemsControl.ItemTemplate>-->
+                        <!--<ItemsControl.ItemContainerStyle>
                             <Style>
                                 <Setter Property="Control.HorizontalAlignment" Value="Stretch"/>
                                 <Setter Property="Control.Margin" Value="5"/>
                             </Style>
-                        </ItemsControl.ItemContainerStyle>
+                        </ItemsControl.ItemContainerStyle>-->
                     </ItemsControl>
-                    <Grid Grid.Row="2" >
+                    
+                    <Grid Grid.Row="2" Grid.ColumnSpan="2" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="3*"/>
                             <ColumnDefinition Width="*"/>

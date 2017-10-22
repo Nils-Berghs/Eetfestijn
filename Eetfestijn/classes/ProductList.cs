@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Xml;
 using System.IO;
 using System.Collections;
+using be.berghs.nils.eetfestijn.Exceptions;
 
 namespace be.berghs.nils.eetfestijn.classes
 {
@@ -54,14 +55,26 @@ namespace be.berghs.nils.eetfestijn.classes
             Products.Clear();
             if (!File.Exists(filename))
             {
-                FillListWithDefaultProducts();
-                SaveToXml(filename);
+                InitializeDefaultProducts(filename);
             }
             else
             {
-                ReadProductsFromXml(filename);
+                try
+                {
+                    ReadProductsFromXml(filename);
+                }
+                catch(IncompatibleProductsException)
+                {
+                    InitializeDefaultProducts(filename);
+                }
             }
 
+        }
+
+        private void InitializeDefaultProducts(string filename)
+        {
+            FillListWithDefaultProducts();
+            SaveToXml(filename);
         }
 
         /// <summary>
@@ -91,36 +104,36 @@ namespace be.berghs.nils.eetfestijn.classes
 
         private void FillListWithDefaultProducts()
         {
-            Products.Add(new Product("Zalm (groot)", 15));
-            Products.Add(new Product("Zalm (klein)", 8));
-            Products.Add(new Product("VarkensHaasje (groot)", 14));
-            Products.Add(new Product("VarkensHaasje (klein)", 8));
-            Products.Add(new Product("Balletjes (groot)", 13));
-            Products.Add(new Product("Balletjes (kinder)", 7));
-            Products.Add(new Product("Vegetarisch (groot)", 12));
-            Products.Add(new Product("Vegetarisch (klein)", 7));
-            Products.Add(new Product("Cava (glas)", 3));
-            Products.Add(new Product("Cava (fles)", 15));
-            Products.Add(new Product("Spa bruis", 1.8m));
-            Products.Add(new Product("Spa plat", 1.8m));
-            Products.Add(new Product("Fruitsap", 1.8m));
-            Products.Add(new Product("Limonade", 1.8m));
-            Products.Add(new Product("Cola", 1.8m));
-            Products.Add(new Product("Cola light", 1.8m));
-            Products.Add(new Product("Ice-Tea", 1.8m));
-            Products.Add(new Product("Pils", 1.8m));
-            Products.Add(new Product("Hoegaarden", 2m));
-            Products.Add(new Product("Leffe blond", 2.5m));
-            Products.Add(new Product("Leffe bruin", 2.5m));
-            Products.Add(new Product("Duvel", 3m));
-            Products.Add(new Product("Witte wijn (glas)", 2.5m));
-            Products.Add(new Product("Rode wijn (glas)", 2.5m));
-            Products.Add(new Product("Witte wijn (fles)", 12m));
-            Products.Add(new Product("Rode wijn (fles)", 12m));
-            Products.Add(new Product("Koffie", 1.8m));
-            Products.Add(new Product("Verwenkoffie", 5m));
-            Products.Add(new Product("Kinderijs", 1.5m));
-            Products.Add(new Product("Dame blanche", 4));
+            Products.Add(new Product("Zalm (groot)", 15, ProductType.Eten));
+            Products.Add(new Product("Zalm (klein)", 8, ProductType.Eten));
+            Products.Add(new Product("VarkensHaasje (groot)", 14, ProductType.Eten));
+            Products.Add(new Product("VarkensHaasje (klein)", 8, ProductType.Eten));
+            Products.Add(new Product("Balletjes (groot)", 13, ProductType.Eten));
+            Products.Add(new Product("Balletjes (kinder)", 7, ProductType.Eten));
+            Products.Add(new Product("Vegetarisch (groot)", 12, ProductType.Eten));
+            Products.Add(new Product("Vegetarisch (klein)", 7, ProductType.Eten));
+            Products.Add(new Product("Cava (glas)", 3, ProductType.Drank));
+            Products.Add(new Product("Cava (fles)", 15, ProductType.Drank));
+            Products.Add(new Product("Spa bruis", 1.8m, ProductType.Drank));
+            Products.Add(new Product("Spa plat", 1.8m, ProductType.Drank));
+            Products.Add(new Product("Fruitsap", 1.8m, ProductType.Drank));
+            Products.Add(new Product("Limonade", 1.8m, ProductType.Drank));
+            Products.Add(new Product("Cola", 1.8m, ProductType.Drank));
+            Products.Add(new Product("Cola light", 1.8m, ProductType.Drank));
+            Products.Add(new Product("Ice-Tea", 1.8m, ProductType.Drank));
+            Products.Add(new Product("Pils", 1.8m, ProductType.Drank));
+            Products.Add(new Product("Hoegaarden", 2m, ProductType.Drank));
+            Products.Add(new Product("Leffe blond", 2.5m, ProductType.Drank));
+            Products.Add(new Product("Leffe bruin", 2.5m, ProductType.Drank));
+            Products.Add(new Product("Duvel", 3m, ProductType.Drank));
+            Products.Add(new Product("Witte wijn (glas)", 2.5m, ProductType.Drank));
+            Products.Add(new Product("Rode wijn (glas)", 2.5m, ProductType.Drank));
+            Products.Add(new Product("Witte wijn (fles)", 12m, ProductType.Drank));
+            Products.Add(new Product("Rode wijn (fles)", 12m, ProductType.Drank));
+            Products.Add(new Product("Koffie", 1.8m, ProductType.Dessert));
+            Products.Add(new Product("Verwenkoffie", 5m, ProductType.Dessert));
+            Products.Add(new Product("Kinderijs", 1.5m, ProductType.Dessert));
+            Products.Add(new Product("Dame blanche", 4, ProductType.Dessert));
         }
 
         internal Product GetProductByName(string name)

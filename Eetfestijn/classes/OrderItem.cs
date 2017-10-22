@@ -22,6 +22,14 @@ namespace be.berghs.nils.eetfestijn.classes
             }
         }
 
+        public ProductType ProductType
+        {
+            get
+            {
+                return Product.ProductType;
+            }
+        }
+
         private int mAantal = 0;
         public int Aantal 
         {

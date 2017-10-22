@@ -62,6 +62,7 @@ namespace be.berghs.nils.eetfestijn.windows
             CurrentOrder = new Order(mProductList.Products);
             //bestellingFood.ItemsSource = CurrentOrder.Items;
             CurrentOrderItemsControl.ItemsSource = CurrentOrder.Items;
+            CurrentOrderFoodControl.ItemsSource = CurrentOrder.FoodItems;
         }
 
         private void btnOK_Click(object sender, RoutedEventArgs e)

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.ComponentModel;
+using be.berghs.nils.eetfestijn.Exceptions;
 
 namespace be.berghs.nils.eetfestijn.classes
 {
@@ -30,17 +31,27 @@ namespace be.berghs.nils.eetfestijn.classes
             }
         }
 
-        public Product(string name, decimal price)
+        public ProductType ProductType { get; set; }
+
+        public Product(string name, decimal price, ProductType productType)
         {
-            //ProductType = productType;
+            ProductType = productType;
             Name = name;
             Price = price;
         }
 
         public Product(XmlAttributeCollection xmlElement)
         {
-            Price = decimal.Parse(xmlElement.GetNamedItem("prijs").Value);
-            Name = xmlElement.GetNamedItem("naam").Value;
+            try
+            {
+                Price = decimal.Parse(xmlElement.GetNamedItem("prijs").Value);
+                Name = xmlElement.GetNamedItem("naam").Value;
+                ProductType = (ProductType)Enum.Parse(typeof(ProductType),xmlElement.GetNamedItem("type").Value);
+            }
+            catch(Exception e)
+            {
+                throw new IncompatibleProductsException(e);
+            }
         }
 
         public override string ToString()
@@ -69,6 +80,7 @@ namespace be.berghs.nils.eetfestijn.classes
             writer.WriteStartElement("Product");
             writer.WriteAttributeString("naam", Name);
             writer.WriteAttributeString("prijs", Price + "");
+            writer.WriteAttributeString("type", ProductType.ToString());
             writer.WriteEndElement();
         }
 

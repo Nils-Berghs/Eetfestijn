@@ -28,6 +28,21 @@ namespace be.berghs.nils.eetfestijn.classes
             set;
         }
 
+        public List<OrderItem> FoodItems
+        {
+            get { return GetItemsWithType(ProductType.Eten); }
+        }
+
+        private List<OrderItem> GetItemsWithType(ProductType productType)
+        {
+            List<OrderItem> items = new List<OrderItem>();
+            foreach (OrderItem oi in Items)
+                if (oi.ProductType == productType)
+                    items.Add(oi);
+            return items;
+
+        }
+
         public decimal TotalPrice 
         {
             get
