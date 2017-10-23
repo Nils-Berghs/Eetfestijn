@@ -61,12 +61,14 @@ namespace be.berghs.nils.eetfestijn.windows
         {
             CurrentOrder = new Order(mProductList.Products);
             //bestellingFood.ItemsSource = CurrentOrder.Items;
-            CurrentOrderItemsControl.ItemsSource = CurrentOrder.Items;
+            CurrentOrderDrinksControl.ItemsSource = CurrentOrder.DrinkItems;
             CurrentOrderFoodControl.ItemsSource = CurrentOrder.FoodItems;
+            CurrentOrderDessertControl.ItemsSource = CurrentOrder.DessertItems;
         }
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
+            btnOK.Focus(); //make sure a leave is initiated from the last field
             Payment betaling = new Payment(CurrentOrder);
             if ((bool)betaling.ShowDialog())
             {

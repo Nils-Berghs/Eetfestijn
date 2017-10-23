@@ -138,11 +138,27 @@ namespace be.berghs.nils.eetfestijn.windows
             
         }
 
+        public bool tIsJust
+        {
+            get;
+            set;
+        }
+
+        public Visibility tIsJustVisibility
+        {
+            get
+            {
+                if (!string.IsNullOrWhiteSpace(Terug))
+                    return Visibility.Visible;
+                return Visibility.Hidden;
+            }
+        }
+
         public bool PaymentCompleted
         {
             get
             {
-                if (mOrder.BestellingId > 0 && mTerug >= 0 && mBetaald >= mTeBetalen)
+                if (/*mOrder.BestellingId > 0 &&*/ mTerug >= 0 && mBetaald >= mTeBetalen)
                     return true;
                 return false;
             }
@@ -182,6 +198,7 @@ namespace be.berghs.nils.eetfestijn.windows
             {
                 mTerug = terug;
                 OnPropertyChanged("Terug");
+                OnPropertyChanged("tIsJustVisibility");
             }
         }
 

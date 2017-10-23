@@ -31,17 +31,22 @@ namespace be.berghs.nils.eetfestijn.classes
         }
 
         private int mAantal = 0;
-        public int Aantal 
+        public int? Aantal 
         {
             get
             {
+                if (mAantal == 0)
+                    return null;
                 return mAantal;
             }
             set
             {
-                if (mAantal != value)
+                if (Aantal != value)
                 {
-                    mAantal = value;
+                    if (value == null)
+                        mAantal = 0;
+                    else
+                        mAantal = value.Value;
                     UpdateTotal();
                 }
             }
@@ -86,7 +91,10 @@ namespace be.berghs.nils.eetfestijn.classes
 
         private void UpdateTotal()
         {
-            TotalPrice = (decimal)Aantal * Product.Price;
+            if (Aantal == null)
+                TotalPrice = 0;
+            else
+                TotalPrice = (decimal)Aantal * Product.Price;
         }
 
         public override bool Equals(object obj)

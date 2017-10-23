@@ -33,6 +33,16 @@ namespace be.berghs.nils.eetfestijn.classes
             get { return GetItemsWithType(ProductType.Eten); }
         }
 
+        public List<OrderItem> DrinkItems
+        {
+            get { return GetItemsWithType(ProductType.Drank); }
+        }
+
+        public List<OrderItem> DessertItems
+        {
+            get { return GetItemsWithType(ProductType.Dessert); }
+        }
+
         private List<OrderItem> GetItemsWithType(ProductType productType)
         {
             List<OrderItem> items = new List<OrderItem>();
@@ -52,6 +62,17 @@ namespace be.berghs.nils.eetfestijn.classes
                     total += bi.TotalPrice;
                 return total;
             }
+        }
+
+        /// <summary>
+        /// This value contains the amount that was actually payed
+        /// Normally this is the TotalPrice - (WaardebonCount* WaardebonValue)
+        /// In some cases people give a tip ('T is just) in such cases this amount is higher
+        /// </summary>
+        public decimal Betaald
+        {
+            get;
+            set;
         }
 
         public Order(IEnumerable<Product> availableProducts)

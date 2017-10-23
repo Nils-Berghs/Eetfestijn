@@ -21,6 +21,7 @@
                 <DataTrigger Binding="{Binding ElementName=AantalBlock, Path=IsFocused}" Value="True">
                     <Setter TargetName="NameBlock" Property="Foreground" Value="red"/>
                     <Setter TargetName="NameBlock" Property="FontWeight" Value="bold"/>
+                    <!--<Setter TargetName="AantalBlock" Property="Text" Value=""/>-->
                 </DataTrigger>
             </DataTemplate.Triggers>
         </DataTemplate>
@@ -33,9 +34,9 @@
     <Grid>
         <TabControl HorizontalAlignment="Stretch" Margin="0,0,0,0" Name="tabControl1" VerticalAlignment="Stretch">
             <TabItem Header="Bestelling" Name="tabBestelling" Selector.Selected="tabBestelling_Selected">
-                <Grid>
+                <Grid Margin="10">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
+                        <RowDefinition Height="AUTO" />
                         <RowDefinition Height="*" />
                         <RowDefinition Height="AUTO"/>
                     </Grid.RowDefinitions>
@@ -43,38 +44,16 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <ItemsControl Margin="10"  Name="CurrentOrderFoodControl" HorizontalAlignment="Stretch" ItemTemplate="{StaticResource MyItemTemplate}" ItemContainerStyle="{StaticResource MyItemStyle}"/>
-                    <ItemsControl Margin="10" Grid.Column="2" Grid.RowSpan="2" Name="CurrentOrderItemsControl" HorizontalAlignment="Stretch" ItemTemplate="{StaticResource MyItemTemplate}" ItemContainerStyle="{StaticResource MyItemStyle}">
-                        <!--<ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Grid HorizontalAlignment="Stretch" Name="ItemRow">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="100"/>
-                                        <ColumnDefinition Width="100"/>
-                                        <ColumnDefinition Width="100"/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Name="NameBlock" Text="{Binding ProductName}" Margin="3,0,3,0" VerticalAlignment="Center" Grid.Column="0"/>
-                                    <TextBox Name="AantalBlock" Text="{Binding Aantal}" HorizontalAlignment="Stretch" Margin="3,0,3,0" Grid.Column="1"/>
-                                    <TextBlock Name="PriceBlock" Text="{Binding Price}" Margin="3,0,3,0" TextAlignment="Right" VerticalAlignment="Center" Grid.Column="2"/>
-                                    <TextBlock Text="{Binding TotalPrice}" Margin="3,0,3,0" TextAlignment="Right" VerticalAlignment="Center" Grid.Column="3"/>
-                                </Grid>
-                                <DataTemplate.Triggers>
-                                    <DataTrigger Binding="{Binding ElementName=AantalBlock, Path=IsFocused}" Value="True">
-                                        <Setter TargetName="NameBlock" Property="Foreground" Value="red"/>
-                                        <Setter TargetName="NameBlock" Property="FontWeight" Value="bold"/>
-                                    </DataTrigger>
-                                </DataTemplate.Triggers>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>-->
-                        <!--<ItemsControl.ItemContainerStyle>
-                            <Style>
-                                <Setter Property="Control.HorizontalAlignment" Value="Stretch"/>
-                                <Setter Property="Control.Margin" Value="5"/>
-                            </Style>
-                        </ItemsControl.ItemContainerStyle>-->
-                    </ItemsControl>
-                    
+                    <Border  HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="3" BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.Row="0" Grid.RowSpan="1">
+                        <ItemsControl Margin="10" IsTabStop="False" Name="CurrentOrderFoodControl"  ItemTemplate="{StaticResource MyItemTemplate}" ItemContainerStyle="{StaticResource MyItemStyle}"/>
+                    </Border>
+                    <Border  HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="3" BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.Row="1" Grid.RowSpan="1">
+                        <ItemsControl Margin="10" IsTabStop="False" Name="CurrentOrderDessertControl" ItemTemplate="{StaticResource MyItemTemplate}" ItemContainerStyle="{StaticResource MyItemStyle}"/>
+                    </Border>
+                    <Border  HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="3" BorderBrush="Black" BorderThickness="1" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
+                        <ItemsControl Margin="10" IsTabStop="False" Name="CurrentOrderDrinksControl" ItemTemplate="{StaticResource MyItemTemplate}" ItemContainerStyle="{StaticResource MyItemStyle}"/>
+                    </Border>
+
                     <Grid Grid.Row="2" Grid.ColumnSpan="2" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="3*"/>
