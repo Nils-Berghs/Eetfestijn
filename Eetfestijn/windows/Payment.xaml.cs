@@ -204,6 +204,12 @@ namespace be.berghs.nils.eetfestijn.windows
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
+            btnOK.Focus();
+            if (tIsJust)
+                mOrder.Betaald = mBetaald;
+            else
+                mOrder.Betaald = mOrder.GetTeBetalen();
+
             this.DialogResult = true;
             this.Close();
         }

@@ -32,7 +32,7 @@ namespace be.berghs.nils.eetfestijn.windows
                 {
                     OrderItem total = mOrder.Items[mOrder.Items.IndexOf(item)];
                     if (total != null)
-                        total.Aantal += item.Aantal;
+                        total.AddToAantal(item.Aantal);
                 }
             }
             Consumption.ItemsSource = mOrder.Items;

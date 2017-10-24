@@ -53,6 +53,20 @@ namespace be.berghs.nils.eetfestijn.classes
 
         }
 
+        /// <summary>
+        /// This is a helper method to do maths with the nullable int
+        /// </summary>
+        /// <param name="aantal"></param>
+        internal void AddToAantal(int? aantal)
+        {
+            if (!aantal.HasValue)
+                return;
+            if (Aantal.HasValue)
+                Aantal += aantal;
+            else
+                Aantal = aantal;
+        }
+
         [DisplayName("Prijs")]
         public decimal Price
         {
@@ -121,7 +135,7 @@ namespace be.berghs.nils.eetfestijn.classes
 
         internal void SaveToXml(XmlTextWriter writer)
         {
-            if (Aantal == 0)
+            if (Aantal.HasValue)
                 return; //do not write empty items to xml
             writer.WriteStartElement("Item");
             writer.WriteAttributeString("product", ProductName);
