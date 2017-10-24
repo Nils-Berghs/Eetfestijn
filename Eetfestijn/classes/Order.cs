@@ -87,6 +87,7 @@ namespace be.berghs.nils.eetfestijn.classes
             :this(availableProducts)
         {
             WaardeBonCount = int.Parse(orderElement.GetAttribute("waardebonCount"));
+            Betaald = decimal.Parse(orderElement.GetAttribute("betaald"));
             XmlNodeList list = orderElement.GetElementsByTagName("Item");
             
             IEnumerator enumerator = list.GetEnumerator();
@@ -119,6 +120,7 @@ namespace be.berghs.nils.eetfestijn.classes
             writer.WriteAttributeString("id", BestellingId+"");
             writer.WriteAttributeString("waardebonCount", WaardeBonCount+"");
             writer.WriteAttributeString("totaal", TotalPrice + "");
+            writer.WriteAttributeString("betaald", Betaald + "");
             writer.WriteStartElement("Items");
             foreach (OrderItem oi in Items)
             {

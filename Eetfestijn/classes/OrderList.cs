@@ -48,6 +48,9 @@ namespace be.berghs.nils.eetfestijn.classes
         
 
         private decimal mTotalSum = 0;
+        /// <summary>
+        /// The total sum that we should have received, this includes the coupons but no tips
+        /// </summary>
         public string TotalSum
         {
             get
@@ -55,6 +58,15 @@ namespace be.berghs.nils.eetfestijn.classes
                 return mTotalSum +"€";
             }
 
+        }
+
+        private decimal mReceived;
+        public string Received
+        {
+            get
+            {
+                return mReceived + "€";
+            }
         }
 
         private decimal mVoucherCount = 0;
@@ -67,6 +79,11 @@ namespace be.berghs.nils.eetfestijn.classes
         }
 
         private decimal mNetIncome;
+        /// <summary>
+        /// This is the amount of cash that we should have received.
+        /// This does not include the value of the coupons, nor any tips
+        /// 
+        /// </summary>
         public string NetIncome
         {
             get
@@ -75,7 +92,23 @@ namespace be.berghs.nils.eetfestijn.classes
             }
         }
 
+        private decimal mBrutoIncome;
+        /// <summary>
+        /// This is the amount of cash that we have received.
+        /// This does not include the value of the coupons, but includes tips
+        /// </summary>
+        public string BrutoIncome
+        {
+            get
+            {
+                return mBrutoIncome + "€";
+            }
+        }
+
         private decimal mCash;
+        /// <summary>
+        /// The amount of cash that we should have, including the start amount and tips
+        /// </summary>
         public string Cash
         {
             get
@@ -89,10 +122,12 @@ namespace be.berghs.nils.eetfestijn.classes
             if (order != null)
             {
                 mList.Add(order);
+                mReceived += order.Betaald;
                 mTotalSum += order.TotalPrice;
                 mVoucherCount += order.WaardeBonCount;
                
                 UpdateCash();//will also update the net income
+                OnPropertyChanged("Received");
                 OnPropertyChanged("TotalSum");
                 OnPropertyChanged("VoucherCount");
             }
@@ -114,7 +149,7 @@ namespace be.berghs.nils.eetfestijn.classes
         private void UpdateCash()
         {
             UpdateNetIncome();
-            decimal cash = mStartCash + mNetIncome;
+            decimal cash = mStartCash + mReceived;
             if (cash != mCash)
             {
                 mCash = cash;
@@ -134,7 +169,8 @@ namespace be.berghs.nils.eetfestijn.classes
             writer.WriteAttributeString("startKassa", mStartCash + "");
             writer.WriteAttributeString("totaal", mTotalSum + "");
             writer.WriteAttributeString("waardebonnen", mVoucherCount + "");
-            writer.WriteAttributeString("ontvangen", mNetIncome + "");
+            writer.WriteAttributeString("inkomsten", mNetIncome + "");
+            writer.WriteAttributeString("ontvangen", mReceived + "");
             writer.WriteAttributeString("eindKassa", mCash + "");
             writer.WriteStartElement("Orders");
             foreach (Order o in mList)

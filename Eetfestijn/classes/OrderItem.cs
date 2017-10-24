@@ -135,11 +135,11 @@ namespace be.berghs.nils.eetfestijn.classes
 
         internal void SaveToXml(XmlTextWriter writer)
         {
-            if (Aantal.HasValue)
+            if (!Aantal.HasValue)
                 return; //do not write empty items to xml
             writer.WriteStartElement("Item");
             writer.WriteAttributeString("product", ProductName);
-            writer.WriteAttributeString("aantal", Aantal+"");
+            writer.WriteAttributeString("aantal", Aantal + "");
             writer.WriteAttributeString("totaal", TotalPrice+"");
             writer.WriteEndElement();
         }

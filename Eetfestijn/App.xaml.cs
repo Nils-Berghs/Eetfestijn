@@ -21,7 +21,7 @@ namespace be.berghs.nils.eetfestijn
         public static void Main()
         {
             ReadProductListFromXml(GetProductDefaultListFileName());
-            mProductList.ReadFromXml(GetProductDefaultListFileName());
+            //mProductList.ReadFromXml(GetProductDefaultListFileName());
             var application = new App();
             application.InitializeComponent();
             application.Run();

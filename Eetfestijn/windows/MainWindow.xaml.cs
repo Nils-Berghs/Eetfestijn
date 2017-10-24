@@ -43,14 +43,14 @@ namespace be.berghs.nils.eetfestijn.windows
         public MainWindow()
         {
 
-            InitializeComponent();
+           
             mOrderList = App.mOrderList;
             mProductList = App.mProductList;
-            
+            InitializeComponent();
             //DataContext = this;
             Producten.ItemsSource = mProductList.Products;
 
-            //tabStatistiek.DataContext = mOrderList;
+            tabStatistiek.DataContext = this;
 
             CreateNewOrder();
             
@@ -69,12 +69,30 @@ namespace be.berghs.nils.eetfestijn.windows
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
             btnOK.Focus(); //make sure a leave is initiated from the last field
+            if (!IsValid(this))
+                return;
             Payment betaling = new Payment(CurrentOrder);
             if ((bool)betaling.ShowDialog())
             {
+                
                 mOrderList.AddOrder(CurrentOrder);
                 CreateNewOrder();
             }
+        }
+
+        public static bool IsValid(DependencyObject parent)
+        {
+            if (Validation.GetHasError(parent))
+                return false;
+
+            // Validate all the bindings on the children
+            for (int i = 0; i != VisualTreeHelper.GetChildrenCount(parent); ++i)
+            {
+                DependencyObject child = VisualTreeHelper.GetChild(parent, i);
+                if (!IsValid(child)) { return false; }
+            }
+
+            return true;
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
