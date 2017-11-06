@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows;
 using be.berghs.nils.eetfestijn.classes;
 using Microsoft.Win32;
+using be.berghs.nils.eetfestijn.windows;
 
 namespace be.berghs.nils.eetfestijn
 {
@@ -66,6 +67,10 @@ namespace be.berghs.nils.eetfestijn
             }
         }
 
-        
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            //OrderSummary summary = new OrderSummary();
+            //summary.Show();
+        }
     }
 }

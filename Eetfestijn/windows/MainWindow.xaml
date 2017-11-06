@@ -62,8 +62,8 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Content="OK" Grid.Column="1" Margin="2" x:Name="btnOK" HorizontalAlignment="Stretch" IsDefault="True" Click="btnOK_Click"/>
-                        <Button Content="Cancel" Grid.Column="2" Margin="2" x:Name="btnCancel" HorizontalAlignment="Stretch" IsCancel="True" Click="btnCancel_Click"/>
+                        <Button Content="OK" Grid.Column="1" Margin="2" Height="40" x:Name="btnOK" HorizontalAlignment="Stretch" IsDefault="True" Click="btnOK_Click"/>
+                        <Button Content="Cancel" Grid.Column="2" Margin="2" Height="40" x:Name="btnCancel" HorizontalAlignment="Stretch" IsCancel="True" Click="btnCancel_Click"/>
                     </Grid>
                 </Grid>
 

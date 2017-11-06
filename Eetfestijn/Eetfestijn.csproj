@@ -59,6 +59,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="windows\OrderSummary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="windows\Payment.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -76,6 +80,9 @@
     <Compile Include="Exceptions\IncompatibleProductsException.cs" />
     <Compile Include="windows\ConsumptionOverview.xaml.cs">
       <DependentUpon>ConsumptionOverview.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="windows\OrderSummary.xaml.cs">
+      <DependentUpon>OrderSummary.xaml</DependentUpon>
     </Compile>
     <Compile Include="windows\Payment.xaml.cs">
       <DependentUpon>Payment.xaml</DependentUpon>
