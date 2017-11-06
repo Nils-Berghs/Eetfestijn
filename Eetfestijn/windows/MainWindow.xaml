@@ -4,7 +4,9 @@
         
         xmlns:classes="clr-namespace:be.berghs.nils.eetfestijn.classes" x:Class="be.berghs.nils.eetfestijn.windows.MainWindow"
         
-        Title="Eetfestijn" x:Name="thisWindow"  DataContext="{Binding ElementName=thisWindow}" >
+        Title="Eetfestijn" x:Name="thisWindow"  DataContext="{Binding ElementName=thisWindow}"
+    Loaded="thisWindow_Loaded"
+    Closing="thisWindow_Closing">
     <Window.Resources>
         <DataTemplate x:Key="MyItemTemplate">
             <Grid HorizontalAlignment="Stretch" x:Name="ItemRow">

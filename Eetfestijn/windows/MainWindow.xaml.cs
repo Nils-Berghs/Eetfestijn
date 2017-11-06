@@ -21,6 +21,8 @@ namespace be.berghs.nils.eetfestijn.windows
     /// </summary>
     public partial class MainWindow : Window
     {
+        private OrderSummary mOrderSummaryWindow;
+
         public OrderList mOrderList = null;
 
         public OrderList OrderList
@@ -43,7 +45,7 @@ namespace be.berghs.nils.eetfestijn.windows
         public MainWindow()
         {
 
-           
+            //mOrderSummaryWindow = App.OrderSummaryWindow;
             mOrderList = App.mOrderList;
             mProductList = App.mProductList;
             InitializeComponent();
@@ -146,6 +148,18 @@ namespace be.berghs.nils.eetfestijn.windows
             {
                 App.ReadProductListFromXml(ofd.FileName);
             }
+        }
+
+        private void thisWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            mOrderSummaryWindow = new OrderSummary();
+            mOrderSummaryWindow.Show();
+
+        }
+
+        private void thisWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            mOrderSummaryWindow.Close();
         }
     }
 }

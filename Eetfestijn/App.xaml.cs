@@ -15,7 +15,7 @@ namespace be.berghs.nils.eetfestijn
     /// </summary>
     public partial class App : Application
     {
-
+        //public OrderSummary OrderSummaryWindow = new OrderSummary();
         public static OrderList mOrderList = new OrderList();
         public static ProductList mProductList = new ProductList();
         [STAThread]
@@ -69,8 +69,7 @@ namespace be.berghs.nils.eetfestijn
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            //OrderSummary summary = new OrderSummary();
-            //summary.Show();
+            //OrderSummaryWindow.Show();
         }
     }
 }

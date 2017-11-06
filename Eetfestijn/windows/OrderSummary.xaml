@@ -4,9 +4,41 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:be.berghs.nils.eetfestijn.windows"
-        mc:Ignorable="d"
-        Title="OrderSummary" Height="300" Width="300">
-    <Grid>
+        mc:Ignorable="d" Height="300" Width="300" ShowInTaskbar="False" WindowState="Maximized" WindowStyle="None">
+    <Window.Resources>
+        <DataTemplate x:Key="MyItemTemplate">
+            <Grid HorizontalAlignment="Stretch" x:Name="ItemRow">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="NameBlock" Text="{Binding ProductName}" Margin="3,0,3,0" VerticalAlignment="Center" Grid.Column="0"/>
+                <TextBox x:Name="AantalBlock" Text="{Binding Aantal}" HorizontalAlignment="Stretch" Margin="3,0,3,0" Grid.Column="1"/>
+                <TextBlock x:Name="PriceBlock" Text="{Binding Price}" Margin="3,0,3,0" TextAlignment="Right" VerticalAlignment="Center" Grid.Column="2"/>
+                <TextBlock Text="{Binding TotalPrice}" Margin="3,0,3,0" TextAlignment="Right" VerticalAlignment="Center" Grid.Column="3"/>
+            </Grid>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding IsFocused, ElementName=AantalBlock}" Value="True">
+                    <Setter TargetName="NameBlock" Property="Foreground" Value="red"/>
+                    <Setter TargetName="NameBlock" Property="FontWeight" Value="bold"/>
+                    <!--<Setter TargetName="AantalBlock" Property="Text" Value=""/>-->
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+        <Style x:Key="MyItemStyle">
+            <Setter Property="FrameworkElement.HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="FrameworkElement.Margin" Value="5"/>
+        </Style>
         
+    </Window.Resources>
+    <Grid Margin="30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Label Content="Overzicht rekening" FontSize="36" FontWeight="Bold"/>
+        <ItemsControl Margin="10" IsTabStop="False" x:Name="CurrentOrderFoodControl"  ItemTemplate="{StaticResource MyItemTemplate}" ItemContainerStyle="{StaticResource MyItemStyle}"/>
     </Grid>
 </Window>
