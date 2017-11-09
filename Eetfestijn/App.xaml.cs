@@ -69,6 +69,7 @@ namespace be.berghs.nils.eetfestijn
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
+            
             //OrderSummaryWindow.Show();
         }
     }

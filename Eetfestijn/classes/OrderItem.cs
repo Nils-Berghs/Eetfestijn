@@ -48,9 +48,20 @@ namespace be.berghs.nils.eetfestijn.classes
                     else
                         mAantal = value.Value;
                     UpdateTotal();
+                    OnPropertyChanged("AantalString");
                 }
             }
 
+        }
+
+        public string AantalString
+        {
+            get
+            {
+                if (Aantal.HasValue)
+                    return Aantal + "";
+                return "";
+            }
         }
 
         /// <summary>

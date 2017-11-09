@@ -7,23 +7,21 @@
         mc:Ignorable="d" Height="300" Width="300" ShowInTaskbar="False" WindowState="Maximized" WindowStyle="None">
     <Window.Resources>
         <DataTemplate x:Key="MyItemTemplate">
-            <Grid HorizontalAlignment="Stretch" x:Name="ItemRow">
+            <Grid HorizontalAlignment="Left" x:Name="ItemRow">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="200"/>
                     <ColumnDefinition Width="100"/>
                     <ColumnDefinition Width="100"/>
                     <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock x:Name="NameBlock" Text="{Binding ProductName}" Margin="3,0,3,0" VerticalAlignment="Center" Grid.Column="0"/>
-                <TextBox x:Name="AantalBlock" Text="{Binding Aantal}" HorizontalAlignment="Stretch" Margin="3,0,3,0" Grid.Column="1"/>
+                <TextBlock x:Name="AantalBlock" Text="{Binding AantalString}" Margin="3,0,3,0" VerticalAlignment="Center" Grid.Column="1"/>
                 <TextBlock x:Name="PriceBlock" Text="{Binding Price}" Margin="3,0,3,0" TextAlignment="Right" VerticalAlignment="Center" Grid.Column="2"/>
                 <TextBlock Text="{Binding TotalPrice}" Margin="3,0,3,0" TextAlignment="Right" VerticalAlignment="Center" Grid.Column="3"/>
             </Grid>
             <DataTemplate.Triggers>
-                <DataTrigger Binding="{Binding IsFocused, ElementName=AantalBlock}" Value="True">
-                    <Setter TargetName="NameBlock" Property="Foreground" Value="red"/>
-                    <Setter TargetName="NameBlock" Property="FontWeight" Value="bold"/>
-                    <!--<Setter TargetName="AantalBlock" Property="Text" Value=""/>-->
+                <DataTrigger Binding="{Binding Text, ElementName=AantalBlock}" Value="">
+                    <Setter TargetName="ItemRow" Property="Visibility" Value="Collapsed"/>
                 </DataTrigger>
             </DataTemplate.Triggers>
         </DataTemplate>
@@ -36,9 +34,18 @@
     <Grid Margin="30">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Label Content="Overzicht rekening" FontSize="36" FontWeight="Bold"/>
-        <ItemsControl Margin="10" IsTabStop="False" x:Name="CurrentOrderFoodControl"  ItemTemplate="{StaticResource MyItemTemplate}" ItemContainerStyle="{StaticResource MyItemStyle}"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Overzicht rekening" Grid.ColumnSpan="2" FontSize="36" FontWeight="Bold"/>
+        <ItemsControl Margin="10" IsTabStop="False" Grid.Row="1" x:Name="CurrentOrderFoodControl"  ItemTemplate="{StaticResource MyItemTemplate}" ItemContainerStyle="{StaticResource MyItemStyle}"/>
+        <ItemsControl Margin="10" IsTabStop="False" Grid.Row="2" x:Name="CurrentOrderDessertControl" ItemTemplate="{StaticResource MyItemTemplate}" ItemContainerStyle="{StaticResource MyItemStyle}"/>
+        <ItemsControl Margin="10" IsTabStop="False" Grid.Row="3" x:Name="CurrentOrderDrinksControl" ItemTemplate="{StaticResource MyItemTemplate}" ItemContainerStyle="{StaticResource MyItemStyle}"/>
+
     </Grid>
 </Window>

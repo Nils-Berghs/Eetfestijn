@@ -45,7 +45,7 @@ namespace be.berghs.nils.eetfestijn.windows
         public MainWindow()
         {
 
-            //mOrderSummaryWindow = App.OrderSummaryWindow;
+            mOrderSummaryWindow = new OrderSummary();
             mOrderList = App.mOrderList;
             mProductList = App.mProductList;
             InitializeComponent();
@@ -66,6 +66,8 @@ namespace be.berghs.nils.eetfestijn.windows
             CurrentOrderDrinksControl.ItemsSource = CurrentOrder.DrinkItems;
             CurrentOrderFoodControl.ItemsSource = CurrentOrder.FoodItems;
             CurrentOrderDessertControl.ItemsSource = CurrentOrder.DessertItems;
+
+            mOrderSummaryWindow.SetOrder(CurrentOrder);
         }
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
@@ -152,8 +154,29 @@ namespace be.berghs.nils.eetfestijn.windows
 
         private void thisWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            mOrderSummaryWindow = new OrderSummary();
-            mOrderSummaryWindow.Show();
+            //System.Windows.Forms.SystemInformation.MonitorCount
+            var screens = System.Windows.Forms.Screen.AllScreens;
+            if (screens.Length > 1)
+            {
+                System.Windows.Forms.Screen s2 = screens[1];
+                System.Drawing.Rectangle r2 = s2.WorkingArea;
+                mOrderSummaryWindow.Top = r2.Top;
+                mOrderSummaryWindow.Left = r2.Left;
+
+                mOrderSummaryWindow.Show();
+            }
+            /*else
+            {
+                mOrderSummaryWindow.WindowState = WindowState.Normal;
+                System.Windows.Forms.Screen s1 = screens[0];
+                System.Drawing.Rectangle r1 = s1.WorkingArea;
+                mOrderSummaryWindow.Top = r1.Top;
+                mOrderSummaryWindow.Left = r1.Width/2;
+                mOrderSummaryWindow.Show();
+            }*/
+
+       
+        
 
         }
 

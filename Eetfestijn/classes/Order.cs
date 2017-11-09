@@ -43,6 +43,27 @@ namespace be.berghs.nils.eetfestijn.classes
             get { return GetItemsWithType(ProductType.Dessert); }
         }
 
+       /* public List<OrderItem> CurrentItems
+        {
+            get
+            {
+                List<OrderItem> items = new List<OrderItem>();
+                AddOrderedItems(FoodItems, items);
+                AddOrderedItems(DessertItems, items);
+                AddOrderedItems(DrinkItems, items);
+                return items;
+            }
+        }
+
+        private void AddOrderedItems(List<OrderItem> fromItems, List<OrderItem> toItems)
+        {
+            foreach (OrderItem oi in fromItems)
+            {
+                if (oi.Aantal.HasValue)
+                    toItems.Add(oi);
+            }
+        }*/
+
         private List<OrderItem> GetItemsWithType(ProductType productType)
         {
             List<OrderItem> items = new List<OrderItem>();

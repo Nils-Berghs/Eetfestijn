@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using be.berghs.nils.eetfestijn.classes;
 
 namespace be.berghs.nils.eetfestijn.windows
 {
@@ -18,9 +19,19 @@ namespace be.berghs.nils.eetfestijn.windows
     /// </summary>
     public partial class OrderSummary : Window
     {
+        private Order _CurrentOrder;
+
         public OrderSummary()
         {
             InitializeComponent();
+        }
+
+        internal void SetOrder(Order currentOrder)
+        {
+            _CurrentOrder = currentOrder;
+            CurrentOrderFoodControl.ItemsSource = currentOrder.FoodItems;
+            CurrentOrderDessertControl.ItemsSource = currentOrder.DessertItems;
+            CurrentOrderDrinksControl.ItemsSource = currentOrder.DrinkItems;
         }
     }
 }
