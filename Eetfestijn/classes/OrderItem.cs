@@ -87,6 +87,14 @@ namespace be.berghs.nils.eetfestijn.classes
             }
         }
 
+        public string PriceString
+        {
+            get
+            {
+                return Product.Price +" €";
+            }
+        }
+
 
         private decimal mTotalPrice;
         [DisplayName("Totaal")]
@@ -102,8 +110,14 @@ namespace be.berghs.nils.eetfestijn.classes
                 {
                     mTotalPrice = value;
                     OnPropertyChanged("TotalPrice");
+                    OnPropertyChanged("TotalPriceString");
                 }
             }
+        }
+
+        public string TotalPriceString
+        {
+            get { return TotalPrice + " €"; }
         }
 
         public OrderItem(Product product)

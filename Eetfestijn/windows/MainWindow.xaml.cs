@@ -165,15 +165,17 @@ namespace be.berghs.nils.eetfestijn.windows
 
                 mOrderSummaryWindow.Show();
             }
-            /*else
+            else
             {
                 mOrderSummaryWindow.WindowState = WindowState.Normal;
                 System.Windows.Forms.Screen s1 = screens[0];
                 System.Drawing.Rectangle r1 = s1.WorkingArea;
                 mOrderSummaryWindow.Top = r1.Top;
                 mOrderSummaryWindow.Left = r1.Width/2;
+                mOrderSummaryWindow.Width = r1.Width / 2;
+                mOrderSummaryWindow.Height = r1.Height - 100;
                 mOrderSummaryWindow.Show();
-            }*/
+            }
 
        
         

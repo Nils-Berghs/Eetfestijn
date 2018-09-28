@@ -4,23 +4,24 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:be.berghs.nils.eetfestijn.windows"
-        mc:Ignorable="d" Height="300" Width="300" ShowInTaskbar="False" WindowState="Maximized" WindowStyle="None">
+        mc:Ignorable="d" Height="300" Width="300" WindowState="Maximized" WindowStyle="None">
     <Window.Resources>
-        <DataTemplate x:Key="MyItemTemplate">
-            <Grid HorizontalAlignment="Left" x:Name="ItemRow">
+        <DataTemplate x:Key="MyItemTemplate" >
+            <Grid HorizontalAlignment="Stretch" x:Name="ItemRow" Margin="0,5">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="200"/>
-                    <ColumnDefinition Width="100"/>
-                    <ColumnDefinition Width="100"/>
-                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock x:Name="NameBlock" Text="{Binding ProductName}" Margin="3,0,3,0" VerticalAlignment="Center" Grid.Column="0"/>
-                <TextBlock x:Name="AantalBlock" Text="{Binding AantalString}" Margin="3,0,3,0" VerticalAlignment="Center" Grid.Column="1"/>
-                <TextBlock x:Name="PriceBlock" Text="{Binding Price}" Margin="3,0,3,0" TextAlignment="Right" VerticalAlignment="Center" Grid.Column="2"/>
-                <TextBlock Text="{Binding TotalPrice}" Margin="3,0,3,0" TextAlignment="Right" VerticalAlignment="Center" Grid.Column="3"/>
+                <TextBlock x:Name="NameBlock" Text="{Binding ProductName}" Margin="3,0,3,0" VerticalAlignment="Center" HorizontalAlignment="Right" TextAlignment="Right" Grid.Column="0"/>
+                <TextBlock x:Name="AantalBlock" Text="{Binding AantalString}" Margin="3,0,3,0" VerticalAlignment="Center" TextAlignment="Right" Grid.Column="1"/>
+                <TextBlock x:Name="PriceBlock" Text="{Binding PriceString}" Margin="3,0,3,0" TextAlignment="Right" VerticalAlignment="Center" Grid.Column="2"/>
+                <TextBlock Text="{Binding TotalPriceString}" Margin="3,0,3,0" TextAlignment="Right" VerticalAlignment="Center" Grid.Column="3"/>
             </Grid>
             <DataTemplate.Triggers>
                 <DataTrigger Binding="{Binding Text, ElementName=AantalBlock}" Value="">
+                    <!--<Setter TargetName="ItemRow" Property="Visibility" Value="Collapsed"/>-->
                     <Setter TargetName="ItemRow" Property="Visibility" Value="Collapsed"/>
                 </DataTrigger>
             </DataTemplate.Triggers>
@@ -43,9 +44,14 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Label Content="Overzicht rekening" Grid.ColumnSpan="2" FontSize="36" FontWeight="Bold"/>
-        <ItemsControl Margin="10" IsTabStop="False" Grid.Row="1" x:Name="CurrentOrderFoodControl"  ItemTemplate="{StaticResource MyItemTemplate}" ItemContainerStyle="{StaticResource MyItemStyle}"/>
-        <ItemsControl Margin="10" IsTabStop="False" Grid.Row="2" x:Name="CurrentOrderDessertControl" ItemTemplate="{StaticResource MyItemTemplate}" ItemContainerStyle="{StaticResource MyItemStyle}"/>
-        <ItemsControl Margin="10" IsTabStop="False" Grid.Row="3" x:Name="CurrentOrderDrinksControl" ItemTemplate="{StaticResource MyItemTemplate}" ItemContainerStyle="{StaticResource MyItemStyle}"/>
-
+        <Border HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="3" BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.Row="1" >
+            <ItemsControl Margin="10" IsTabStop="False" x:Name="CurrentOrderFoodControl"  ItemTemplate="{StaticResource MyItemTemplate}" />
+        </Border>
+        <Border HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="3" BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.Row="2" >
+            <ItemsControl Margin="10" IsTabStop="False" x:Name="CurrentOrderDessertControl" ItemTemplate="{StaticResource MyItemTemplate}"/>
+        </Border>
+        <Border HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="3" BorderBrush="Black" BorderThickness="1" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" >
+            <ItemsControl Margin="10" IsTabStop="False" x:Name="CurrentOrderDrinksControl" ItemTemplate="{StaticResource MyItemTemplate}" />
+        </Border>
     </Grid>
 </Window>
