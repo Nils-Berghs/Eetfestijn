@@ -67,7 +67,8 @@ namespace be.berghs.nils.eetfestijn.windows
             CurrentOrderFoodControl.ItemsSource = CurrentOrder.FoodItems;
             CurrentOrderDessertControl.ItemsSource = CurrentOrder.DessertItems;
 
-            mOrderSummaryWindow.SetOrder(CurrentOrder);
+            if (mOrderSummaryWindow != null)
+                mOrderSummaryWindow.SetOrder(CurrentOrder);
         }
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
@@ -76,12 +77,16 @@ namespace be.berghs.nils.eetfestijn.windows
             if (!IsValid(this))
                 return;
             Payment betaling = new Payment(CurrentOrder);
+            if (mOrderSummaryWindow != null)
+                mOrderSummaryWindow.SetPayment(betaling);
+
             if ((bool)betaling.ShowDialog())
             {
-                
                 mOrderList.AddOrder(CurrentOrder);
                 CreateNewOrder();
             }
+            else
+                mOrderSummaryWindow.SetPayment(null);
         }
 
         public static bool IsValid(DependencyObject parent)

@@ -79,6 +79,7 @@
     </Compile>
     <Compile Include="classes\ProductList.cs" />
     <Compile Include="classes\ProductType.cs" />
+    <Compile Include="classes\PropertyChangedNotifier.cs" />
     <Compile Include="Exceptions\IncompatibleProductsException.cs" />
     <Compile Include="windows\ConsumptionOverview.xaml.cs">
       <DependentUpon>ConsumptionOverview.xaml</DependentUpon>

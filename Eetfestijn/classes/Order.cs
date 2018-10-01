@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Collections;
+using System.ComponentModel;
 
 namespace be.berghs.nils.eetfestijn.classes
 {
-    public class Order
+    public class Order: PropertyChangedNotifier 
     {
         
         public int BestellingId
@@ -85,6 +86,11 @@ namespace be.berghs.nils.eetfestijn.classes
             }
         }
 
+        public string TotalPriceString
+        {
+            get { return TotalPrice + " €"; }
+        }
+
         /// <summary>
         /// This value contains the amount that was actually payed
         /// Normally this is the TotalPrice - (WaardebonCount* WaardebonValue)
@@ -99,9 +105,18 @@ namespace be.berghs.nils.eetfestijn.classes
         public Order(IEnumerable<Product> availableProducts)
         {
             Items = new List<OrderItem>();
-            
-            foreach(Product p in availableProducts)
-                Items.Add(new OrderItem(p));
+
+            foreach (Product p in availableProducts)
+            {
+                var oi = new OrderItem(p);
+                //oi.CountChangedEvent += Oi_CountChangedEvent;
+                Items.Add(oi);
+            }
+        }
+
+        private void Oi_CountChangedEvent()
+        {
+            OnPropertyChanged("TotalPriceString");
         }
 
         public Order(XmlElement orderElement, IEnumerable<Product> availableProducts)

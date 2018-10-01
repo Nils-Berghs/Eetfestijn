@@ -40,12 +40,12 @@
         </Grid>
         <Grid Grid.Row="7" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button Content="OK" IsEnabled="{Binding PaymentCompleted}"  Grid.Column="1" Margin="5" Name="btnOK" HorizontalAlignment="Stretch" IsDefault="True" Click="btnOK_Click"/>
-            <Button Content="Cancel" Grid.Column="2" Margin="5" Name="btnCancel" HorizontalAlignment="Stretch" IsCancel="True" Click="btnCancel_Click"/>
+            <Button Content="OK" IsEnabled="{Binding PaymentCompleted}" Height="40"  Grid.Column="1" Margin="5" Name="btnOK" HorizontalAlignment="Stretch" IsDefault="True" Click="btnOK_Click"/>
+            <Button Content="Cancel" Height="40" Grid.Column="2" Margin="5" Name="btnCancel" HorizontalAlignment="Stretch" IsCancel="True" Click="btnCancel_Click"/>
 
         </Grid>
     </Grid>

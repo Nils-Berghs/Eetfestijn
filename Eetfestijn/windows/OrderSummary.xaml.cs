@@ -29,9 +29,20 @@ namespace be.berghs.nils.eetfestijn.windows
         internal void SetOrder(Order currentOrder)
         {
             _CurrentOrder = currentOrder;
+            this.DataContext = _CurrentOrder;
+            SetPayment(null);
             CurrentOrderFoodControl.ItemsSource = currentOrder.FoodItems;
             CurrentOrderDessertControl.ItemsSource = currentOrder.DessertItems;
             CurrentOrderDrinksControl.ItemsSource = currentOrder.DrinkItems;
+        }
+
+        internal void SetPayment(Payment betaling)
+        {
+            if (betaling == null)
+                SummaryGrid.Visibility = Visibility.Hidden;
+            else
+                SummaryGrid.Visibility = Visibility.Visible;
+            SummaryGrid.DataContext = betaling;
         }
     }
 }

@@ -7,9 +7,10 @@ using System.Xml;
 
 namespace be.berghs.nils.eetfestijn.classes
 {
-    public class OrderItem: INotifyPropertyChanged
+    public class OrderItem: PropertyChangedNotifier
     {
-        
+
+        //public event Action CountChangedEvent;
 
         private Product Product { get; set; }
 
@@ -134,6 +135,7 @@ namespace be.berghs.nils.eetfestijn.classes
                 TotalPrice = 0;
             else
                 TotalPrice = (decimal)Aantal * Product.Price;
+            //CountChangedEvent?.Invoke();
         }
 
         public override bool Equals(object obj)
@@ -149,15 +151,7 @@ namespace be.berghs.nils.eetfestijn.classes
             return false;
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-
-        }
-
+        
         internal void SaveToXml(XmlTextWriter writer)
         {
             if (!Aantal.HasValue)
