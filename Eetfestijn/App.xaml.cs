@@ -15,6 +15,8 @@ namespace be.berghs.nils.eetfestijn
     /// </summary>
     public partial class App : Application
     {
+        private static bool AskForSaveOnExit = true;
+
         //public OrderSummary OrderSummaryWindow = new OrderSummary();
         public static OrderList mOrderList = new OrderList();
         public static ProductList mProductList = new ProductList();
@@ -26,7 +28,10 @@ namespace be.berghs.nils.eetfestijn
             var application = new App();
             application.InitializeComponent();
             application.Run();
-            SaveData();
+            if (AskForSaveOnExit)
+            {
+                SaveData();
+            }
         }
 
         /// <summary>
@@ -69,8 +74,30 @@ namespace be.berghs.nils.eetfestijn
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
+            Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+
+            StartupWindow stw = new StartupWindow();
+            stw.ShowDialog();
             
+            switch(stw.StartUpResult)
+            {
+                case StartUpResult.Exit:
+                    AskForSaveOnExit = false;
+                    Current.Shutdown();
+                    return;
+                
+            }
+
+            //Re-enable normal shutdown mode.
+            Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
+
+            MainWindow mw = new MainWindow();
+            Current.MainWindow = mw;
+            mw.Show();
+
             //OrderSummaryWindow.Show();
+
+
         }
     }
 }

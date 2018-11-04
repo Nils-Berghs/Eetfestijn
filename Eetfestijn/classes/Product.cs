@@ -33,6 +33,11 @@ namespace be.berghs.nils.eetfestijn.classes
 
         public ProductType ProductType { get; set; }
 
+        public Product()
+        {
+            //Dummy constructor for databinding
+        }
+
         public Product(string name, decimal price, ProductType productType)
         {
             ProductType = productType;
