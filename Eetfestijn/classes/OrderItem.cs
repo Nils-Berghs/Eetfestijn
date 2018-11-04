@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 using System.Xml;
+using Newtonsoft.Json;
 
 namespace be.berghs.nils.eetfestijn.classes
 {
@@ -55,6 +56,7 @@ namespace be.berghs.nils.eetfestijn.classes
 
         }
 
+        [JsonIgnore]
         public string AantalString
         {
             get
@@ -79,6 +81,7 @@ namespace be.berghs.nils.eetfestijn.classes
                 Aantal = aantal;
         }
 
+        [JsonIgnore]
         [DisplayName("Prijs")]
         public decimal Price
         {
@@ -88,6 +91,7 @@ namespace be.berghs.nils.eetfestijn.classes
             }
         }
 
+        [JsonIgnore]
         public string PriceString
         {
             get
@@ -116,10 +120,14 @@ namespace be.berghs.nils.eetfestijn.classes
             }
         }
 
+        [JsonIgnore]
         public string TotalPriceString
         {
             get { return TotalPrice + " €"; }
         }
+
+        public OrderItem()
+        { }
 
         public OrderItem(Product product)
         {

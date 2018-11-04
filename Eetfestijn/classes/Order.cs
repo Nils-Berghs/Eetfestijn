@@ -5,6 +5,7 @@ using System.Text;
 using System.Xml;
 using System.Collections;
 using System.ComponentModel;
+using Newtonsoft.Json;
 
 namespace be.berghs.nils.eetfestijn.classes
 {
@@ -29,16 +30,19 @@ namespace be.berghs.nils.eetfestijn.classes
             set;
         }
 
+        [JsonIgnore]
         public List<OrderItem> FoodItems
         {
             get { return GetItemsWithType(ProductType.Eten); }
         }
 
+        [JsonIgnore]
         public List<OrderItem> DrinkItems
         {
             get { return GetItemsWithType(ProductType.Drank); }
         }
 
+        [JsonIgnore]
         public List<OrderItem> DessertItems
         {
             get { return GetItemsWithType(ProductType.Dessert); }
@@ -75,6 +79,7 @@ namespace be.berghs.nils.eetfestijn.classes
 
         }
 
+        [JsonIgnore]
         public decimal TotalPrice 
         {
             get
@@ -86,6 +91,7 @@ namespace be.berghs.nils.eetfestijn.classes
             }
         }
 
+        [JsonIgnore]
         public string TotalPriceString
         {
             get { return TotalPrice + " €"; }
@@ -102,9 +108,14 @@ namespace be.berghs.nils.eetfestijn.classes
             set;
         }
 
-        public Order(IEnumerable<Product> availableProducts)
+        public Order()
         {
             Items = new List<OrderItem>();
+        }
+
+        public Order(IEnumerable<Product> availableProducts):this()
+        {
+            
 
             foreach (Product p in availableProducts)
             {

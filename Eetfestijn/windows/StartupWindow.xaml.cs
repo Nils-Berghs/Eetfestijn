@@ -1,6 +1,8 @@
 ﻿using be.berghs.nils.eetfestijn.classes;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -43,6 +45,14 @@ namespace be.berghs.nils.eetfestijn.windows
             DialogResult dr = ofd.ShowDialog();
             if (dr == System.Windows.Forms.DialogResult.OK)
             {
+                /*using (StreamReader file = File.OpenText(ofd.FileName))
+                {
+                    JsonSerializer serializer = new JsonSerializer();
+                    SaveData sd = (SaveData)serializer.Deserialize(file, typeof(SaveData));
+
+                    App.mOrderList = sd.OrderList;
+                    App.mProductList = sd.ProductList;
+                }*/
                 App.mOrderList.ReadFromXml(ofd.FileName);
                 StartUpResult = StartUpResult.Continue;
                 this.Close();

@@ -6,6 +6,7 @@ using System.Xml;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Collections;
+using Newtonsoft.Json;
 
 namespace be.berghs.nils.eetfestijn.classes
 {
@@ -51,6 +52,7 @@ namespace be.berghs.nils.eetfestijn.classes
         /// <summary>
         /// The total sum that we should have received, this includes the coupons but no tips
         /// </summary>
+        [JsonIgnore]
         public string TotalSum
         {
             get
@@ -61,6 +63,7 @@ namespace be.berghs.nils.eetfestijn.classes
         }
 
         private decimal mReceived;
+        [JsonIgnore]
         public string Received
         {
             get
@@ -161,7 +164,7 @@ namespace be.berghs.nils.eetfestijn.classes
         internal void SaveToXml(string fileName)
         {
             XmlTextWriter writer = new XmlTextWriter(fileName, null);
-            writer.Formatting = Formatting.Indented;
+            writer.Formatting = System.Xml.Formatting.Indented;
             writer.WriteStartDocument(true);
             writer.WriteStartElement("Eetfestijn");
             writer.WriteAttributeString("date", DateTime.Now.Date.ToShortDateString());

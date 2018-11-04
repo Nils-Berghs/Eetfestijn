@@ -7,6 +7,8 @@ using System.Windows;
 using be.berghs.nils.eetfestijn.classes;
 using Microsoft.Win32;
 using be.berghs.nils.eetfestijn.windows;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace be.berghs.nils.eetfestijn
 {
@@ -64,6 +66,9 @@ namespace be.berghs.nils.eetfestijn
                 sfd.FileName = "Eetfestijn-" + dt.Year + "-" + dt.Month.ToString("00") + "-" + dt.Day.ToString("00") + ".xml";
                 if ((bool)sfd.ShowDialog() == true)
                 {
+                    SaveData sd = new SaveData() { OrderList = mOrderList, ProductList = mProductList };
+                    File.WriteAllText(sfd.FileName.Replace(".xml", ".json"), JsonConvert.SerializeObject(sd));
+
                     mOrderList.SaveToXml(sfd.FileName);
                     break;
                 }
