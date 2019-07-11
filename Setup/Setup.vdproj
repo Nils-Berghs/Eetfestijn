@@ -50,6 +50,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.5"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.5 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.5"
+                    }
+                }
             }
         }
         "Release"
@@ -184,15 +192,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Eetfestijn"
-        "ProductCode" = "8:{E37FE89C-EDBC-46BD-B7C6-70A23DA8BF7E}"
-        "PackageCode" = "8:{99370139-D4E7-4D00-AABA-C4D034558DAB}"
+        "ProductCode" = "8:{0E0B8F28-EBDE-4449-9BD0-53DE53B9196F}"
+        "PackageCode" = "8:{B0B5A631-BD41-483B-A08A-13941B21800A}"
         "UpgradeCode" = "8:{D7D97042-6125-4BE2-9920-18F222322C1C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.0.2"
+        "ProductVersion" = "8:1.0.4"
         "Manufacturer" = "8:H6"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"

@@ -138,8 +138,11 @@ namespace be.berghs.nils.eetfestijn.classes
 
         internal Product GetProductByName(string name)
         {
+            if (name == "Vegetarisch penne (kinder)")
+                name = "Vegetarische penne (kinder)";
+            string nameTrimmed = name.Trim();
             foreach (Product p in Products)
-                if (p.Name.Equals(name))
+                if (string.Equals(p.Name.Trim(), nameTrimmed, StringComparison.InvariantCultureIgnoreCase))//if (p.Name.Equals(name))
                     return p;
             return null;
         }

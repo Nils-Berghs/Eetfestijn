@@ -141,7 +141,7 @@ namespace be.berghs.nils.eetfestijn.classes
             while (enumerator.MoveNext())
             {
                 XmlAttributeCollection item = ((XmlNode)enumerator.Current).Attributes;
-                string name = item.GetNamedItem("product").Value;
+                string name = item.GetNamedItem("product").Value.Trim();
                 Product p = App.mProductList.GetProductByName(name);
 
                 OrderItem oi = Items[Items.IndexOf(new OrderItem(p))];

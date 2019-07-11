@@ -68,9 +68,13 @@ namespace be.berghs.nils.eetfestijn.classes
 
         public override bool Equals(object obj)
         {
-            if (obj is Product)
+
+            string temp = obj == null? "":obj.ToString();
+            return string.Equals(temp.Trim(), Name.Trim(), StringComparison.InvariantCultureIgnoreCase);
+            /*if (obj is Product)
                 return obj.ToString().Equals(Name);
-            return base.Equals(obj);
+            else 
+                return base.Equals(obj);*/
         }
 
         public override int GetHashCode()
