@@ -7,7 +7,7 @@ namespace be.berghs.nils.EetFestijnLib.models
     public enum ProductType
     {
         Food,
-        Beverages,
+        Beverage,
         Dessert
     }
 }

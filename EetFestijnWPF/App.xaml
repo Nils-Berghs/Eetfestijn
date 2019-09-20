@@ -76,7 +76,10 @@
                 </Setter.Value>
             </Setter>
         </Style>
-                
+
+        <Style TargetType="DataGrid">
+            <Setter Property="Margin" Value="5"/>
+        </Style>
         <Style TargetType="Page">
             <Setter Property="Control.Background"  Value="White" />
         </Style>

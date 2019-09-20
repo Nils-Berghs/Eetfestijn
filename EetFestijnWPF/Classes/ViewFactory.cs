@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Navigation;
 
 namespace be.berghs.nils.EetFestijnWPF.Classes
@@ -21,11 +22,14 @@ namespace be.berghs.nils.EetFestijnWPF.Classes
 
         public void CreateView(BaseViewModel viewModel)
         {
-            
-            _StackViewWindow.PushPage(new MenuPage());
-           // throw new NotImplementedException();
-            //_NavigationWindow
-           // _NavigationWindow.NavigationService.Navigate
+            Page page = null;
+            if (viewModel is MenuViewModel)
+                page = new MenuPage();
+            if (page != null)
+            {
+                page.DataContext = viewModel;
+                _StackViewWindow.PushPage(page);
+            }
         }
     }
 }
