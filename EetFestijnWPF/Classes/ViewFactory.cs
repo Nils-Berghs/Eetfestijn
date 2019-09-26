@@ -31,5 +31,10 @@ namespace be.berghs.nils.EetFestijnWPF.Classes
                 _StackViewWindow.PushPage(page);
             }
         }
+
+        public void PopView()
+        {
+            _StackViewWindow.PopPage();
+        }
     }
 }

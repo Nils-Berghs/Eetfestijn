@@ -43,7 +43,7 @@ namespace be.berghs.nils.EetFestijnLib.viewModels
 
         private void Cancel()
         {
-            //todo navigate backwards
+            ViewFactory.PopView();
         }
 
         private bool CanConfirm()

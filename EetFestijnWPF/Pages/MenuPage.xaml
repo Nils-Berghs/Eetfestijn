@@ -12,7 +12,7 @@
         <DataGridTextColumn Header="Naam" x:Key="NameColumn" x:Shared="false" Width="5*" Binding="{Binding Name}"/>
     </Page.Resources>
 
-    <Grid Grid.IsSharedSizeScope="True" Margin="10"> 
+    <Grid Grid.IsSharedSizeScope="True" Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="auto" SharedSizeGroup="buttonColumn"/>
@@ -32,27 +32,33 @@
                 <RowDefinition />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <DataGrid Grid.Row="0" Grid.Column="0" ItemsSource="{Binding Foods}" CanUserAddRows="True" CanUserDeleteRows="True" AutoGenerateColumns="False" >
-                <DataGrid.Columns>
-                    <StaticResource ResourceKey="NameColumn"/>
-                    <StaticResource ResourceKey="PriceColumn"/>
-                </DataGrid.Columns>
-            </DataGrid>
-            <DataGrid Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Desserts}" CanUserAddRows="True" CanUserDeleteRows="True" AutoGenerateColumns="False">
-                <DataGrid.Columns>
-                    <StaticResource ResourceKey="NameColumn"/>
-                    <StaticResource ResourceKey="PriceColumn"/>
-                </DataGrid.Columns>
-            </DataGrid>
-            <DataGrid Grid.RowSpan="2" Grid.Column="1" ItemsSource="{Binding Beverages}" CanUserAddRows="True" CanUserDeleteRows="True" AutoGenerateColumns="False">
-                <DataGrid.Columns>
-                    <StaticResource ResourceKey="NameColumn"/>
-                    <StaticResource ResourceKey="PriceColumn"/>
-                </DataGrid.Columns>
-            </DataGrid>
+            <GroupBox Grid.Row="0" Grid.Column="0" Header="Eten">
+                <DataGrid ItemsSource="{Binding Foods}" CanUserAddRows="True" CanUserDeleteRows="True" AutoGenerateColumns="False" CellEditEnding="DataGrid_CellEditEnding" >
+                    <DataGrid.Columns>
+                        <StaticResource ResourceKey="NameColumn"/>
+                        <StaticResource ResourceKey="PriceColumn"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </GroupBox>
+            <GroupBox  Grid.Row="1" Grid.Column="0" Header="Dessert">
+                <DataGrid ItemsSource="{Binding Desserts}" CanUserAddRows="True" CanUserDeleteRows="True" AutoGenerateColumns="False"  CellEditEnding="DataGrid_CellEditEnding">
+                    <DataGrid.Columns>
+                        <StaticResource ResourceKey="NameColumn"/>
+                        <StaticResource ResourceKey="PriceColumn"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </GroupBox>
+            <GroupBox Grid.RowSpan="2" Grid.Column="1" Header="Drank">
+                <DataGrid ItemsSource="{Binding Beverages}" CanUserAddRows="True" CanUserDeleteRows="True" AutoGenerateColumns="False"  CellEditEnding="DataGrid_CellEditEnding">
+                    <DataGrid.Columns>
+                        <StaticResource ResourceKey="NameColumn"/>
+                        <StaticResource ResourceKey="PriceColumn"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </GroupBox>
         </Grid>
-        
-        <Button Grid.Column="1" Grid.Row="1" Content="Start" Command="{Binding OkCommand}"/>
+
+        <Button Grid.Column="1" Grid.Row="1" Content="Start" Command="{Binding OkCommand}" x:Name="btnOk"/>
         <Button Grid.Column="2" Grid.Row="1" Content="Annuleer" Command="{Binding CancelCommand}"/>
-    </Grid> 
+    </Grid>
 </Page>

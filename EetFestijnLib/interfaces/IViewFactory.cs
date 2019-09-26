@@ -8,5 +8,7 @@ namespace be.berghs.nils.EetFestijnLib.interfaces
     public interface IViewFactory
     {
         void CreateView(BaseViewModel viewModel);
+
+        void PopView();
     }
 }
