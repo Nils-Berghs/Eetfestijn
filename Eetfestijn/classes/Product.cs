@@ -68,9 +68,15 @@ namespace be.berghs.nils.eetfestijn.classes
 
         public override bool Equals(object obj)
         {
-
-            string temp = obj == null? "":obj.ToString();
-            return string.Equals(temp.Trim(), Name.Trim(), StringComparison.InvariantCultureIgnoreCase);
+            try
+            {
+                string temp = obj == null ? "" : obj.ToString();
+                return string.Equals(temp.Trim(), Name.Trim(), StringComparison.InvariantCultureIgnoreCase);
+            }
+            catch
+            {
+                return false;
+            }
             /*if (obj is Product)
                 return obj.ToString().Equals(Name);
             else 
