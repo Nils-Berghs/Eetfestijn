@@ -22,7 +22,7 @@ namespace be.berghs.nils.EetFestijnLib.models
         /// <summary>
         /// The type of product
         /// </summary>
-        public ProductType ProductType { get; set; }
+        public ProductTypes ProductType { get; set; }
 
         /// <summary>
         /// No args constructor for Json

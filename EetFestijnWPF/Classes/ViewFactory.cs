@@ -25,6 +25,8 @@ namespace be.berghs.nils.EetFestijnWPF.Classes
             Page page = null;
             if (viewModel is MenuViewModel)
                 page = new MenuPage();
+            else if (viewModel is OrderViewModel)
+                page = new OrderPage();
             if (page != null)
             {
                 page.DataContext = viewModel;

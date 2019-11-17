@@ -4,7 +4,7 @@ using System.Text;
 
 namespace be.berghs.nils.EetFestijnLib.models
 {
-    public enum ProductType
+    public enum ProductTypes
     {
         Food,
         Beverage,

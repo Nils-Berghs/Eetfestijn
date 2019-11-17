@@ -53,7 +53,8 @@ namespace be.berghs.nils.EetFestijnLib.viewModels
 
         private void Confirm()
         {
-            //todo load next viewmodel
+            ProductList productList = new ProductList(Foods, Beverages, Desserts);
+            ViewFactory.CreateView(new OrderViewModel(ViewFactory, productList));
         }
     }
 }
