@@ -62,6 +62,16 @@ namespace be.berghs.nils.eetfestijn.classes
 
         }
 
+        private decimal mMobileReceived;
+        [JsonIgnore]
+        public string MobileReceived
+        {
+            get
+            {
+                return mMobileReceived + "€";
+            }
+        }
+
         private decimal mReceived;
         [JsonIgnore]
         public string Received
@@ -110,7 +120,7 @@ namespace be.berghs.nils.eetfestijn.classes
 
         private decimal mCash;
         /// <summary>
-        /// The amount of cash that we should have, including the start amount and tips
+        /// The amount of cash that we should have, including the start amount and tips, but not including the orders that are payed mobile
         /// </summary>
         public string Cash
         {
@@ -125,12 +135,16 @@ namespace be.berghs.nils.eetfestijn.classes
             if (order != null)
             {
                 mList.Add(order);
-                mReceived += order.Betaald;
+                if (order.MobilePay)
+                    mMobileReceived += order.Betaald;
+                else
+                    mReceived += order.Betaald;
                 mTotalSum += order.TotalPrice;
                 mVoucherCount += order.WaardeBonCount;
                
                 UpdateCash();//will also update the net income
                 OnPropertyChanged("Received");
+                OnPropertyChanged("MobileReceived");
                 OnPropertyChanged("TotalSum");
                 OnPropertyChanged("VoucherCount");
             }
@@ -174,6 +188,7 @@ namespace be.berghs.nils.eetfestijn.classes
             writer.WriteAttributeString("waardebonnen", mVoucherCount + "");
             writer.WriteAttributeString("inkomsten", mNetIncome + "");
             writer.WriteAttributeString("ontvangen", mReceived + "");
+            writer.WriteAttributeString("mobilereceived", mMobileReceived + "");
             writer.WriteAttributeString("eindKassa", mCash + "");
             writer.WriteStartElement("Orders");
             foreach (Order o in mList)

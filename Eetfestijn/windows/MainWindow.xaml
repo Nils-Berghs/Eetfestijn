@@ -79,6 +79,7 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
                         <RowDefinition/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
@@ -98,8 +99,10 @@
                     <Label Content="{Binding OrderList.Received}" Grid.Row="4" Grid.Column="1" Margin="3" HorizontalAlignment="Right" VerticalAlignment="Top"/>
                     <Label Content="Bedrag in kassa:" Grid.Row="5" Margin="3" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                     <Label Content="{Binding OrderList.Cash}" Grid.Row="5" Grid.Column="1" Margin="3" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+                    <Label Content="Bedrag mobiel ontvangen:" Grid.Row="6" Margin="3" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Label Content="{Binding OrderList.MobileReceived}" Grid.Row="6" Grid.Column="1" Margin="3" HorizontalAlignment="Right" VerticalAlignment="Top"/>
 
-                    <Grid Grid.Row="7" Grid.ColumnSpan="2" Margin="3">
+                    <Grid Grid.Row="8" Grid.ColumnSpan="2" Margin="3">
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition />

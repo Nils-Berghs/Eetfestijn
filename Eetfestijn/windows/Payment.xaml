@@ -3,12 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Betaling" Width="400" ShowInTaskbar="False" ResizeMode="NoResize" SizeToContent="Height" WindowStartupLocation="CenterOwner"
         Loaded="Window_Loaded">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="boolToVisibilityConverter"/>
+    </Window.Resources>
     <Grid Margin="3">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="AUTO"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -26,19 +30,48 @@
         <TextBox Text="{Binding WaardeBonCount, UpdateSourceTrigger=PropertyChanged}" Width="100" Grid.Row="2" Grid.Column="1" Margin="5"/>
         <Label Content="Te betalen:" Grid.Row="3" Margin="5"/>
         <Label Content="{Binding TeBetalen}" Grid.Row="3" Grid.Column="1" Margin="5" HorizontalContentAlignment="Right"/>
-        <Label Content="Betaald:" Grid.Row="4" Margin="5"/>
-        <TextBox Text="{Binding Betaald, UpdateSourceTrigger=PropertyChanged}" Width="100" Grid.Row="4" Grid.Column="1" Margin="5"/>
-        <Label Content="Terug:" Grid.Row="5" Margin="5"/>
-        <Grid Grid.Row="5" Grid.Column="1" Margin="0" >
+        <RadioButton Grid.Row="4" Content="Cash" Margin="5" GroupName="Options1" IsChecked="{Binding CashPay, Mode=TwoWay}" Name="rdbCash" />
+        <Grid Grid.Row="5" Grid.ColumnSpan="2" Visibility="{Binding ElementName=rdbCash, Path=IsChecked, Converter={StaticResource boolToVisibilityConverter}}">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="AUTO"/>
             </Grid.ColumnDefinitions>
-            <CheckBox Content="'t is just" IsChecked="{Binding tIsJust}" Visibility="{Binding tIsJustVisibility}" HorizontalAlignment="Right" Margin="5" VerticalAlignment="Center"/>
-            <Label Content="{Binding Terug}" Grid.Column="1" Margin="5" HorizontalContentAlignment="Right"/>
-        
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Content="Betaald:" Grid.Row="0" Margin="25,5,5,5" />
+            <TextBox Text="{Binding Betaald, UpdateSourceTrigger=PropertyChanged}" Width="100" Grid.Row="0" Grid.Column="1" Margin="5"/>
+
+            <Label Content="Terug:" Grid.Row="2" Margin="25,5,5,5"/>
+            <Grid Grid.Row="2" Grid.Column="1" Margin="0" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <CheckBox Content="'t is just" IsChecked="{Binding tIsJust}" Visibility="{Binding tIsJustVisibility}" HorizontalAlignment="Right" Margin="5" VerticalAlignment="Center"/>
+                <Label Content="{Binding Terug}" Grid.Column="1" Margin="5" HorizontalContentAlignment="Right"/>
+
+            </Grid>
         </Grid>
-        <Grid Grid.Row="7" Grid.ColumnSpan="2">
+        <RadioButton Grid.Row="6" Content="Mobiel" Margin="5" GroupName="Options1" IsChecked="{Binding MobilePay, Mode=TwoWay}" Name="rdbMobile" />
+        <Grid Grid.Row="7" Grid.ColumnSpan="2" Visibility="{Binding ElementName=rdbMobile, Path=IsChecked, Converter={StaticResource boolToVisibilityConverter}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="AUTO"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Content="Betaald:" Grid.Row="0" Margin="25,5,5,5" />
+            <Label Content="{Binding TeBetalen}" Grid.Row="0" Grid.Column="1" Margin="5" HorizontalContentAlignment="Right"/>
+
+        </Grid>
+        
+        
+        
+        
+        <Grid Grid.Row="8" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>

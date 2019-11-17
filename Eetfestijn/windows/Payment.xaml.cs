@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using be.berghs.nils.eetfestijn.classes;
 using System.ComponentModel;
+using System.Globalization;
 
 namespace be.berghs.nils.eetfestijn.windows
 {
@@ -88,6 +89,26 @@ namespace be.berghs.nils.eetfestijn.windows
             }
         }
 
+        private bool _MobilePay;
+        public bool MobilePay
+        {
+            get { return _MobilePay; }
+            set 
+            { 
+                if (value != _MobilePay)
+                {
+                    _MobilePay = value;
+                    OnPropertyChanged("PaymentCompleted");
+                }
+            }
+        }
+
+        public bool CashPay
+        {
+            get { return !MobilePay; }
+            set { MobilePay = !value; }
+        }
+
         private decimal mTeBetalen = 0;
         public string TeBetalen
         {
@@ -112,8 +133,9 @@ namespace be.berghs.nils.eetfestijn.windows
             {
                 try
                 {
-                    decimal val = decimal.Parse(value);
-                    if (mBetaald == val)
+                    string tmp = value.Replace(CultureInfo.CurrentCulture.NumberFormat.NumberGroupSeparator, CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
+                    decimal val = decimal.Parse(tmp);
+                    if (mBetaald == val && tmp== value)
                         return;
                     mBetaald = val;
                 }
@@ -159,6 +181,8 @@ namespace be.berghs.nils.eetfestijn.windows
         {
             get
             {
+                if (MobilePay == true)
+                    return true;
                 if (/*mOrder.BestellingId > 0 &&*/ mTerug >= 0 && mBetaald >= mTeBetalen)
                     return true;
                 return false;
@@ -206,10 +230,21 @@ namespace be.berghs.nils.eetfestijn.windows
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
             btnOK.Focus();
-            if (tIsJust)
-                mOrder.Betaald = mBetaald;
-            else
+            
+
+            if (rdbMobile.IsChecked == true)
+            {
                 mOrder.Betaald = mOrder.GetTeBetalen();
+                mOrder.MobilePay = true;
+            }
+            else
+            {
+                if (tIsJust)
+                    mOrder.Betaald = mBetaald;
+                else
+                    mOrder.Betaald = mOrder.GetTeBetalen();
+                mOrder.MobilePay = false;
+            }
 
             this.DialogResult = true;
             this.Close();

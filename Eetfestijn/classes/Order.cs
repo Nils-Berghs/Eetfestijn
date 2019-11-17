@@ -108,6 +108,12 @@ namespace be.berghs.nils.eetfestijn.classes
             set;
         }
 
+        public bool MobilePay
+        {
+            get;
+            set;
+        }
+
         public Order()
         {
             Items = new List<OrderItem>();
@@ -135,6 +141,7 @@ namespace be.berghs.nils.eetfestijn.classes
         {
             WaardeBonCount = int.Parse(orderElement.GetAttribute("waardebonCount"));
             Betaald = decimal.Parse(orderElement.GetAttribute("betaald"));
+            MobilePay = bool.Parse(orderElement.GetAttribute("mobilepay"));
             XmlNodeList list = orderElement.GetElementsByTagName("Item");
             
             IEnumerator enumerator = list.GetEnumerator();
@@ -168,6 +175,7 @@ namespace be.berghs.nils.eetfestijn.classes
             writer.WriteAttributeString("waardebonCount", WaardeBonCount+"");
             writer.WriteAttributeString("totaal", TotalPrice + "");
             writer.WriteAttributeString("betaald", Betaald + "");
+            writer.WriteAttributeString("mobilepay", MobilePay + "");
             writer.WriteStartElement("Items");
             foreach (OrderItem oi in Items)
             {
