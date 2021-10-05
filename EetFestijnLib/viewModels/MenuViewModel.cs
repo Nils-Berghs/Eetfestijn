@@ -10,17 +10,17 @@ using System.Windows.Input;
 
 namespace be.berghs.nils.EetFestijnLib.viewModels
 {
-    public class MenuViewModel: BaseViewModel
+    public class MenuViewModel: PageViewModel
     {
-        public ObservableCollection<Product> Foods { get; set; }
+        public ObservableCollection<Product> Foods { get; }
 
-        public ObservableCollection<Product> Beverages { get; set; }
+        public ObservableCollection<Product> Beverages { get; }
 
-        public ObservableCollection<Product> Desserts { get; set; }
+        public ObservableCollection<Product> Desserts { get;  }
 
-        public ICommand OkCommand { get; private set; }
+        public ICommand OkCommand { get; }
 
-        public ICommand CancelCommand { get; private set; }
+        public ICommand CancelCommand { get;  }
 
         internal MenuViewModel(IViewFactory viewFactory): base(viewFactory)
         {

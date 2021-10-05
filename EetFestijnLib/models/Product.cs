@@ -17,7 +17,7 @@ namespace be.berghs.nils.EetFestijnLib.models
         /// <summary>
         /// The price of the product
         /// </summary>
-        public decimal? Price { get; set; }
+        public decimal Price { get; set; }
 
         /// <summary>
         /// The type of product

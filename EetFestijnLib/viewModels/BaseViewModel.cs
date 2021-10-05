@@ -12,28 +12,33 @@ namespace be.berghs.nils.EetFestijnLib.viewModels
     /// </summary>
     public abstract class BaseViewModel : INotifyPropertyChanged
     {
-        protected IViewFactory ViewFactory { get; private set; }
-        
-        protected BaseViewModel(IViewFactory viewFactory)
+        /// <summary>
+        /// Helper method to implement property with backing private field.
+        /// This method will set the field an rais a property changed event if the new value differs from the current
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="field"></param>
+        /// <param name="newValue"></param>
+        /// <param name="propertyName"></param>
+        /// <returns>True if the property has been set</returns>
+        protected bool SetProperty<T>(ref T field, T newValue, [CallerMemberName] string propertyName = null)
         {
-            ViewFactory = viewFactory;
+            if (!Equals(field, newValue))
+            {
+                field = newValue;
+                OnPropertyChanged(propertyName);
+                return true;
+            }
+
+            return false;
         }
 
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void OnPropertyChanged(string propertyName)
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            InvokePropertyChanged(propertyName);
-        }
-
-        protected void RaisePropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            InvokePropertyChanged(propertyName);
-        }
-        private void InvokePropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
     }

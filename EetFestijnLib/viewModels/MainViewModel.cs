@@ -7,8 +7,12 @@ using System.Windows.Input;
 
 namespace be.berghs.nils.EetFestijnLib.viewModels
 {
-    public class MainViewModel: BaseViewModel
+    public class MainViewModel: PageViewModel
     {
+        public ICommand NewSessionCommand { get; }
+
+        public ICommand OpenSessionCommand { get; }
+
         private bool test = true;
         public MainViewModel(IViewFactory viewFactory):base(viewFactory)
         {
@@ -21,8 +25,6 @@ namespace be.berghs.nils.EetFestijnLib.viewModels
 
         }
 
-        public ICommand NewSessionCommand { get; private set; }
-
-        public ICommand OpenSessionCommand { get; private set; }
+        
     }
 }
