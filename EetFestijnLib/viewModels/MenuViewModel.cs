@@ -1,10 +1,12 @@
 ﻿using be.berghs.nils.EetFestijnLib.classes;
 using be.berghs.nils.EetFestijnLib.interfaces;
 using be.berghs.nils.EetFestijnLib.models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.IO;
 using System.Text;
 using System.Windows.Input;
 
@@ -54,7 +56,22 @@ namespace be.berghs.nils.EetFestijnLib.viewModels
         private void Confirm()
         {
             ProductList productList = new ProductList(Foods, Beverages, Desserts);
+            SaveProductList(productList);
             ViewFactory.CreateView(new OrderViewModel(ViewFactory, productList));
+        }
+
+        /// <summary>
+        /// Saves the product list to appData
+        /// </summary>
+        private void SaveProductList(ProductList productList)
+        {
+            string path = System.Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            path = Path.Combine(path, "EetFestijn");
+            Directory.CreateDirectory(path);
+            path = Path.Combine(path, "Menu.json");
+            string text = JsonConvert.SerializeObject(productList);
+            File.WriteAllText(path, JsonConvert.SerializeObject(productList, Formatting.Indented));
+
         }
     }
 }

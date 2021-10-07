@@ -49,13 +49,14 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
+        <!-- The grid with the food items-->
         <Grid Grid.ColumnSpan="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition />
+                <RowDefinition Height="auto"/>
                 <RowDefinition />
             </Grid.RowDefinitions>
 
@@ -70,5 +71,10 @@
             </Border>
 
         </Grid>
+
+        <TextBlock Text="{Binding TotalPrice, StringFormat={}Totaal: {0} €}" Grid.Row="1"/>
+
+        <Button Grid.Row="1" Grid.Column="1" Content="OK" Command="{Binding }"/>
+        <Button Grid.Row="1" Grid.Column="2" Content="Annuleren"/>
     </Grid>
 </Page>
