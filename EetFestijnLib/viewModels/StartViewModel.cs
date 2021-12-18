@@ -1,11 +1,7 @@
-﻿using be.berghs.nils.EetFestijnLib.classes;
-using be.berghs.nils.EetFestijnLib.interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using be.berghs.nils.EetFestijnLib.Helpers;
 using System.Windows.Input;
 
-namespace be.berghs.nils.EetFestijnLib.viewModels
+namespace be.berghs.nils.EetFestijnLib.ViewModels
 {
     public class StartViewModel: PageViewModel
     {
@@ -13,9 +9,9 @@ namespace be.berghs.nils.EetFestijnLib.viewModels
 
         public ICommand OpenSessionCommand { get; }
 
-        public StartViewModel(IViewFactory viewFactory):base(viewFactory)
+        public StartViewModel(StackViewModel<PageViewModel> stackViewModel):base(stackViewModel)
         {
-            NewSessionCommand = new Command(() => viewFactory.CreateView(new MenuViewModel(viewFactory)));
+            NewSessionCommand = new Command(() => StackViewModel.PushViewModel(new MenuViewModel(StackViewModel)));
             OpenSessionCommand = new Command(() =>
             {
                 //test = !test;

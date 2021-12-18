@@ -1,16 +1,13 @@
-﻿using be.berghs.nils.EetFestijnLib.classes;
-using be.berghs.nils.EetFestijnLib.interfaces;
-using be.berghs.nils.EetFestijnLib.models;
+﻿using be.berghs.nils.EetFestijnLib.Helpers;
+using be.berghs.nils.EetFestijnLib.Models;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
-using System.Text;
 using System.Windows.Input;
 
-namespace be.berghs.nils.EetFestijnLib.viewModels
+namespace be.berghs.nils.EetFestijnLib.ViewModels
 {
     public class MenuViewModel: PageViewModel
     {
@@ -24,7 +21,7 @@ namespace be.berghs.nils.EetFestijnLib.viewModels
 
         public ICommand CancelCommand { get;  }
 
-        internal MenuViewModel(IViewFactory viewFactory) : base(viewFactory)
+        internal MenuViewModel(StackViewModel<PageViewModel> stackViewModel) : base(stackViewModel)
         {
             ProductList productList = ReadProductList();
             Foods = new ObservableCollection<Product>(productList.Foods);
@@ -46,7 +43,7 @@ namespace be.berghs.nils.EetFestijnLib.viewModels
 
         private void Cancel()
         {
-            ViewFactory.PopView();
+            StackViewModel.PopViewModel();
         }
 
         private bool CanConfirm()
@@ -58,7 +55,7 @@ namespace be.berghs.nils.EetFestijnLib.viewModels
         {
             ProductList productList = new ProductList(Foods, Beverages, Desserts);
             SaveProductList(productList);
-            ViewFactory.CreateView(new OrderViewModel(ViewFactory, productList));
+            StackViewModel.PushViewModel(new OrderViewModel(StackViewModel, productList));
         }
 
         /// <summary>

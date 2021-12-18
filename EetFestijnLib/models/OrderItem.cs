@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace be.berghs.nils.EetFestijnLib.models
+namespace be.berghs.nils.EetFestijnLib.Models
 {
     /// <summary>
     /// An order item is part of an order, it contains a Product and a count

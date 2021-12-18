@@ -1,17 +1,12 @@
-﻿using be.berghs.nils.EetFestijnLib.interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace be.berghs.nils.EetFestijnLib.viewModels
+﻿namespace be.berghs.nils.EetFestijnLib.ViewModels
 {
     public abstract class PageViewModel:ViewModelBase
     {
-        protected IViewFactory ViewFactory { get; private set; }
+        protected StackViewModel<PageViewModel> StackViewModel { get;  }
         
-        protected PageViewModel(IViewFactory viewFactory)
+        protected PageViewModel(StackViewModel<PageViewModel> stackViewModel)
         {
-            ViewFactory = viewFactory;
+            StackViewModel = stackViewModel;
         }
     }
 }

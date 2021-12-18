@@ -1,14 +1,11 @@
-﻿using be.berghs.nils.EetFestijnLib.classes;
-using be.berghs.nils.EetFestijnLib.interfaces;
-using be.berghs.nils.EetFestijnLib.models;
-using System;
+﻿using be.berghs.nils.EetFestijnLib.Helpers;
+using be.berghs.nils.EetFestijnLib.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows.Input;
 
-namespace be.berghs.nils.EetFestijnLib.viewModels
+namespace be.berghs.nils.EetFestijnLib.ViewModels
 {
     public class OrderViewModel : PageViewModel
     {
@@ -30,7 +27,7 @@ namespace be.berghs.nils.EetFestijnLib.viewModels
 
         public ICommand CancelCommand { get;  }
 
-        public OrderViewModel(IViewFactory viewFactory, ProductList products) : base(viewFactory)
+        public OrderViewModel(StackViewModel<PageViewModel> stackViewModel, ProductList products) : base(stackViewModel)
         {
             Foods = CreateOrderItemViewModels(products.Foods);
             Beverages = CreateOrderItemViewModels(products.Beverages);

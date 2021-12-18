@@ -1,4 +1,5 @@
-﻿using System;
+﻿using be.berghs.nils.EetFestijnLib.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +14,15 @@ namespace EetfestijnUI_WPF
     /// </summary>
     public partial class App : Application
     {
+        private void ApplicationStartup(object sender, StartupEventArgs e)
+        {
+            MainViewModel mainViewModel = new();
+            mainViewModel.PushViewModel(new StartViewModel(mainViewModel));
+
+            MainWindow window = new();
+            window.DataContext = mainViewModel;
+
+            window.Show();
+        }
     }
 }

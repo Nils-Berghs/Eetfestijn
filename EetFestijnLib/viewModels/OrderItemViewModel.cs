@@ -1,9 +1,9 @@
-﻿using be.berghs.nils.EetFestijnLib.models;
+﻿using be.berghs.nils.EetFestijnLib.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace be.berghs.nils.EetFestijnLib.viewModels
+namespace be.berghs.nils.EetFestijnLib.ViewModels
 {
     public class OrderItemViewModel:ViewModelBase
     {

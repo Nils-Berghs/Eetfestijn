@@ -16,8 +16,4 @@
     <ProjectReference Include="..\EetFestijnLib\EetFestijnLib.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Templates\" />
-  </ItemGroup>
-
 </Project>

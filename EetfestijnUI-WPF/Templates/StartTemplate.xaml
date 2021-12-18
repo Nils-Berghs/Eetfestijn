@@ -1,0 +1,21 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:viewmodels="clr-namespace:be.berghs.nils.EetFestijnLib.ViewModels;assembly=EetFestijnLib">
+    <DataTemplate DataType="{x:Type viewmodels:StartViewModel}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Button Grid.Column="1" Grid.Row="1" Command="{Binding NewSessionCommand}" Content="Start nieuwe sessie"/>
+            <Button Grid.Column="1" Grid.Row="2" Command="{Binding OpenSessionCommand}" Content="Sessie laden"/>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>

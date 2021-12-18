@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace be.berghs.nils.EetFestijnLib.viewModels
+namespace be.berghs.nils.EetFestijnLib.ViewModels
 {
     /// <summary>
     /// A Viewmodel that has a stack of other viewmodels that can be used to show content with datatemplates.

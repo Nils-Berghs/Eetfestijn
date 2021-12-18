@@ -1,8 +1,9 @@
 ﻿<Application x:Class="EetfestijnUI_WPF.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:EetfestijnUI_WPF" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             StartupUri="MainWindow.xaml">
+             xmlns:local="clr-namespace:EetfestijnUI_WPF" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             Startup="ApplicationStartup">
     <Application.Resources>
         <ResourceDictionary>
 
@@ -12,21 +13,23 @@
                     <materialDesign:CustomColorTheme.PrimaryColor >
                         <Color  A="255" R="65" G="105" B="225"/>
                     </materialDesign:CustomColorTheme.PrimaryColor>
-                    <!--<materialDesign:CustomColorTheme.SecondaryColor >
-                        <Color  A="255" R="26" G="128" B="16"/>
-                    </materialDesign:CustomColorTheme.SecondaryColor>-->
+                    <materialDesign:CustomColorTheme.SecondaryColor >
+                        <Color  A="255" R="225" G="185" B="65"/>
+                    </materialDesign:CustomColorTheme.SecondaryColor>
                 </materialDesign:CustomColorTheme>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
 
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignExtensions;component/Themes/Generic.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignExtensions;component/Themes/MaterialDesignLightTheme.xaml" />
+                <!--<ResourceDictionary Source="pack://application:,,,/MaterialDesignExtensions;component/Themes/Generic.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignExtensions;component/Themes/MaterialDesignLightTheme.xaml" />-->
 
                 <!-- Styles and Converters must be loaded before the templates, but the styles depend on material design.
                      So styles and converter are in a seperate resource dictionary te be able to load them here.
                 -->
+                <ResourceDictionary Source="./Styles/Styles.xaml"/>
 
                 <!-- Application specific data templates-->
-               
+                <ResourceDictionary Source="./Templates/StartTemplate.xaml"/>
+                <ResourceDictionary Source="./Templates/MenuTemplate.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
         </ResourceDictionary>

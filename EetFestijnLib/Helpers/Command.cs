@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Windows.Input;
 
-namespace be.berghs.nils.EetFestijnLib.classes
+namespace be.berghs.nils.EetFestijnLib.Helpers
 {
     /// <summary>
     /// Command is a platform agnostic ICommand implementation (although it is currently only tested on WPF)

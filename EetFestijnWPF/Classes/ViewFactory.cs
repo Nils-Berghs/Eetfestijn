@@ -1,5 +1,5 @@
 ﻿using be.berghs.nils.EetFestijnLib.interfaces;
-using be.berghs.nils.EetFestijnLib.viewModels;
+using be.berghs.nils.EetFestijnLib.ViewModels;
 using be.berghs.nils.EetFestijnWPF.Pages;
 using System;
 using System.Collections.Generic;

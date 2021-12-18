@@ -1,4 +1,4 @@
-﻿using be.berghs.nils.EetFestijnLib.viewModels;
+﻿using be.berghs.nils.EetFestijnLib.ViewModels;
 using be.berghs.nils.EetFestijnWPF.Classes;
 using be.berghs.nils.EetFestijnWPF.Pages;
 using System;
@@ -26,10 +26,10 @@ namespace be.berghs.nils.EetFestijnWPF
         
         public AppWindow():base(new StartPage())
         {
-            _ViewFactory = new ViewFactory(this);
-            StartViewModel mainViewModel = new StartViewModel(_ViewFactory);
+           // _ViewFactory = new ViewFactory(this);
+           // StartViewModel mainViewModel = new StartViewModel(_ViewFactory);
             
-            CurrentPage.DataContext = mainViewModel;
+           // CurrentPage.DataContext = mainViewModel;
             InitializeComponent();
 
         }

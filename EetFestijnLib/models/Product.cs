@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace be.berghs.nils.EetFestijnLib.models
+namespace be.berghs.nils.EetFestijnLib.Models
 {
     /// <summary>
     /// A product represents an item on the menu (the ProductList)

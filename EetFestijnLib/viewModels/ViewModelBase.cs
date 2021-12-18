@@ -1,11 +1,7 @@
-﻿using be.berghs.nils.EetFestijnLib.interfaces;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
 
-namespace be.berghs.nils.EetFestijnLib.viewModels
+namespace be.berghs.nils.EetFestijnLib.ViewModels
 {
     /// <summary>
     /// The base class for a viewmodel, it contains the INotifyPropertyChanged implementation.
