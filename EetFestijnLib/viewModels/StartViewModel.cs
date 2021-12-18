@@ -7,13 +7,13 @@ using System.Windows.Input;
 
 namespace be.berghs.nils.EetFestijnLib.viewModels
 {
-    public class MainViewModel: PageViewModel
+    public class StartViewModel: PageViewModel
     {
         public ICommand NewSessionCommand { get; }
 
         public ICommand OpenSessionCommand { get; }
 
-        public MainViewModel(IViewFactory viewFactory):base(viewFactory)
+        public StartViewModel(IViewFactory viewFactory):base(viewFactory)
         {
             NewSessionCommand = new Command(() => viewFactory.CreateView(new MenuViewModel(viewFactory)));
             OpenSessionCommand = new Command(() =>

@@ -20,7 +20,7 @@ namespace be.berghs.nils.EetFestijnWPF.Classes
             _StackViewWindow = navigationWindow;
         }
 
-        public void CreateView(BaseViewModel viewModel)
+        public void CreateView(ViewModelBase viewModel)
         {
             Page page = null;
             if (viewModel is MenuViewModel)

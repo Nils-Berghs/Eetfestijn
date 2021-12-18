@@ -5,7 +5,7 @@ using System.Text;
 
 namespace be.berghs.nils.EetFestijnLib.viewModels
 {
-    public class OrderItemViewModel:BaseViewModel
+    public class OrderItemViewModel:ViewModelBase
     {
         private Product Product { get; }
 

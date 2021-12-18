@@ -27,7 +27,7 @@ namespace be.berghs.nils.EetFestijnWPF
         public AppWindow():base(new StartPage())
         {
             _ViewFactory = new ViewFactory(this);
-            MainViewModel mainViewModel = new MainViewModel(_ViewFactory);
+            StartViewModel mainViewModel = new StartViewModel(_ViewFactory);
             
             CurrentPage.DataContext = mainViewModel;
             InitializeComponent();

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace be.berghs.nils.EetFestijnLib.viewModels
 {
-    public abstract class PageViewModel:BaseViewModel
+    public abstract class PageViewModel:ViewModelBase
     {
         protected IViewFactory ViewFactory { get; private set; }
         

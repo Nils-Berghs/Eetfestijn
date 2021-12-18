@@ -11,7 +11,7 @@ namespace be.berghs.nils.EetFestijnLib.interfaces
         /// Creates a view for a given baseViewModel implementation
         /// </summary>
         /// <param name="viewModel"></param>
-        void CreateView(BaseViewModel viewModel);
+        void CreateView(ViewModelBase viewModel);
 
         void PopView();
     }

@@ -10,7 +10,7 @@ namespace be.berghs.nils.EetFestijnLib.viewModels
     /// <summary>
     /// The base class for a viewmodel, it contains the INotifyPropertyChanged implementation.
     /// </summary>
-    public abstract class BaseViewModel : INotifyPropertyChanged
+    public abstract class ViewModelBase : INotifyPropertyChanged
     {
         /// <summary>
         /// Helper method to implement property with backing private field.
