@@ -14,23 +14,24 @@ namespace be.berghs.nils.EetFestijnLib.viewModels
 {
     public class MenuViewModel: PageViewModel
     {
-        public ObservableCollection<Product> Foods { get; }
+        public ObservableCollection<Product> Foods { get; private set; }
 
-        public ObservableCollection<Product> Beverages { get; }
+        public ObservableCollection<Product> Beverages { get; private set; }
 
-        public ObservableCollection<Product> Desserts { get;  }
+        public ObservableCollection<Product> Desserts { get; private set; }
 
         public ICommand OkCommand { get; }
 
         public ICommand CancelCommand { get;  }
 
-        internal MenuViewModel(IViewFactory viewFactory): base(viewFactory)
+        internal MenuViewModel(IViewFactory viewFactory) : base(viewFactory)
         {
-            Foods = new ObservableCollection<Product>();
+            ProductList productList = ReadProductList();
+            Foods = new ObservableCollection<Product>(productList.Foods);
+            Beverages = new ObservableCollection<Product>(productList.Beverages);
+            Desserts = new ObservableCollection<Product>(productList.Desserts);
             Foods.CollectionChanged += Products_CollectionChanged;
-            Beverages = new ObservableCollection<Product>();
             Beverages.CollectionChanged += Products_CollectionChanged;
-            Desserts = new ObservableCollection<Product>();
             Desserts.CollectionChanged += Products_CollectionChanged;
 
             OkCommand = new Command(Confirm, CanConfirm);
@@ -65,13 +66,46 @@ namespace be.berghs.nils.EetFestijnLib.viewModels
         /// </summary>
         private void SaveProductList(ProductList productList)
         {
-            string path = System.Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            path = Path.Combine(path, "EetFestijn");
-            Directory.CreateDirectory(path);
-            path = Path.Combine(path, "Menu.json");
-            string text = JsonConvert.SerializeObject(productList);
+            string path = GetTempMenuPath();
+            FileInfo fileInfo = new FileInfo(path);
+            Directory.CreateDirectory(fileInfo.DirectoryName);
+
             File.WriteAllText(path, JsonConvert.SerializeObject(productList, Formatting.Indented));
 
+        }
+
+        /// <summary>
+        /// This function reads a product list from a temporary file from AppData
+        /// </summary>
+        private ProductList ReadProductList()
+        {
+            string path = GetTempMenuPath();
+            try
+            {
+                if (File.Exists(path))
+                {
+                    return JsonConvert.DeserializeObject<ProductList>(File.ReadAllText(path));
+                }
+                else
+                {
+                    return new ProductList();
+                }
+            }
+            catch
+            {
+                return new ProductList();
+            }
+        }
+
+        /// <summary>
+        /// Gets the path to temporarily save the menu.
+        /// This is AppData/Local/Eetfestijn
+        /// </summary>
+        /// <returns></returns>
+        private string GetTempMenuPath()
+        {
+            string path = System.Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            return Path.Combine(path, "EetFestijn", "Menu.json");
         }
     }
 }

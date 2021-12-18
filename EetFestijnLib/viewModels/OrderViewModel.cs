@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Input;
 
 namespace be.berghs.nils.EetFestijnLib.viewModels
@@ -41,7 +42,8 @@ namespace be.berghs.nils.EetFestijnLib.viewModels
 
         private void ConfirmOrder()
         {
-            //throw new NotImplementedException();
+            Order order = new Order();
+            
         }
 
         private bool CanConfirmOrder()

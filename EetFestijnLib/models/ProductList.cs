@@ -26,9 +26,9 @@ namespace be.berghs.nils.EetFestijnLib.models
 
         public ProductList(IEnumerable<Product> foods, IEnumerable<Product> beverages, IEnumerable<Product> desserts)
         {
-            Foods = new List<Product>(foods);
-            Beverages = new List<Product>(beverages);
-            Desserts = new List<Product>(desserts);
+            Foods = foods;
+            Beverages = beverages;
+            Desserts = desserts;
         }
     }
 }

@@ -19,7 +19,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock x:Name="NameBlock" Text="{Binding Name}" Margin="3,0,3,0" VerticalAlignment="Center" Grid.Column="0"/>
-                <TextBox x:Name="AantalBlock" Text="{Binding Count}" HorizontalAlignment="Stretch" Margin="3,0,3,0" Grid.Column="1"/>
+                <TextBox x:Name="AantalBlock" Text="{Binding Count, TargetNullValue=''}" HorizontalAlignment="Stretch" Margin="3,0,3,0" Grid.Column="1"/>
                 <TextBlock x:Name="PriceBlock" Text="{Binding Price, StringFormat={}{0} €}" Margin="3,0,3,0" TextAlignment="Right" VerticalAlignment="Center" Grid.Column="2"/>
                 <TextBlock Text="{Binding TotalPrice, StringFormat={}{0} €}" Margin="3,0,3,0" TextAlignment="Right" VerticalAlignment="Center" Grid.Column="3"/>
             </Grid>

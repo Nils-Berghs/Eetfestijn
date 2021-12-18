@@ -13,13 +13,12 @@ namespace be.berghs.nils.EetFestijnLib.viewModels
 
         public ICommand OpenSessionCommand { get; }
 
-        private bool test = true;
         public MainViewModel(IViewFactory viewFactory):base(viewFactory)
         {
-            NewSessionCommand = new Command(() => viewFactory.CreateView(new MenuViewModel(viewFactory)), ()=>test == true );
+            NewSessionCommand = new Command(() => viewFactory.CreateView(new MenuViewModel(viewFactory)));
             OpenSessionCommand = new Command(() =>
             {
-                test = !test;
+                //test = !test;
                 ((Command)NewSessionCommand).ChangeCanExecute();
             });
 

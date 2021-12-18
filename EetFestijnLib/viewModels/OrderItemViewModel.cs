@@ -38,5 +38,14 @@ namespace be.berghs.nils.EetFestijnLib.viewModels
         {
             Product = p;
         }
+
+        //internal OrderItem ToOrderItem()
+        //{
+        //    return new OrderItem
+        //    {
+        //        Count = Count.Value,
+        //        Product = Product,
+        //    }
+        //}
     }
 }
