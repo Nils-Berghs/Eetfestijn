@@ -30,7 +30,7 @@
                             <DataGridTextColumn Header="Naam"  Width="5*" Binding="{Binding Name}" 
                                                 ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                            <DataGridTextColumn Header="Prijs" Width="*" Binding="{Binding Price}"
+                            <DataGridTextColumn Header="Prijs" Width="*" Binding="{Binding Price, Mode=TwoWay}" 
                                                 ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                             <DataGridTemplateColumn>
@@ -53,7 +53,7 @@
                             <DataGridTextColumn Header="Naam"  Width="5*" Binding="{Binding Name}" 
                                                 ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                            <DataGridTextColumn Header="Prijs" Width="*" Binding="{Binding Price}"
+                            <DataGridTextColumn Header="Prijs" Width="*" Binding="{Binding Price, Mode=TwoWay}"
                                                 ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                         </DataGrid.Columns>
@@ -65,7 +65,7 @@
                             <DataGridTextColumn Header="Naam"  Width="5*" Binding="{Binding Name}" 
                                                 ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                            <DataGridTextColumn Header="Prijs" Width="*" Binding="{Binding Price}"
+                            <DataGridTextColumn Header="Prijs" Width="*" Binding="{Binding Price, Mode=TwoWay}"
                                                 ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                         </DataGrid.Columns>

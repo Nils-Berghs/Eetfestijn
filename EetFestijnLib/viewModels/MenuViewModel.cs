@@ -5,17 +5,18 @@ using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
+using System.Linq;
 using System.Windows.Input;
 
 namespace be.berghs.nils.EetFestijnLib.ViewModels
 {
     public class MenuViewModel: PageViewModel
     {
-        public ObservableCollection<Product> Foods { get; private set; }
+        public ObservableCollection<ProductViewModel> Foods { get; private set; }
 
-        public ObservableCollection<Product> Beverages { get; private set; }
+        public ObservableCollection<ProductViewModel> Beverages { get; private set; }
 
-        public ObservableCollection<Product> Desserts { get; private set; }
+        public ObservableCollection<ProductViewModel> Desserts { get; private set; }
 
         public ICommand OkCommand { get; }
 
@@ -24,9 +25,9 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
         internal MenuViewModel(StackViewModel<PageViewModel> stackViewModel) : base(stackViewModel)
         {
             ProductList productList = ReadProductList();
-            Foods = new ObservableCollection<Product>(productList.Foods);
-            Beverages = new ObservableCollection<Product>(productList.Beverages);
-            Desserts = new ObservableCollection<Product>(productList.Desserts);
+            Foods = new ObservableCollection<ProductViewModel>(productList.Foods.Select(p => new ProductViewModel(p)));
+            Beverages = new ObservableCollection<ProductViewModel>(productList.Beverages.Select(p => new ProductViewModel(p)));
+            Desserts = new ObservableCollection<ProductViewModel>(productList.Desserts.Select(p => new ProductViewModel(p)));
             Foods.CollectionChanged += Products_CollectionChanged;
             Beverages.CollectionChanged += Products_CollectionChanged;
             Desserts.CollectionChanged += Products_CollectionChanged;
@@ -53,9 +54,11 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
         private void Confirm()
         {
-            ProductList productList = new ProductList(Foods, Beverages, Desserts);
-            SaveProductList(productList);
-            StackViewModel.PushViewModel(new OrderViewModel(StackViewModel, productList));
+            //TODO
+
+            //ProductList productList = new ProductList(Foods, Beverages, Desserts);
+            //SaveProductList(productList);
+            //StackViewModel.PushViewModel(new OrderViewModel(StackViewModel, productList));
         }
 
         /// <summary>
