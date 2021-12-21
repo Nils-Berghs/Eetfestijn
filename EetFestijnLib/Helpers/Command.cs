@@ -11,29 +11,20 @@ namespace be.berghs.nils.EetFestijnLib.Helpers
     /// </summary>
     public class Command : ICommand
     {
-        private readonly Action<object> _execute = null;
-        private readonly Func<object, bool> _canExecute = null;
+        private Action Action { get; }
+        private Func<bool> CanExecuteAction { get; }
 
         #region Constructors
 
-        public Command(Action execute):this(o=> execute())
+        public Command(Action action):this(action, null)
         {
-
+            
         }
 
-        public Command(Action execute, Func<bool> canExecute) : this(o => execute(), o=> canExecute())
+        public Command(Action action, Func<bool> canExecute) 
         {
-
-        }
-
-        public Command(Action<object> execute): this(execute, null)
-        {
-        }
-
-        public Command(Action<object> execute, Func<object, bool> canExecute)
-        {
-            _execute = execute;
-            _canExecute = canExecute;
+            Action = action ?? throw new ArgumentNullException("Action can not be null");
+            CanExecuteAction = canExecute;
         }
 
         #endregion
@@ -44,12 +35,12 @@ namespace be.berghs.nils.EetFestijnLib.Helpers
 
         public bool CanExecute(object parameter)
         {
-            return _canExecute != null ? _canExecute(parameter) : true;
+            return CanExecuteAction != null ? CanExecuteAction() : true;
         }
 
         public void Execute(object parameter)
         {
-            _execute?.Invoke(parameter);
+            Action();
         }
 
         public void ChangeCanExecute()
@@ -59,5 +50,59 @@ namespace be.berghs.nils.EetFestijnLib.Helpers
 
         #endregion
 
+    }
+
+    public class Command<T>:ICommand
+    {
+        private Action<T> Action { get; }
+        private Func<T,bool> CanExecuteAction { get; }
+
+        #region Constructors
+
+        public Command(Action<T> action) : this(action, null)
+        {
+
+        }
+
+        public Command(Action<T> action, Func<T,bool> canExecute)
+        {
+            Action = action ?? throw new ArgumentNullException("Action can not be null");
+            CanExecuteAction = canExecute;
+        }
+
+        #endregion
+
+        #region ICommand Members
+
+        public event EventHandler CanExecuteChanged;
+
+        public bool CanExecute(object parameter)
+        {
+            return CanExecuteAction != null ? CanExecuteAction((T)parameter) : true;
+        }
+
+        public void Execute(object parameter)
+        {
+            if (parameter == null)
+                Action(default);
+            else if (parameter is T t) //if parameter is T or subclass Of T
+                Action(t);
+            else
+            {
+                try
+                {
+                    //If parameters is not of type T, try converting it using I convertible
+                    Action((T)Convert.ChangeType(parameter, typeof(T)));
+                }
+                catch { }
+            }
+        }
+
+        public void ChangeCanExecute()
+        {
+            CanExecuteChanged(this, EventArgs.Empty);
+        }
+
+        #endregion
     }
 }

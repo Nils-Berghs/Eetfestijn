@@ -18,6 +18,8 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
         public ObservableCollection<ProductViewModel> Desserts { get; private set; }
 
+        public ICommand MoveItemDownCommand { get; }
+
         public ICommand OkCommand { get; }
 
         public ICommand CancelCommand { get;  }
@@ -34,6 +36,17 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
             OkCommand = new Command(Confirm, CanConfirm);
             CancelCommand = new Command(Cancel);
+            MoveItemDownCommand = new Command<ProductViewModel>(pvm =>MoveItemDown(pvm), pvm => CanMoveItemDown(pvm));
+        }
+
+        private bool CanMoveItemDown(ProductViewModel pvm)
+        {
+            return Foods.IndexOf(pvm) < Foods.Count - 1;
+        }
+
+        private void MoveItemDown(ProductViewModel pvm)
+        {
+            throw new NotImplementedException();
         }
 
         private void Products_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
