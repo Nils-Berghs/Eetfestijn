@@ -78,7 +78,22 @@ namespace be.berghs.nils.EetFestijnLib.Helpers
 
         public bool CanExecute(object parameter)
         {
-            return CanExecuteAction != null ? CanExecuteAction((T)parameter) : true;
+            if (CanExecuteAction == null)
+                return true;
+            if (parameter == null)
+                return CanExecuteAction(default);
+            else if (parameter is T t) //if parameter is T or subclass Of T
+                return CanExecuteAction(t);
+            else
+            {
+                try
+                {
+                    //If parameters is not of type T, try converting it using I convertible
+                    return CanExecuteAction((T)Convert.ChangeType(parameter, typeof(T)));
+                }
+                catch { }
+            }
+            return false;
         }
 
         public void Execute(object parameter)

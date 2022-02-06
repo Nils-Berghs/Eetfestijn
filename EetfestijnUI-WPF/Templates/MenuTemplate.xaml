@@ -49,9 +49,10 @@
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
-                                            <Button Content="{materialDesign:PackIcon ArrowDown}" Style="{StaticResource SmallDataGridButton}" CommandParameter="{Binding DataContext}"
+                                            <Button Content="{materialDesign:PackIcon ArrowDown}" Style="{StaticResource SmallDataGridButton}" CommandParameter="{Binding DataContext, RelativeSource={RelativeSource Self}}"
                                                     Command="{Binding Path=DataContext.MoveItemDownCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}" />
-                                            <Button Content="{materialDesign:PackIcon ArrowUp}" Style="{StaticResource SmallDataGridButton}"  />
+                                            <Button Content="{materialDesign:PackIcon ArrowUp}" Style="{StaticResource SmallDataGridButton}"  CommandParameter="{Binding DataContext, RelativeSource={RelativeSource Self}}"
+                                                    Command="{Binding Path=DataContext.MoveItemUpCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}" />
                                         </StackPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>

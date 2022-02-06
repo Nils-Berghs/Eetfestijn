@@ -20,6 +20,8 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
         public ICommand MoveItemDownCommand { get; }
 
+        public ICommand MoveItemUpCommand { get; }
+
         public ICommand OkCommand { get; }
 
         public ICommand CancelCommand { get;  }
@@ -27,7 +29,7 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
         internal MenuViewModel(StackViewModel<PageViewModel> stackViewModel) : base(stackViewModel)
         {
             ProductList productList = ReadProductList();
-            Foods = new ObservableCollection<ProductViewModel>(productList.Foods.Select(p => new ProductViewModel(p)));
+            Foods = new ObservableCollection<ProductViewModel>();// (productList.Foods.Select(p => new ProductViewModel(p)));
             Beverages = new ObservableCollection<ProductViewModel>(productList.Beverages.Select(p => new ProductViewModel(p)));
             Desserts = new ObservableCollection<ProductViewModel>(productList.Desserts.Select(p => new ProductViewModel(p)));
             Foods.CollectionChanged += Products_CollectionChanged;
@@ -37,22 +39,39 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             OkCommand = new Command(Confirm, CanConfirm);
             CancelCommand = new Command(Cancel);
             MoveItemDownCommand = new Command<ProductViewModel>(pvm =>MoveItemDown(pvm), pvm => CanMoveItemDown(pvm));
+            MoveItemUpCommand = new Command<ProductViewModel>(pvm => MoveItemUp(pvm), pvm => CanMoveItemUp(pvm));
         }
 
         private bool CanMoveItemDown(ProductViewModel pvm)
         {
-            return Foods.IndexOf(pvm) < Foods.Count - 1;
+            return Foods.IndexOf(pvm) < Foods.Count - 2;
         }
 
         private void MoveItemDown(ProductViewModel pvm)
         {
-            throw new NotImplementedException();
+            int index = Foods.IndexOf(pvm);
+            Foods.Remove(pvm);
+            Foods.Insert(index + 1, pvm);
+        }
+
+        private bool CanMoveItemUp(ProductViewModel pvm)
+        {
+            return Foods.IndexOf(pvm) !=0 && !string.IsNullOrWhiteSpace(pvm.Name) && !string.IsNullOrWhiteSpace(pvm.Price);
+        }
+
+        private void MoveItemUp(ProductViewModel pvm)
+        {
+            int index = Foods.IndexOf(pvm);
+            Foods.Remove(pvm);
+            Foods.Insert(index - 1, pvm);
         }
 
         private void Products_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             //if the number of items in our collection is updated, reevaluate the change can execute
             ((Command)OkCommand).ChangeCanExecute();
+            ((Command<ProductViewModel>)MoveItemDownCommand).ChangeCanExecute();
+            ((Command<ProductViewModel>)MoveItemUpCommand).ChangeCanExecute();
         }
 
         private void Cancel()
