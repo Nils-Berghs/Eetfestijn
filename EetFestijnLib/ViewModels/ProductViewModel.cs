@@ -10,7 +10,22 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
     {
         private Product Product { get; }
 
-        public string Name { get; set; }
+        /// <summary>
+        /// An event to listen for initialized of the viewmodel.
+        /// Initialized meaning that both name and price have been set
+        /// </summary>
+        internal event EventHandler ProductViewModelInitializedEvent;
+
+        private string _Name;
+        public string Name 
+        { 
+            get =>_Name; 
+            set
+            {
+                if (SetProperty(ref _Name, value))
+                    CheckRaiseInitializedEvent();
+            }
+        }
 
         private string _Price;
         public string Price 
@@ -21,9 +36,14 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
                 //get a corrected string
                 string newValue = StringToDecimalHelper.CheckDecimalString(value, _Price);
                 //set the new price
-                if (!SetProperty(ref _Price, newValue))
+                if (SetProperty(ref _Price, newValue))
                 {
-                    //the price was not different from the new value, if the newValue was different from the value, raise the property changed manually
+                    CheckRaiseInitializedEvent();
+                }
+                else
+                {
+                    //the old price as number was not different from the new price,
+                    //but if the newValue (as string) was different from the old value, the property changed must still be raised manually
                     if (newValue != value)
                         OnPropertyChanged();
                 }
@@ -42,7 +62,12 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             Price = Product.Price.ToString("N1");
         }
 
-        
+        private void CheckRaiseInitializedEvent()
+        {
+            if(!string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(Price))
+                ProductViewModelInitializedEvent?.Invoke(this, EventArgs.Empty);
+        }
+
 
 
     }

@@ -68,10 +68,22 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
         private void Products_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            //if the number of items in our collection is updated, reevaluate the change can execute
+            //if the number of items in our collection is updated, reevaluate the commands
             ((Command)OkCommand).ChangeCanExecute();
             ((Command<ProductViewModel>)MoveItemDownCommand).ChangeCanExecute();
-            ((Command<ProductViewModel>)MoveItemUpCommand).ChangeCanExecute();
+            
+            foreach (ProductViewModel pvm in e.NewItems)
+                pvm.ProductViewModelInitializedEvent += ProductViewModelInitializedEvent;
+
+        }
+
+        private void ProductViewModelInitializedEvent(object sender, EventArgs e)
+        {
+            if (sender is ProductViewModel pvm)
+            {
+                pvm.ProductViewModelInitializedEvent -= ProductViewModelInitializedEvent;
+                ((Command<ProductViewModel>)MoveItemUpCommand).ChangeCanExecute();
+            }
         }
 
         private void Cancel()
