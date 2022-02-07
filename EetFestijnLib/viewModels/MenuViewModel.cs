@@ -40,11 +40,17 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             CancelCommand = new Command(Cancel);
             MoveItemDownCommand = new Command<ProductViewModel>(pvm =>MoveItemDown(pvm), pvm => CanMoveItemDown(pvm));
             MoveItemUpCommand = new Command<ProductViewModel>(pvm => MoveItemUp(pvm), pvm => CanMoveItemUp(pvm));
+
+            Foods.Add(new ProductViewModel() { Name = "Zalm", Price = "19" });
+            Foods.Add(new ProductViewModel() { Name = "Vlees", Price = "17" });
+            Foods.Add(new ProductViewModel() { Name = "Ballekes", Price = "15" });
+            Foods.Add(new ProductViewModel() { Name = "Vegi", Price = "14" });
+
         }
 
         private bool CanMoveItemDown(ProductViewModel pvm)
         {
-            return Foods.IndexOf(pvm) < Foods.Count - 2;
+            return Foods.IndexOf(pvm) < Foods.Count - 1;
         }
 
         private void MoveItemDown(ProductViewModel pvm)
@@ -71,9 +77,8 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             //if the number of items in our collection is updated, reevaluate the commands
             ((Command)OkCommand).ChangeCanExecute();
             ((Command<ProductViewModel>)MoveItemDownCommand).ChangeCanExecute();
-            
-            foreach (ProductViewModel pvm in e.NewItems)
-                pvm.ProductViewModelInitializedEvent += ProductViewModelInitializedEvent;
+            ((Command<ProductViewModel>)MoveItemUpCommand).ChangeCanExecute();
+
 
         }
 

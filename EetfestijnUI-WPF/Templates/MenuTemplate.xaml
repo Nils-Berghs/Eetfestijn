@@ -43,37 +43,66 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <GroupBox Grid.Row="0" Grid.Column="0" Header="Eten" Margin="10">
-                    <DataGrid ItemsSource="{Binding Foods}" CanUserAddRows="True" CanUserDeleteRows="True" AutoGenerateColumns="False" SelectionUnit="FullRow">
-                        <DataGrid.Columns>
-                            <DataGridTemplateColumn Width="auto" CellStyle="{StaticResource SmallDataGridButtonCell}"  >
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <Button Content="{materialDesign:PackIcon ArrowDown}" Style="{StaticResource SmallDataGridButton}" CommandParameter="{Binding DataContext, RelativeSource={RelativeSource Self}}"
-                                                    Command="{Binding Path=DataContext.MoveItemDownCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}" />
-                                            <Button Content="{materialDesign:PackIcon ArrowUp}" Style="{StaticResource SmallDataGridButton}"  CommandParameter="{Binding DataContext, RelativeSource={RelativeSource Self}}"
-                                                    Command="{Binding Path=DataContext.MoveItemUpCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}" />
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTextColumn Header="Naam"  Width="5*" Binding="{Binding Name}" 
-                                                ElementStyle="{StaticResource VerticalCenteredDataGridTextColumnStyle}"
-                                                EditingElementStyle="{StaticResource VerticalCenteredDataGridTextColumnEditingStyle}"/>
-                            <DataGridTextColumn Header="Prijs" Width="*" Binding="{Binding Price, Mode=TwoWay}" 
-                                                ElementStyle="{StaticResource VerticalCenteredDataGridTextColumnStyle}"
-                                                EditingElementStyle="{StaticResource VerticalCenteredDataGridTextColumnEditingStyle}"/>
-                            <DataGridTemplateColumn Width="auto" CellStyle="{StaticResource SmallDataGridButtonCell}">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <Button Content="{materialDesign:PackIcon Delete}" Style="{StaticResource SmallDataGridButton}" />
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                        </DataGrid.Columns>
-                    </DataGrid>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <ListView ItemsSource="{Binding Foods}" Background="Red" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border BorderThickness="0" >
+                                        <Grid >
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="5*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Button Grid.Column="0" Content="{materialDesign:PackIcon ArrowDown}" Style="{StaticResource SmallDataGridButton}" CommandParameter="{Binding DataContext, RelativeSource={RelativeSource Self}}"
+                                                            Command="{Binding Path=DataContext.MoveItemDownCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type GroupBox}}}" />
+                                            <Button Grid.Column="1" Content="{materialDesign:PackIcon ArrowUp}" Style="{StaticResource SmallDataGridButton}"  CommandParameter="{Binding DataContext, RelativeSource={RelativeSource Self}}"
+                                                            Command="{Binding Path=DataContext.MoveItemUpCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type GroupBox}}}" />
+                                            <TextBlock Grid.Column="2" Text="{Binding Name}" VerticalAlignment="Center" Margin="10,0"/>
+                                            <TextBlock Grid.Column="3" Text="{Binding Price}" VerticalAlignment="Center"/>
+                                            <Button Grid.Column="4" Content="{materialDesign:PackIcon Edit}" Style="{StaticResource SmallDataGridButton}" />
+                                            <Button Grid.Column="5" Content="{materialDesign:PackIcon Delete}" Style="{StaticResource SmallDataGridButton}" />
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                        </ListView>
+                        <materialDesign:DialogHost Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10,5">
+                            <materialDesign:DialogHost.DialogContent>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Naam"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Prijs"/>
+                                    <TextBox Grid.Row="0" Grid.Column="1"/>
+                                    <TextBox Grid.Row="1" Grid.Column="1"/>
+                                </Grid>
+                            </materialDesign:DialogHost.DialogContent>
+                                <Button  Style="{StaticResource MaterialDesignFloatingActionButton}" Content="{materialDesign:PackIcon Add}"
+                                />
+                        </materialDesign:DialogHost>
+                        
+                    </Grid>
                 </GroupBox>
                 <GroupBox  Grid.Row="1" Grid.Column="0" Header="Dessert" Margin="10">
                     <DataGrid ItemsSource="{Binding Desserts}" CanUserAddRows="True" CanUserDeleteRows="True" AutoGenerateColumns="False" >

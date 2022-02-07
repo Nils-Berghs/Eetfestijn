@@ -45,7 +45,7 @@ namespace be.berghs.nils.EetFestijnLib.Helpers
 
         public void ChangeCanExecute()
         {
-            CanExecuteChanged(this, EventArgs.Empty);
+            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
 
         #endregion
@@ -115,7 +115,7 @@ namespace be.berghs.nils.EetFestijnLib.Helpers
 
         public void ChangeCanExecute()
         {
-            CanExecuteChanged(this, EventArgs.Empty);
+            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
 
         #endregion
