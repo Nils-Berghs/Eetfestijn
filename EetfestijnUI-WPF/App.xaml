@@ -30,6 +30,7 @@
                 <!-- Application specific data templates-->
                 <ResourceDictionary Source="./Templates/StartTemplate.xaml"/>
                 <ResourceDictionary Source="./Templates/MenuTemplate.xaml"/>
+                <ResourceDictionary Source="./Templates/ProductTemplate.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
         </ResourceDictionary>

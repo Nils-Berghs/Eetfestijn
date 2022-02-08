@@ -1,4 +1,5 @@
 ﻿using be.berghs.nils.EetFestijnLib.Helpers;
+using be.berghs.nils.EetFestijnLib.Helpers.Dialog;
 using be.berghs.nils.EetFestijnLib.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -27,7 +28,7 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
         public ICommand CancelCommand { get;  }
 
-        public OrderViewModel(StackViewModel<PageViewModel> stackViewModel, ProductList products) : base(stackViewModel)
+        public OrderViewModel(StackViewModel<PageViewModel> stackViewModel, IDialogService dialogService, ProductList products) : base(stackViewModel, dialogService)
         {
             Foods = CreateOrderItemViewModels(products.Foods);
             Beverages = CreateOrderItemViewModels(products.Beverages);

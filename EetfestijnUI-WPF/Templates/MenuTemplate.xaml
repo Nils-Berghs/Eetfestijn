@@ -43,12 +43,13 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <GroupBox Grid.Row="0" Grid.Column="0" Header="Eten" Margin="10">
+                    <materialDesign:DialogHost Identifier="{Binding FoodsDialogIdentifier}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
-                        <ListView ItemsSource="{Binding Foods}" Background="Red" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                        <ListView ItemsSource="{Binding Foods}" >
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Border BorderThickness="0" >
@@ -80,29 +81,11 @@
                                 </Style>
                             </ListView.ItemContainerStyle>
                         </ListView>
-                        <materialDesign:DialogHost Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10,5">
-                            <materialDesign:DialogHost.DialogContent>
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="auto"/>
-                                        <RowDefinition Height="auto"/>
-                                        <RowDefinition Height="auto"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Naam"/>
-                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Prijs"/>
-                                    <TextBox Grid.Row="0" Grid.Column="1"/>
-                                    <TextBox Grid.Row="1" Grid.Column="1"/>
-                                </Grid>
-                            </materialDesign:DialogHost.DialogContent>
-                                <Button  Style="{StaticResource MaterialDesignFloatingActionButton}" Content="{materialDesign:PackIcon Add}"
-                                />
-                        </materialDesign:DialogHost>
-                        
-                    </Grid>
+                            <Button  Style="{StaticResource MaterialDesignFloatingActionButton}" Content="{materialDesign:PackIcon Add}"
+                                        Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10,5"
+                                        Command="{Binding AddProductCommand}"/>
+                        </Grid>
+                    </materialDesign:DialogHost>
                 </GroupBox>
                 <GroupBox  Grid.Row="1" Grid.Column="0" Header="Dessert" Margin="10">
                     <DataGrid ItemsSource="{Binding Desserts}" CanUserAddRows="True" CanUserDeleteRows="True" AutoGenerateColumns="False" >

@@ -1,4 +1,5 @@
-﻿using be.berghs.nils.EetFestijnLib.ViewModels;
+﻿using be.berghs.nils.EetFestijn.UI.WPF.Helpers.Dialog;
+using be.berghs.nils.EetFestijnLib.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -16,8 +17,9 @@ namespace EetfestijnUI_WPF
     {
         private void ApplicationStartup(object sender, StartupEventArgs e)
         {
+
             MainViewModel mainViewModel = new();
-            mainViewModel.PushViewModel(new StartViewModel(mainViewModel));
+            mainViewModel.PushViewModel(new StartViewModel(mainViewModel, new MaterialDesignDialogService()));
 
             MainWindow window = new();
             window.DataContext = mainViewModel;

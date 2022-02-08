@@ -1,4 +1,5 @@
 ﻿using be.berghs.nils.EetFestijnLib.Helpers;
+using be.berghs.nils.EetFestijnLib.Helpers.Dialog;
 using be.berghs.nils.EetFestijnLib.Models;
 using Newtonsoft.Json;
 using System;
@@ -18,15 +19,19 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
         public ObservableCollection<ProductViewModel> Desserts { get; private set; }
 
+        public string FoodsDialogIdentifier => "FoodsDialogId";
+
         public ICommand MoveItemDownCommand { get; }
 
         public ICommand MoveItemUpCommand { get; }
+
+        public ICommand AddProductCommand { get; }  
 
         public ICommand OkCommand { get; }
 
         public ICommand CancelCommand { get;  }
 
-        internal MenuViewModel(StackViewModel<PageViewModel> stackViewModel) : base(stackViewModel)
+        internal MenuViewModel(StackViewModel<PageViewModel> stackViewModel, IDialogService dialogService) : base(stackViewModel, dialogService)
         {
             ProductList productList = ReadProductList();
             Foods = new ObservableCollection<ProductViewModel>();// (productList.Foods.Select(p => new ProductViewModel(p)));
@@ -40,12 +45,21 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             CancelCommand = new Command(Cancel);
             MoveItemDownCommand = new Command<ProductViewModel>(pvm =>MoveItemDown(pvm), pvm => CanMoveItemDown(pvm));
             MoveItemUpCommand = new Command<ProductViewModel>(pvm => MoveItemUp(pvm), pvm => CanMoveItemUp(pvm));
+            AddProductCommand = new Command(AddProduct);
 
-            Foods.Add(new ProductViewModel() { Name = "Zalm", Price = "19" });
-            Foods.Add(new ProductViewModel() { Name = "Vlees", Price = "17" });
-            Foods.Add(new ProductViewModel() { Name = "Ballekes", Price = "15" });
-            Foods.Add(new ProductViewModel() { Name = "Vegi", Price = "14" });
+            Foods.Add(new ProductViewModel(new Product { Name = "Zalm", Price = 19 }));
+            Foods.Add(new ProductViewModel(new Product { Name = "Vlees", Price = 17 }));
+            Foods.Add(new ProductViewModel(new Product { Name = "Ballekes", Price = 15 }));
+            Foods.Add(new ProductViewModel(new Product { Name = "Vegi", Price = 14 }));
 
+        }
+
+        private async void AddProduct()
+        {
+            var viewModel = new EditProductViewModel();
+            await DialogService.ShowDialog(viewModel, FoodsDialogIdentifier);
+            if (viewModel.IsConfirmed)
+                Foods.Add(new ProductViewModel(viewModel.Product));
         }
 
         private bool CanMoveItemDown(ProductViewModel pvm)
@@ -80,15 +94,6 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             ((Command<ProductViewModel>)MoveItemUpCommand).ChangeCanExecute();
 
 
-        }
-
-        private void ProductViewModelInitializedEvent(object sender, EventArgs e)
-        {
-            if (sender is ProductViewModel pvm)
-            {
-                pvm.ProductViewModelInitializedEvent -= ProductViewModelInitializedEvent;
-                ((Command<ProductViewModel>)MoveItemUpCommand).ChangeCanExecute();
-            }
         }
 
         private void Cancel()

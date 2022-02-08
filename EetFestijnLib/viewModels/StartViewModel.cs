@@ -1,4 +1,5 @@
 ﻿using be.berghs.nils.EetFestijnLib.Helpers;
+using be.berghs.nils.EetFestijnLib.Helpers.Dialog;
 using System.Windows.Input;
 
 namespace be.berghs.nils.EetFestijnLib.ViewModels
@@ -9,9 +10,9 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
         public ICommand OpenSessionCommand { get; }
 
-        public StartViewModel(StackViewModel<PageViewModel> stackViewModel):base(stackViewModel)
+        public StartViewModel(StackViewModel<PageViewModel> stackViewModel, IDialogService dialogService):base(stackViewModel, dialogService)
         {
-            NewSessionCommand = new Command(() => StackViewModel.PushViewModel(new MenuViewModel(StackViewModel)));
+            NewSessionCommand = new Command(() => StackViewModel.PushViewModel(new MenuViewModel(StackViewModel, dialogService)));
             OpenSessionCommand = new Command(() =>
             {
                 //test = !test;
