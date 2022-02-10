@@ -29,7 +29,7 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             set
             {
                 //get a corrected string
-                string newValue = StringToDecimalHelper.CheckDecimalString(value, _Price);
+                string newValue = StringToDecimalHelper.CheckDecimalString(value, _Price, "0.#");
                 //set the new price
                 if (SetProperty(ref _Price, newValue))
                 {

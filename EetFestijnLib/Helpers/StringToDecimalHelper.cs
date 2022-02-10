@@ -9,7 +9,7 @@ namespace be.berghs.nils.EetFestijnLib.Helpers
     {
         internal static string CheckDecimalString(string value, string fallback, string format = "N1")
         {
-            if (value == null)
+            if (string.IsNullOrWhiteSpace(value))
                 return null;
 
             string decimalSeparator = Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator;
