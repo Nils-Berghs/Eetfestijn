@@ -25,10 +25,13 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
         public string DialogIdentifier { get; }
 
-        internal ProductCategoryViewModel(IEnumerable<Product> products, IDialogService dialogService, string dialogId)
+        public string Title { get; }
+
+        internal ProductCategoryViewModel(IEnumerable<Product> products, IDialogService dialogService, string title)
         {
             DialogService = dialogService;
-            DialogIdentifier = dialogId;
+            Title = title;
+            DialogIdentifier = title+ "DialogId";
 
             Products = new ObservableCollection<ProductViewModel>(products.Select(p => new ProductViewModel(p)));
             Products.CollectionChanged += ProductCollectionChanged;

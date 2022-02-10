@@ -26,9 +26,9 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
         internal MenuViewModel(StackViewModel<PageViewModel> stackViewModel, IDialogService dialogService) : base(stackViewModel, dialogService)
         {
             ProductList productList = ReadProductList();
-            Foods = new ProductCategoryViewModel(productList.Foods, DialogService, "FoodsDialogId");
-            Beverages = new ProductCategoryViewModel(productList.Beverages, DialogService, "BeveragesDialogId");
-            Desserts = new ProductCategoryViewModel(productList.Desserts, DialogService, "DessertsDialogId");
+            Foods = new ProductCategoryViewModel(productList.Foods, DialogService, "Eten");
+            Beverages = new ProductCategoryViewModel(productList.Beverages, DialogService, "Dessert");
+            Desserts = new ProductCategoryViewModel(productList.Desserts, DialogService, "Drank");
 
             OkCommand = new Command(Confirm, CanConfirm);
             CancelCommand = new Command(Cancel);
