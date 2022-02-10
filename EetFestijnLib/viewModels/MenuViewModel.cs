@@ -13,19 +13,11 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 {
     public class MenuViewModel: PageViewModel
     {
-        public ObservableCollection<ProductViewModel> Foods { get; private set; }
+        public ProductCategoryViewModel Foods { get; private set; }
 
-        public ObservableCollection<ProductViewModel> Beverages { get; private set; }
+        public ProductCategoryViewModel Beverages { get; private set; }
 
-        public ObservableCollection<ProductViewModel> Desserts { get; private set; }
-
-        public string FoodsDialogIdentifier => "FoodsDialogId";
-
-        public ICommand MoveItemDownCommand { get; }
-
-        public ICommand MoveItemUpCommand { get; }
-
-        public ICommand AddProductCommand { get; }  
+        public ProductCategoryViewModel Desserts { get; private set; }
 
         public ICommand OkCommand { get; }
 
@@ -34,64 +26,21 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
         internal MenuViewModel(StackViewModel<PageViewModel> stackViewModel, IDialogService dialogService) : base(stackViewModel, dialogService)
         {
             ProductList productList = ReadProductList();
-            Foods = new ObservableCollection<ProductViewModel>();// (productList.Foods.Select(p => new ProductViewModel(p)));
-            Beverages = new ObservableCollection<ProductViewModel>(productList.Beverages.Select(p => new ProductViewModel(p)));
-            Desserts = new ObservableCollection<ProductViewModel>(productList.Desserts.Select(p => new ProductViewModel(p)));
-            Foods.CollectionChanged += Products_CollectionChanged;
-            Beverages.CollectionChanged += Products_CollectionChanged;
-            Desserts.CollectionChanged += Products_CollectionChanged;
+            Foods = new ProductCategoryViewModel(productList.Foods, DialogService, "FoodsDialogId");
+            Beverages = new ProductCategoryViewModel(productList.Beverages, DialogService, "BeveragesDialogId");
+            Desserts = new ProductCategoryViewModel(productList.Desserts, DialogService, "DessertsDialogId");
 
             OkCommand = new Command(Confirm, CanConfirm);
             CancelCommand = new Command(Cancel);
-            MoveItemDownCommand = new Command<ProductViewModel>(pvm =>MoveItemDown(pvm), pvm => CanMoveItemDown(pvm));
-            MoveItemUpCommand = new Command<ProductViewModel>(pvm => MoveItemUp(pvm), pvm => CanMoveItemUp(pvm));
-            AddProductCommand = new Command(AddProduct);
-
-            Foods.Add(new ProductViewModel(new Product { Name = "Zalm", Price = 19 }));
-            Foods.Add(new ProductViewModel(new Product { Name = "Vlees", Price = 17 }));
-            Foods.Add(new ProductViewModel(new Product { Name = "Ballekes", Price = 15 }));
-            Foods.Add(new ProductViewModel(new Product { Name = "Vegi", Price = 14 }));
-
-        }
-
-        private async void AddProduct()
-        {
-            var viewModel = new EditProductViewModel();
-            await DialogService.ShowDialog(viewModel, FoodsDialogIdentifier);
-            if (viewModel.IsConfirmed)
-                Foods.Add(new ProductViewModel(viewModel.Product));
-        }
-
-        private bool CanMoveItemDown(ProductViewModel pvm)
-        {
-            return Foods.IndexOf(pvm) < Foods.Count - 1;
-        }
-
-        private void MoveItemDown(ProductViewModel pvm)
-        {
-            int index = Foods.IndexOf(pvm);
-            Foods.Remove(pvm);
-            Foods.Insert(index + 1, pvm);
-        }
-
-        private bool CanMoveItemUp(ProductViewModel pvm)
-        {
-            return Foods.IndexOf(pvm) !=0 && !string.IsNullOrWhiteSpace(pvm.Name) && !string.IsNullOrWhiteSpace(pvm.Price);
-        }
-
-        private void MoveItemUp(ProductViewModel pvm)
-        {
-            int index = Foods.IndexOf(pvm);
-            Foods.Remove(pvm);
-            Foods.Insert(index - 1, pvm);
+            
         }
 
         private void Products_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             //if the number of items in our collection is updated, reevaluate the commands
             ((Command)OkCommand).ChangeCanExecute();
-            ((Command<ProductViewModel>)MoveItemDownCommand).ChangeCanExecute();
-            ((Command<ProductViewModel>)MoveItemUpCommand).ChangeCanExecute();
+            //((Command<ProductViewModel>)MoveItemDownCommand).ChangeCanExecute();
+            //((Command<ProductViewModel>)MoveItemUpCommand).ChangeCanExecute();
 
 
         }
@@ -103,7 +52,8 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
         private bool CanConfirm()
         {
-            return Foods.Count > 0 || Beverages.Count > 0 || Desserts.Count > 0;
+            return true;
+            //return Foods.Count > 0 || Beverages.Count > 0 || Desserts.Count > 0;
         }
 
         private void Confirm()

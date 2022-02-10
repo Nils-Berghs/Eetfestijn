@@ -3,24 +3,13 @@
                     xmlns:viewmodels="clr-namespace:be.berghs.nils.EetFestijnLib.ViewModels;assembly=EetFestijnLib" 
                     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
 
-    <Style TargetType="TextBlock" x:Key="VerticalCenteredDataGridTextColumnStyle" BasedOn="{StaticResource MaterialDesignDataGridTextColumnStyle}">
-        <Setter Property="VerticalAlignment" Value="Center"/>
-    </Style>
-    <Style TargetType="TextBox" x:Key="VerticalCenteredDataGridTextColumnEditingStyle" BasedOn="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
-        <Setter Property="VerticalAlignment" Value="Center"/>
-    </Style>
     <Style TargetType="Button" x:Key="SmallDataGridButton" BasedOn="{StaticResource MaterialDesignFlatButton}">
         <Setter Property="Padding" Value="2,0"/>
         <Setter Property="Height" Value="24"/>
         <Setter Property="IsTabStop" Value="False"/>
     </Style>
-    <Style TargetType="DataGridCell" x:Key="SmallDataGridButtonCell" BasedOn="{StaticResource MaterialDesignDataGridCell}">
-        <Setter Property="IsTabStop" Value="False"/>
-        <Setter Property="Padding" Value="5"/>
-    </Style>
-    <DataTemplate DataType="{x:Type viewmodels:MenuViewModel}">
 
-        
+    <DataTemplate DataType="{x:Type viewmodels:MenuViewModel}">
         
         <Grid  Margin="10" x:Name="MainGrid">
             <Grid.ColumnDefinitions>
@@ -42,14 +31,14 @@
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <GroupBox Grid.Row="0" Grid.Column="0" Header="Eten" Margin="10">
-                    <materialDesign:DialogHost Identifier="{Binding FoodsDialogIdentifier}">
+                <GroupBox Grid.Row="0" Grid.Column="0" Header="Eten" Margin="10" DataContext="{Binding Foods}">
+                    <materialDesign:DialogHost Identifier="{Binding DialogIdentifier}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
-                        <ListView ItemsSource="{Binding Foods}" >
+                        <ListView ItemsSource="{Binding Products}" >
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Border BorderThickness="0" >
@@ -87,71 +76,99 @@
                         </Grid>
                     </materialDesign:DialogHost>
                 </GroupBox>
-                <GroupBox  Grid.Row="1" Grid.Column="0" Header="Dessert" Margin="10">
-                    <DataGrid ItemsSource="{Binding Desserts}" CanUserAddRows="True" CanUserDeleteRows="True" AutoGenerateColumns="False" >
-                        <DataGrid.Columns>
-                            <DataGridTemplateColumn Width="auto" CellStyle="{StaticResource SmallDataGridButtonCell}"  >
-                                <DataGridTemplateColumn.CellTemplate>
+                <GroupBox  Grid.Row="1" Grid.Column="0" Header="Dessert" Margin="10" DataContext="{Binding Desserts}">
+                    <materialDesign:DialogHost Identifier="{Binding DialogIdentifier}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <ListView ItemsSource="{Binding Products}" >
+                                <ListView.ItemTemplate>
                                     <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <Button Content="{materialDesign:PackIcon ArrowDown}" Style="{StaticResource SmallDataGridButton}" />
-                                            <Button Content="{materialDesign:PackIcon ArrowUp}" Style="{StaticResource SmallDataGridButton}"  />
-                                        </StackPanel>
+                                        <Border BorderThickness="0" >
+                                            <Grid >
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto"/>
+                                                    <ColumnDefinition Width="auto"/>
+                                                    <ColumnDefinition Width="5*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="auto"/>
+                                                    <ColumnDefinition Width="auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Button Grid.Column="0" Content="{materialDesign:PackIcon ArrowDown}" Style="{StaticResource SmallDataGridButton}" CommandParameter="{Binding DataContext, RelativeSource={RelativeSource Self}}"
+                                                            Command="{Binding Path=DataContext.MoveItemDownCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type GroupBox}}}" />
+                                                <Button Grid.Column="1" Content="{materialDesign:PackIcon ArrowUp}" Style="{StaticResource SmallDataGridButton}"  CommandParameter="{Binding DataContext, RelativeSource={RelativeSource Self}}"
+                                                            Command="{Binding Path=DataContext.MoveItemUpCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type GroupBox}}}" />
+                                                <TextBlock Grid.Column="2" Text="{Binding Name}" VerticalAlignment="Center" Margin="10,0"/>
+                                                <TextBlock Grid.Column="3" Text="{Binding Price}" VerticalAlignment="Center"/>
+                                                <Button Grid.Column="4" Content="{materialDesign:PackIcon Edit}" Style="{StaticResource SmallDataGridButton}" />
+                                                <Button Grid.Column="5" Content="{materialDesign:PackIcon Delete}" Style="{StaticResource SmallDataGridButton}" />
+                                            </Grid>
+                                        </Border>
                                     </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTextColumn Header="Naam"  Width="5*" Binding="{Binding Name}" 
-                                                ElementStyle="{StaticResource VerticalCenteredDataGridTextColumnStyle}"
-                                                EditingElementStyle="{StaticResource VerticalCenteredDataGridTextColumnEditingStyle}"/>
-                            <DataGridTextColumn Header="Prijs" Width="*" Binding="{Binding Price, Mode=TwoWay}" 
-                                                ElementStyle="{StaticResource VerticalCenteredDataGridTextColumnStyle}"
-                                                EditingElementStyle="{StaticResource VerticalCenteredDataGridTextColumnEditingStyle}"/>
-                            <DataGridTemplateColumn Width="auto" CellStyle="{StaticResource SmallDataGridButtonCell}">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <Button Content="{materialDesign:PackIcon Delete}" Style="{StaticResource SmallDataGridButton}" />
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                        </DataGrid.Columns>
-                    </DataGrid>
+                                </ListView.ItemTemplate>
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
+                                        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                            </ListView>
+                            <Button  Style="{StaticResource MaterialDesignFloatingActionButton}" Content="{materialDesign:PackIcon Add}"
+                                        Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10,5"
+                                        Command="{Binding AddProductCommand}"/>
+                        </Grid>
+                    </materialDesign:DialogHost>
                 </GroupBox>
-                <GroupBox Grid.RowSpan="2" Grid.Column="1" Header="Drank" Margin="10">
-                    <DataGrid ItemsSource="{Binding Beverages}" CanUserAddRows="True" CanUserDeleteRows="True" AutoGenerateColumns="False" >
-                        <DataGrid.Columns>
-                            <DataGridTemplateColumn Width="auto" CellStyle="{StaticResource SmallDataGridButtonCell}"  >
-                                <DataGridTemplateColumn.CellTemplate>
+                <GroupBox Grid.RowSpan="2" Grid.Column="1" Header="Drank" Margin="10" DataContext="{Binding Beverages}">
+                    <materialDesign:DialogHost Identifier="{Binding DialogIdentifier}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <ListView ItemsSource="{Binding Products}" >
+                                <ListView.ItemTemplate>
                                     <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <Button Content="{materialDesign:PackIcon ArrowDown}" Style="{StaticResource SmallDataGridButton}" />
-                                            <Button Content="{materialDesign:PackIcon ArrowUp}" Style="{StaticResource SmallDataGridButton}"  />
-                                        </StackPanel>
+                                        <Border BorderThickness="0" >
+                                            <Grid >
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto"/>
+                                                    <ColumnDefinition Width="auto"/>
+                                                    <ColumnDefinition Width="5*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="auto"/>
+                                                    <ColumnDefinition Width="auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Button Grid.Column="0" Content="{materialDesign:PackIcon ArrowDown}" Style="{StaticResource SmallDataGridButton}" CommandParameter="{Binding DataContext, RelativeSource={RelativeSource Self}}"
+                                                            Command="{Binding Path=DataContext.MoveItemDownCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type GroupBox}}}" />
+                                                <Button Grid.Column="1" Content="{materialDesign:PackIcon ArrowUp}" Style="{StaticResource SmallDataGridButton}"  CommandParameter="{Binding DataContext, RelativeSource={RelativeSource Self}}"
+                                                            Command="{Binding Path=DataContext.MoveItemUpCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type GroupBox}}}" />
+                                                <TextBlock Grid.Column="2" Text="{Binding Name}" VerticalAlignment="Center" Margin="10,0"/>
+                                                <TextBlock Grid.Column="3" Text="{Binding Price}" VerticalAlignment="Center"/>
+                                                <Button Grid.Column="4" Content="{materialDesign:PackIcon Edit}" Style="{StaticResource SmallDataGridButton}" />
+                                                <Button Grid.Column="5" Content="{materialDesign:PackIcon Delete}" Style="{StaticResource SmallDataGridButton}" />
+                                            </Grid>
+                                        </Border>
                                     </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTextColumn Header="Naam"  Width="5*" Binding="{Binding Name}" 
-                                                ElementStyle="{StaticResource VerticalCenteredDataGridTextColumnStyle}"
-                                                EditingElementStyle="{StaticResource VerticalCenteredDataGridTextColumnEditingStyle}"/>
-                            <DataGridTextColumn Header="Prijs" Width="*" Binding="{Binding Price, Mode=TwoWay}" 
-                                                ElementStyle="{StaticResource VerticalCenteredDataGridTextColumnStyle}"
-                                                EditingElementStyle="{StaticResource VerticalCenteredDataGridTextColumnEditingStyle}"/>
-                            <DataGridTemplateColumn Width="auto" CellStyle="{StaticResource SmallDataGridButtonCell}">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <Button Content="{materialDesign:PackIcon Delete}" Style="{StaticResource SmallDataGridButton}" />
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                        </DataGrid.Columns>
-                    </DataGrid>
+                                </ListView.ItemTemplate>
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
+                                        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                            </ListView>
+                            <Button  Style="{StaticResource MaterialDesignFloatingActionButton}" Content="{materialDesign:PackIcon Add}"
+                                        Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10,5"
+                                        Command="{Binding AddProductCommand}"/>
+                        </Grid>
+                    </materialDesign:DialogHost>
                 </GroupBox>
             </Grid>
 
-            <Button Grid.Column="1" Grid.Row="1" Content="Start" Command="{Binding OkCommand}" x:Name="btnOk"/>
+            <Button Grid.Column="1" Grid.Row="1" Content="Start" Command="{Binding OkCommand}" />
             <Button Grid.Column="2" Grid.Row="1" Content="Annuleer" Command="{Binding CancelCommand}"/>
         </Grid>
     </DataTemplate>
