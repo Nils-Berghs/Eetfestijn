@@ -35,8 +35,10 @@
                                                             Command="{Binding Path=DataContext.MoveItemUpCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type GroupBox}}}" />
                                         <TextBlock Grid.Column="2" Text="{Binding Name}" VerticalAlignment="Center" Margin="10,0"/>
                                         <TextBlock Grid.Column="3" Text="{Binding Price}" VerticalAlignment="Center"/>
-                                        <Button Grid.Column="4" Content="{materialDesign:PackIcon Edit}" Style="{StaticResource SmallDataGridButton}" />
-                                        <Button Grid.Column="5" Content="{materialDesign:PackIcon Delete}" Style="{StaticResource SmallDataGridButton}" />
+                                        <Button Grid.Column="4" Content="{materialDesign:PackIcon Edit}" Style="{StaticResource SmallDataGridButton}" CommandParameter="{Binding DataContext, RelativeSource={RelativeSource Self}}"
+                                                            Command="{Binding Path=DataContext.EditItemCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type GroupBox}}}" />
+                                        <Button Grid.Column="5" Content="{materialDesign:PackIcon Delete}" Style="{StaticResource SmallDataGridButton}" CommandParameter="{Binding DataContext, RelativeSource={RelativeSource Self}}"
+                                                            Command="{Binding Path=DataContext.DeleteItemCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type GroupBox}}}" />
                                     </Grid>
                                 </Border>
                             </DataTemplate>

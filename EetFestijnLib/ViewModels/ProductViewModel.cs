@@ -7,7 +7,7 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 {
     public class ProductViewModel:ViewModelBase
     {
-        private Product Product { get; }
+        internal Product Product { get; }
 
         public string Name => Product.Name;
 
@@ -16,6 +16,12 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
         public ProductViewModel(Product product)
         {
             Product = product;
+        }
+
+        internal void RaisePropertyChanged()
+        {
+            OnPropertyChanged(nameof(Name));
+            OnPropertyChanged(nameof(Price));
         }
     }
 }

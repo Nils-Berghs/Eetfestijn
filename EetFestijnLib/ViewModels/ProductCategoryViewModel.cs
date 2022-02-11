@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace be.berghs.nils.EetFestijnLib.ViewModels
@@ -20,6 +21,10 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
         public ICommand MoveItemDownCommand { get; }
 
         public ICommand MoveItemUpCommand { get; }
+
+        public ICommand DeleteItemCommand { get; }
+
+        public ICommand EditItemCommand { get; }
 
         public ICommand AddProductCommand { get; }
 
@@ -38,6 +43,8 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
             MoveItemDownCommand = new Command<ProductViewModel>(pvm => MoveItemDown(pvm), pvm => CanMoveItemDown(pvm));
             MoveItemUpCommand = new Command<ProductViewModel>(pvm => MoveItemUp(pvm), pvm => CanMoveItemUp(pvm));
+            DeleteItemCommand = new Command<ProductViewModel>(pvm => DeleteItem(pvm));
+            EditItemCommand = new Command<ProductViewModel>(pvm => EditItem(pvm));
             AddProductCommand = new Command(AddProduct);
 
         }
@@ -72,6 +79,19 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             int index = Products.IndexOf(pvm);
             Products.Remove(pvm);
             Products.Insert(index - 1, pvm);
+        }
+
+        private async Task EditItem(ProductViewModel pvm)
+        {
+            var viewModel = new EditProductViewModel(pvm.Product);
+            await DialogService.ShowDialog(viewModel, DialogIdentifier);
+            if (viewModel.IsConfirmed)
+                pvm.RaisePropertyChanged();
+        }
+
+        private void DeleteItem(ProductViewModel pvm)
+        {
+            Products.Remove(pvm);
         }
 
         private void ProductCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
