@@ -49,6 +49,11 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
         }
 
+        internal IEnumerable<Product> GetProducts()
+        {
+            return Products.Select(p => p.Product);
+        }
+
         private async void AddProduct()
         {
             var viewModel = new EditProductViewModel();

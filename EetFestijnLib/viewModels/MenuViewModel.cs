@@ -30,19 +30,9 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             Beverages = new ProductCategoryViewModel(productList.Beverages, DialogService, "Dessert");
             Desserts = new ProductCategoryViewModel(productList.Desserts, DialogService, "Drank");
 
-            OkCommand = new Command(Confirm, CanConfirm);
+            OkCommand = new Command(Confirm);
             CancelCommand = new Command(Cancel);
             
-        }
-
-        private void Products_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            //if the number of items in our collection is updated, reevaluate the commands
-            ((Command)OkCommand).ChangeCanExecute();
-            //((Command<ProductViewModel>)MoveItemDownCommand).ChangeCanExecute();
-            //((Command<ProductViewModel>)MoveItemUpCommand).ChangeCanExecute();
-
-
         }
 
         private void Cancel()
@@ -50,18 +40,12 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             StackViewModel.PopViewModel();
         }
 
-        private bool CanConfirm()
-        {
-            return true;
-            //return Foods.Count > 0 || Beverages.Count > 0 || Desserts.Count > 0;
-        }
-
         private void Confirm()
         {
             //TODO
 
-            //ProductList productList = new ProductList(Foods, Beverages, Desserts);
-            //SaveProductList(productList);
+            ProductList productList = new ProductList(Foods.GetProducts(), Beverages.GetProducts(), Desserts.GetProducts());
+            SaveProductList(productList);
             //StackViewModel.PushViewModel(new OrderViewModel(StackViewModel, productList));
         }
 
