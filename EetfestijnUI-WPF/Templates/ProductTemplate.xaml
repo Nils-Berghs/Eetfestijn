@@ -19,7 +19,8 @@
             <TextBlock Grid.Row="0" Grid.Column="0" Text="Naam" VerticalAlignment="Center" Margin="0,0,20,0"/>
             <TextBlock Grid.Row="1" Grid.Column="0" Text="Prijs" VerticalAlignment="Center" Margin="0,0,20,0"/>
             
-            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
+                      FocusManager.FocusedElement="{Binding RelativeSource={RelativeSource Self}}" />
             <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}" materialDesign:TextFieldAssist.SuffixText="€"/>
 
             <Grid Grid.Row="2" Grid.Column="1" Margin="0,10,0,0">
