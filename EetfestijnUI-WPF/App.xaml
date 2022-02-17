@@ -19,8 +19,9 @@
                 </materialDesign:CustomColorTheme>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
 
-                <!--<ResourceDictionary Source="pack://application:,,,/MaterialDesignExtensions;component/Themes/Generic.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignExtensions;component/Themes/MaterialDesignLightTheme.xaml" />-->
+                <!-- load material design extensions for tabcontrol-->
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignExtensions;component/Themes/Generic.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignExtensions;component/Themes/MaterialDesignLightTheme.xaml" />
 
                 <!-- Styles and Converters must be loaded before the templates, but the styles depend on material design.
                      So styles and converter are in a seperate resource dictionary te be able to load them here.
@@ -32,6 +33,7 @@
                 <ResourceDictionary Source="./Templates/MenuTemplate.xaml"/>
                 <ResourceDictionary Source="./Templates/ProductTemplate.xaml"/>
                 <ResourceDictionary Source="./Templates/ProductCategoryTemplate.xaml"/>
+                <ResourceDictionary Source="./Templates/SessionTemplate.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
         </ResourceDictionary>

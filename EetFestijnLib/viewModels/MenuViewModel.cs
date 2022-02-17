@@ -46,7 +46,7 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
             ProductList productList = new ProductList(Foods.GetProducts(), Beverages.GetProducts(), Desserts.GetProducts());
             SaveProductList(productList);
-            //StackViewModel.PushViewModel(new OrderViewModel(StackViewModel, productList));
+            StackViewModel.PushViewModel(new SessionViewModel(StackViewModel, DialogService, productList));
         }
 
         /// <summary>
