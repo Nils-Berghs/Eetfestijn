@@ -15,7 +15,7 @@
         TextElement.FontSize="14"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{materialDesign:MaterialDesignFont}"
-        
+        Icon="H6-icon.ico"
         >
     <ContentPresenter Content="{Binding CurrentViewModel}"/>
 </Window>

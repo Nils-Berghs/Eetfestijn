@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:EetfestijnUI_WPF" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             Startup="ApplicationStartup">
+             Startup="ApplicationStartup"
+             >
     <Application.Resources>
         <ResourceDictionary>
 

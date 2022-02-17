@@ -6,7 +6,12 @@
     <RootNamespace>be.berghs.nils.EetFestijn.UI.WPF</RootNamespace>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>H6-icon.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="H6-icon.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="MaterialDesignExtensions" Version="3.3.0" />
