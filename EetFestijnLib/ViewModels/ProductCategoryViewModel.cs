@@ -44,7 +44,7 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             MoveItemDownCommand = new Command<ProductViewModel>(pvm => MoveItemDown(pvm), pvm => CanMoveItemDown(pvm));
             MoveItemUpCommand = new Command<ProductViewModel>(pvm => MoveItemUp(pvm), pvm => CanMoveItemUp(pvm));
             DeleteItemCommand = new Command<ProductViewModel>(pvm => DeleteItem(pvm));
-            EditItemCommand = new Command<ProductViewModel>(pvm => EditItem(pvm));
+            EditItemCommand = new Command<ProductViewModel>(async pvm => await EditItem(pvm));
             AddProductCommand = new Command(AddProduct);
 
         }
