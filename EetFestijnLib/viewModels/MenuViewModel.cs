@@ -27,8 +27,8 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
         {
             ProductList productList = ReadProductList();
             Foods = new ProductCategoryViewModel(productList.Foods, DialogService, "Eten");
-            Beverages = new ProductCategoryViewModel(productList.Beverages, DialogService, "Dessert");
-            Desserts = new ProductCategoryViewModel(productList.Desserts, DialogService, "Drank");
+            Beverages = new ProductCategoryViewModel(productList.Beverages, DialogService, "Drank");
+            Desserts = new ProductCategoryViewModel(productList.Desserts, DialogService, "Dessert");
 
             OkCommand = new Command(Confirm);
             CancelCommand = new Command(Cancel);

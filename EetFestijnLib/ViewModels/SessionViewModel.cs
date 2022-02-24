@@ -10,9 +10,12 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
     {
         private ProductList ProductList { get; }
 
+        public OrderViewModel CurrentOrder { get; }
+
         public SessionViewModel(StackViewModel<PageViewModel> stackViewModel, IDialogService dialogService, ProductList productList):base(stackViewModel, dialogService)
         {
             ProductList = productList;
+            CurrentOrder = new OrderViewModel(dialogService, productList);
         }
     }
 }

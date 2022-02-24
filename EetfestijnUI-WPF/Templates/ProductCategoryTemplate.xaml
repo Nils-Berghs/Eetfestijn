@@ -9,7 +9,7 @@
     </Style>
 
     <DataTemplate DataType="{x:Type viewmodels:ProductCategoryViewModel}">
-        <GroupBox Grid.Row="0" Grid.Column="0" Header="{Binding Title}" Margin="10">
+        <GroupBox Header="{Binding Title}" Margin="10">
             <materialDesign:DialogHost Identifier="{Binding DialogIdentifier}">
                 <Grid>
                     <Grid.RowDefinitions>

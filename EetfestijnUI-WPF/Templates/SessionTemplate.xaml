@@ -5,7 +5,7 @@
     <DataTemplate DataType="{x:Type viewmodels:SessionViewModel}">
         <TabControl Style="{StaticResource MaterialDesignTabControl}" >
             <TabItem Header="Bestelling">
-                <TextBlock Text="whoot"/>
+                <ContentPresenter Content="{Binding CurrentOrder}"/>
             </TabItem>
 
             <TabItem Header="Sessie">

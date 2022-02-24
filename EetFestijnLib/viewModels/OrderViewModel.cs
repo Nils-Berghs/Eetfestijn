@@ -8,19 +8,22 @@ using System.Windows.Input;
 
 namespace be.berghs.nils.EetFestijnLib.ViewModels
 {
-    public class OrderViewModel : PageViewModel
+    public class OrderViewModel : ViewModelBase
     {
-        public ObservableCollection<OrderItemViewModel> Foods { get;  }
+        private IDialogService DialogService { get; }
 
-        public ObservableCollection<OrderItemViewModel> Beverages { get; }
+        public OrderCategoryViewModel Foods { get;  }
 
-        public ObservableCollection<OrderItemViewModel> Desserts { get; }
+        public OrderCategoryViewModel Beverages { get; }
+
+        public OrderCategoryViewModel Desserts { get; }
 
         public decimal TotalPrice
         {
             get
             {
-                return GetTotalPrice(Foods) + GetTotalPrice(Beverages) + GetTotalPrice(Desserts);
+                //TODO
+                return 0; // GetTotalPrice(Foods) + GetTotalPrice(Beverages) + GetTotalPrice(Desserts);
             }
         }
 
@@ -28,11 +31,12 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
         public ICommand CancelCommand { get;  }
 
-        public OrderViewModel(StackViewModel<PageViewModel> stackViewModel, IDialogService dialogService, ProductList products) : base(stackViewModel, dialogService)
+        public OrderViewModel(IDialogService dialogService, ProductList products) 
         {
-            Foods = CreateOrderItemViewModels(products.Foods);
-            Beverages = CreateOrderItemViewModels(products.Beverages);
-            Desserts = CreateOrderItemViewModels(products.Desserts);
+            DialogService = dialogService;
+            Foods = new OrderCategoryViewModel(products.Foods, "Eten");
+            Beverages = new OrderCategoryViewModel(products.Beverages, "Drank");
+            Desserts = new OrderCategoryViewModel(products.Desserts, "Dessert");
 
             OkCommand = new Command(ConfirmOrder, CanConfirmOrder);
 
@@ -47,25 +51,6 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
         private bool CanConfirmOrder()
         {
             return TotalPrice > 0;
-        }
-
-        private ObservableCollection<OrderItemViewModel> CreateOrderItemViewModels(IEnumerable<Product> products)
-        {
-            var result = new ObservableCollection<OrderItemViewModel>();
-            foreach(var product in products)
-            {
-                var oivm = new OrderItemViewModel(product);
-                result.Add(oivm);
-
-                oivm.PropertyChanged += OrderItemViewModelPropertyChanged;
-            }
-            return result;
-        }
-
-        private void OrderItemViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(OrderItemViewModel.TotalPrice))
-                OnPropertyChanged(nameof(TotalPrice));
         }
 
         private decimal GetTotalPrice(IEnumerable<OrderItemViewModel> orderItemViewModels)
