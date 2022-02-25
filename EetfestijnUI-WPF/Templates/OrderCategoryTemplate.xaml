@@ -4,14 +4,14 @@
                     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
     <DataTemplate DataType="{x:Type viewmodels:OrderCategoryViewModel}">
         <GroupBox Header="{Binding Title}" Margin="10">
-            <ListView ItemsSource="{Binding Items}">
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
+            <ItemsControl ItemsSource="{Binding Items}" IsTabStop="False">
+                <!--<ItemsControl.ItemContainerStyle>
+                    <Style TargetType="ItemsControl">
                         <Setter Property="VerticalContentAlignment" Value="Stretch"/>
                         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                     </Style>
-                </ListView.ItemContainerStyle>
-                <ListView.ItemTemplate>
+                </ItemsControl.ItemContainerStyle>-->
+                <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -20,15 +20,22 @@
                                 <ColumnDefinition Width="80"/>
                                 <ColumnDefinition Width="80"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="{Binding Name}" VerticalAlignment="Center"/>
-                            <TextBox Grid.Column="1" Text="{Binding Count}" TextAlignment="Right"/>
+                            <TextBlock Grid.Column="0" Text="{Binding Name}" VerticalAlignment="Center" x:Name="txbName"/>
+                            <TextBox Grid.Column="1" Text="{Binding Count}" TextAlignment="Right" x:Name="txbCount"/>
                             <TextBlock Grid.Column="2" Text="{Binding Price}" VerticalAlignment="Center" TextAlignment="Right"/>
                             <TextBlock Grid.Column="3" Text="{Binding TotalPrice}" VerticalAlignment="Center" TextAlignment="Right"/>
 
                         </Grid>
+
+                        <DataTemplate.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=txbCount, Path=IsFocused}" Value="True">
+                                <Setter TargetName="txbName" Property="Foreground" Value="Red" />
+                            </DataTrigger>
+                        </DataTemplate.Triggers>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                </ItemsControl.ItemTemplate>
+                
+            </ItemsControl>
         </GroupBox>
         
     </DataTemplate>

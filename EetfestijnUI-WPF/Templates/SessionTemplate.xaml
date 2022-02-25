@@ -4,11 +4,11 @@
                     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
     <DataTemplate DataType="{x:Type viewmodels:SessionViewModel}">
         <TabControl Style="{StaticResource MaterialDesignTabControl}" >
-            <TabItem Header="Bestelling">
+            <TabItem Header="Bestelling" IsTabStop="False">
                 <ContentPresenter Content="{Binding CurrentOrder}"/>
             </TabItem>
 
-            <TabItem Header="Sessie">
+            <TabItem Header="Sessie" IsTabStop="False">
                 <TextBlock Text="whaat"/>
             </TabItem>
         </TabControl>
