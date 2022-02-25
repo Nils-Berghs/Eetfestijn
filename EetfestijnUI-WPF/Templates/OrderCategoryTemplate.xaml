@@ -15,15 +15,15 @@
                     <DataTemplate>
                         <Grid>
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*"/>
                                 <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="80"/>
-                                <ColumnDefinition Width="80"/>
-                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0" Text="{Binding Name}" VerticalAlignment="Center" x:Name="txbName"/>
-                            <TextBox Grid.Column="1" Text="{Binding Count}" TextAlignment="Right" x:Name="txbCount"/>
-                            <TextBlock Grid.Column="2" Text="{Binding Price}" VerticalAlignment="Center" TextAlignment="Right"/>
-                            <TextBlock Grid.Column="3" Text="{Binding TotalPrice}" VerticalAlignment="Center" TextAlignment="Right"/>
+                            <TextBox Grid.Column="1" Text="{Binding Count, UpdateSourceTrigger=PropertyChanged, TargetNullValue=''}" TextAlignment="Right" x:Name="txbCount"/>
+                            <TextBlock Grid.Column="2" Text="{Binding PriceText}" VerticalAlignment="Center" TextAlignment="Right"/>
+                            <TextBlock Grid.Column="3" Text="{Binding TotalPriceText}" VerticalAlignment="Center" TextAlignment="Right"/>
 
                         </Grid>
 

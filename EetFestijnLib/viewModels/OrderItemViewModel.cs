@@ -2,16 +2,19 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace be.berghs.nils.EetFestijnLib.ViewModels
 {
-    public class OrderItemViewModel:ViewModelBase
+    public class OrderItemViewModel : ViewModelBase
     {
         private Product Product { get; }
 
         public string Name => Product.Name;
 
         public decimal Price => Product.Price;
+
+        public string PriceText => Price.ToString("0.0 €");
 
         private int? _Count;
         public int? Count
@@ -20,7 +23,7 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             set
             {
                 if (SetProperty(ref _Count, value))
-                    OnPropertyChanged(nameof(TotalPrice));
+                    OnPropertyChanged(nameof(TotalPriceText));
             }
         }
 
@@ -31,6 +34,16 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
                 if (Count == null)
                     return null;
                 return Count * Price;
+            }
+        }
+
+        public string TotalPriceText
+        {
+            get
+            {
+                if (TotalPrice == null || TotalPrice == 0)
+                    return "- €";
+                return  TotalPrice.Value.ToString("0.0 €");
             }
         }
 
