@@ -18,33 +18,44 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
         public OrderCategoryViewModel Desserts { get; }
 
+        private decimal _TotalPrice;
         public decimal TotalPrice
         {
-            get
-            {
-                //TODO
-                return 0; // GetTotalPrice(Foods) + GetTotalPrice(Beverages) + GetTotalPrice(Desserts);
-            }
+            get => _TotalPrice;
+            set => SetProperty(ref _TotalPrice, value); 
         }
 
         public ICommand OkCommand { get; }
 
         public ICommand CancelCommand { get;  }
 
-        public OrderViewModel(IDialogService dialogService, ProductList products) 
+        public OrderViewModel(IDialogService dialogService, ProductList products)
         {
             DialogService = dialogService;
             Foods = new OrderCategoryViewModel(products.Foods, "Eten");
             Beverages = new OrderCategoryViewModel(products.Beverages, "Drank");
             Desserts = new OrderCategoryViewModel(products.Desserts, "Dessert");
 
+            Foods.PropertyChanged += OrderCategoryPropertyChanged;
+            Beverages.PropertyChanged += OrderCategoryPropertyChanged;
+            Desserts.PropertyChanged += OrderCategoryPropertyChanged;
+
             OkCommand = new Command(ConfirmOrder, CanConfirmOrder);
 
         }
 
+        private void OrderCategoryPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(OrderCategoryViewModel.TotalPrice))
+            {
+                TotalPrice = Foods.TotalPrice + Beverages.TotalPrice + Desserts.TotalPrice;
+                ((Command)OkCommand).ChangeCanExecute();
+            }
+        }
+
         private void ConfirmOrder()
         {
-            Order order = new Order();
+            Order order = new Order(Foods.GetOrderItems(), Beverages.GetOrderItems(), Desserts.GetOrderItems());
             
         }
 
@@ -53,15 +64,5 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             return TotalPrice > 0;
         }
 
-        private decimal GetTotalPrice(IEnumerable<OrderItemViewModel> orderItemViewModels)
-        {
-            decimal total = 0;
-            foreach (var oivm in orderItemViewModels)
-            {
-                if (oivm.TotalPrice.HasValue)
-                    total += oivm.TotalPrice.Value;
-            }
-            return total;
-        }
     }
 }

@@ -23,17 +23,19 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             set
             {
                 if (SetProperty(ref _Count, value))
-                    OnPropertyChanged(nameof(TotalPriceText));
+                    TotalPrice = _Count * Price;
+                    
             }
         }
 
+        public decimal? _TotalPrice;
         public decimal? TotalPrice
         {
-            get
+            get => _TotalPrice;
+            set 
             {
-                if (Count == null)
-                    return null;
-                return Count * Price;
+                if (SetProperty(ref _TotalPrice, value))
+                    OnPropertyChanged(nameof(TotalPriceText));
             }
         }
 
@@ -52,13 +54,9 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             Product = p;
         }
 
-        //internal OrderItem ToOrderItem()
-        //{
-        //    return new OrderItem
-        //    {
-        //        Count = Count.Value,
-        //        Product = Product,
-        //    }
-        //}
+        internal OrderItem GetOrderItem()
+        {
+            return new OrderItem(Product, Count.Value);
+        }
     }
 }

@@ -19,12 +19,15 @@ namespace be.berghs.nils.EetFestijnLib.Models
         /// </summary>
         public int Count { get; set; }
 
+        public decimal TotalPrice => Product.Price * Count;
+
         /// <summary>
         /// No args constructor for Json
         /// </summary>
-        public OrderItem()
+        public OrderItem(Product product, int count)
         {
-
+            Product = product;
+            Count = count;
         }
     }
 }
