@@ -37,6 +37,7 @@
                 <ResourceDictionary Source="./Templates/SessionTemplate.xaml"/>
                 <ResourceDictionary Source="./Templates/OrderCategoryTemplate.xaml"/>
                 <ResourceDictionary Source="./Templates/OrderTemplate.xaml"/>
+                <ResourceDictionary Source="./Templates/PaymentTemplate.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
         </ResourceDictionary>

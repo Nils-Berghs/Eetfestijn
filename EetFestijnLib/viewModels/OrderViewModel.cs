@@ -4,6 +4,7 @@ using be.berghs.nils.EetFestijnLib.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace be.berghs.nils.EetFestijnLib.ViewModels
@@ -40,7 +41,7 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             Beverages.PropertyChanged += OrderCategoryPropertyChanged;
             Desserts.PropertyChanged += OrderCategoryPropertyChanged;
 
-            OkCommand = new Command(ConfirmOrder, CanConfirmOrder);
+            OkCommand = new Command(async ()=> await ConfirmOrder(), CanConfirmOrder);
 
         }
 
@@ -53,9 +54,17 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             }
         }
 
-        private void ConfirmOrder()
+        private async Task ConfirmOrder()
         {
-            Order order = new Order(Foods.GetOrderItems(), Beverages.GetOrderItems(), Desserts.GetOrderItems());
+            Order order = new Order(TotalPrice, Foods.GetOrderItems(), Beverages.GetOrderItems(), Desserts.GetOrderItems());
+            PaymentViewModel paymentViewModel = new PaymentViewModel(order);
+
+            await DialogService.ShowDialog(paymentViewModel);
+
+            if (paymentViewModel.IsConfirmed)
+            {
+                //TODO clear the currenct order
+            }
             
         }
 

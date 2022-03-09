@@ -3,33 +3,35 @@
                     xmlns:viewmodels="clr-namespace:be.berghs.nils.EetFestijnLib.ViewModels;assembly=EetFestijnLib" 
                     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
     <DataTemplate DataType="{x:Type viewmodels:OrderViewModel}">
-        <Grid Margin="10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
-
-            <Grid Grid.ColumnSpan="3" >
+        <materialDesign:DialogHost>
+            <Grid Margin="10">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
-                <ContentPresenter Grid.Row="0" Grid.Column="0" Content="{Binding Foods}"/>
-                <ContentPresenter Grid.Row="1" Grid.Column="0" Content="{Binding Desserts}"/>
-                <ContentPresenter Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Content="{Binding Beverages}"/>
 
+                <Grid Grid.ColumnSpan="3" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <ContentPresenter Grid.Row="0" Grid.Column="0" Content="{Binding Foods}"/>
+                    <ContentPresenter Grid.Row="1" Grid.Column="0" Content="{Binding Desserts}"/>
+                    <ContentPresenter Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Content="{Binding Beverages}"/>
+
+                </Grid>
+                <Button Grid.Column="1" Grid.Row="1" Content="OK" Command="{Binding OkCommand}" IsTabStop="False" />
+                <Button Grid.Column="2" Grid.Row="1" Content="Annuleer" Command="{Binding CancelCommand}" IsTabStop="False"/>
             </Grid>
-            <Button Grid.Column="1" Grid.Row="1" Content="OK" Command="{Binding OkCommand}" IsTabStop="False" />
-            <Button Grid.Column="2" Grid.Row="1" Content="Annuleer" Command="{Binding CancelCommand}" IsTabStop="False"/>
-        </Grid>
+        </materialDesign:DialogHost>
     </DataTemplate>
 </ResourceDictionary>
