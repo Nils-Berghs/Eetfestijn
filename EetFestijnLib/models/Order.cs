@@ -13,7 +13,9 @@ namespace be.berghs.nils.EetFestijnLib.Models
 
         public IEnumerable<OrderItem> Desserts { get; set; }
 
-        public Order(IEnumerable<OrderItem> foods, IEnumerable<OrderItem> beverages, IEnumerable<OrderItem> desserts)
+        public Decimal TotalPrice { get; }
+
+        public Order(decimal totalPrice, IEnumerable<OrderItem> foods, IEnumerable<OrderItem> beverages, IEnumerable<OrderItem> desserts)
         {
             Foods = foods;
             Beverages = beverages;
