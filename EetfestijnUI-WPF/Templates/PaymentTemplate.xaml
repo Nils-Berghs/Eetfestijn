@@ -4,7 +4,7 @@
                     xmlns:materialdesign="http://materialdesigninxaml.net/winfx/xaml/themes">
 
     <DataTemplate DataType="{x:Type viewModels:PaymentViewModel}">
-        <Grid Margin="20">
+        <Grid Margin="20" MinWidth="400" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="100"/>
@@ -15,16 +15,33 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" VerticalAlignment="Center" Text="Totaal"/>
-            <TextBlock Grid.Row="1" VerticalAlignment="Center" Text="Aantal waardebonnen"/>
-            <TextBlock Grid.Row="2" VerticalAlignment="Center" Text="Te betalen"/>
+            <TextBlock Grid.Row="0" VerticalAlignment="Center" Margin="0,0,20,0" Text="Totaal"/>
+            <TextBlock Grid.Row="1" VerticalAlignment="Center" Margin="0,0,20,0" Text="Aantal waardebonnen"/>
+            <TextBlock Grid.Row="2" VerticalAlignment="Center" Margin="0,0,20,0" Text="Te betalen"/>
+            <TextBlock Grid.Row="3" VerticalAlignment="Center" Margin="0,0,20,0" Text="Betaald"/>
+            <TextBlock Grid.Row="4" VerticalAlignment="Center" Margin="0,0,20,0" Text="Terug"/>
+            <TextBlock Grid.Row="5" VerticalAlignment="Center" Margin="0,0,20,0" Text="'T is just"/>
 
             <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding TotalPrice, Mode=OneWay}" IsReadOnly="True" materialdesign:TextFieldAssist.SuffixText="€"/>
-            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding VoucherCount}" />
-            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding NettoPrice}" materialdesign:TextFieldAssist.SuffixText="€"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding VoucherCount, UpdateSourceTrigger=PropertyChanged, TargetNullValue=''}" />
+            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding NettoPrice, Mode=OneWay}" IsReadOnly="True" materialdesign:TextFieldAssist.SuffixText="€"/>
+            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Payed, UpdateSourceTrigger=PropertyChanged, TargetNullValue=''}" materialdesign:TextFieldAssist.SuffixText="€"/>
+            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Change, Mode=OneWay}" IsReadOnly="True"  materialdesign:TextFieldAssist.SuffixText="€"/>
+            <CheckBox Grid.Row="5" Grid.Column="1" IsChecked="{Binding KeepChange}" Margin="5"/>
 
+            <Grid Grid.Row="6" Grid.ColumnSpan="2" Margin="0,10,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="1" Grid.Row="1" Content="OK" Command="{Binding OkCommand}" IsTabStop="False" />
+                <Button Grid.Column="2" Grid.Row="1" Content="Annuleer" Command="{Binding CancelCommand}" IsTabStop="False"/>
+            </Grid>
         </Grid>
         
     </DataTemplate>

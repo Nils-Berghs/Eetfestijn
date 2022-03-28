@@ -19,12 +19,12 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
         /// <summary>
         /// The command to link to an 'OK' button
         /// </summary>
-        public ICommand OkCommand { get; }
+        public Command OkCommand { get; }
 
         /// <summary>
         /// The command to link to a 'Cancel' button
         /// </summary>
-        public ICommand CancelCommand { get; }
+        public Command CancelCommand { get; }
 
         public DialogViewModelBase()
         {

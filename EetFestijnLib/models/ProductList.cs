@@ -7,6 +7,9 @@ namespace be.berghs.nils.EetFestijnLib.Models
 {
     public class ProductList
     {
+        //Todo make this a variable
+        public decimal VoucherValue = 5;
+
         public IEnumerable<Product> Foods { get; private set; }
 
         public IEnumerable<Product> Beverages { get; private set; }

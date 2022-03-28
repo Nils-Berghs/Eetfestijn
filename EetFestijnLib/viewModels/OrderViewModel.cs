@@ -13,6 +13,8 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
     {
         private IDialogService DialogService { get; }
 
+        private ProductList ProductList { get; }
+
         public OrderCategoryViewModel Foods { get;  }
 
         public OrderCategoryViewModel Beverages { get; }
@@ -26,13 +28,15 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             set => SetProperty(ref _TotalPrice, value); 
         }
 
-        public ICommand OkCommand { get; }
+        public Command OkCommand { get; }
 
-        public ICommand CancelCommand { get;  }
+        public Command CancelCommand { get;  }
 
         public OrderViewModel(IDialogService dialogService, ProductList products)
         {
             DialogService = dialogService;
+            ProductList = products;
+
             Foods = new OrderCategoryViewModel(products.Foods, "Eten");
             Beverages = new OrderCategoryViewModel(products.Beverages, "Drank");
             Desserts = new OrderCategoryViewModel(products.Desserts, "Dessert");
@@ -42,6 +46,7 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             Desserts.PropertyChanged += OrderCategoryPropertyChanged;
 
             OkCommand = new Command(async ()=> await ConfirmOrder(), CanConfirmOrder);
+            CancelCommand = new Command(Cancel);
 
         }
 
@@ -50,19 +55,20 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             if (e.PropertyName == nameof(OrderCategoryViewModel.TotalPrice))
             {
                 TotalPrice = Foods.TotalPrice + Beverages.TotalPrice + Desserts.TotalPrice;
-                ((Command)OkCommand).ChangeCanExecute();
+                OkCommand.ChangeCanExecute();
             }
         }
 
         private async Task ConfirmOrder()
         {
             Order order = new Order(TotalPrice, Foods.GetOrderItems(), Beverages.GetOrderItems(), Desserts.GetOrderItems());
-            PaymentViewModel paymentViewModel = new PaymentViewModel(order);
+            PaymentViewModel paymentViewModel = new PaymentViewModel(order, ProductList.VoucherValue);
 
             await DialogService.ShowDialog(paymentViewModel);
 
             if (paymentViewModel.IsConfirmed)
             {
+                //TODO save somewhere
                 //TODO clear the currenct order
             }
             
@@ -71,6 +77,11 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
         private bool CanConfirmOrder()
         {
             return TotalPrice > 0;
+        }
+
+        private void Cancel()
+        {
+            //Todo clear current order
         }
 
     }
