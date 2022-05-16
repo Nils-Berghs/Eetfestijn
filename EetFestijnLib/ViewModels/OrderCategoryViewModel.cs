@@ -43,7 +43,7 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
                 foreach(var item in Items)
                 {
                     if (item.TotalPrice != null)
-                        totalPrice+= item.Price;
+                        totalPrice+= item.TotalPrice.Value;
                 }
                 TotalPrice = totalPrice;
 
