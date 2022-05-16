@@ -29,8 +29,8 @@
                     <ContentPresenter Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Content="{Binding Beverages}"/>
 
                 </Grid>
-                <Button Grid.Column="1" Grid.Row="1" Content="OK" Command="{Binding OkCommand}" IsTabStop="False" />
-                <Button Grid.Column="2" Grid.Row="1" Content="Annuleer" Command="{Binding CancelCommand}" IsTabStop="False"/>
+                <Button Grid.Column="1" Grid.Row="1" Content="OK" Command="{Binding OkCommand}" IsTabStop="False" IsDefault="True" />
+                <Button Grid.Column="2" Grid.Row="1" Content="Annuleer" Command="{Binding CancelCommand}" IsTabStop="False" IsCancel="True"/>
             </Grid>
         </materialDesign:DialogHost>
     </DataTemplate>
