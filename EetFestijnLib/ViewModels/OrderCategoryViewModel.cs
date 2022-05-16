@@ -10,6 +10,7 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 {
     public class OrderCategoryViewModel:ViewModelBase
     {
+
         public ObservableCollection<OrderItemViewModel> Items { get; }
 
         public string Title { get; }
@@ -53,6 +54,15 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
         internal IEnumerable<OrderItem> GetOrderItems()
         {
             return Items.Where(i => i.Count > 0).Select(i => i.GetOrderItem());
+        }
+
+        /// <summary>
+        /// Clears the order items in this category
+        /// </summary>
+        internal void ClearOrder()
+        {
+            foreach(var item in Items)
+                item.Count = null;
         }
     }
 }

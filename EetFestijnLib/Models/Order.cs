@@ -13,10 +13,11 @@ namespace be.berghs.nils.EetFestijnLib.Models
 
         public IEnumerable<OrderItem> Desserts { get; set; }
 
-        public Decimal TotalPrice { get; }
+        public decimal TotalPrice { get; }
 
         public Order(decimal totalPrice, IEnumerable<OrderItem> foods, IEnumerable<OrderItem> beverages, IEnumerable<OrderItem> desserts)
         {
+            TotalPrice = totalPrice;
             Foods = foods;
             Beverages = beverages;
             Desserts = desserts;

@@ -1,6 +1,7 @@
 ﻿using be.berghs.nils.EetFestijnLib.Helpers;
 using be.berghs.nils.EetFestijnLib.Helpers.Dialog;
 using be.berghs.nils.EetFestijnLib.Models;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -14,6 +15,8 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
         private IDialogService DialogService { get; }
 
         private ProductList ProductList { get; }
+
+        private OrderList OrderList { get; }
 
         public OrderCategoryViewModel Foods { get;  }
 
@@ -32,10 +35,11 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
         public Command CancelCommand { get;  }
 
-        public OrderViewModel(IDialogService dialogService, ProductList products)
+        public OrderViewModel(IDialogService dialogService, ProductList products, OrderList orderList)
         {
             DialogService = dialogService;
             ProductList = products;
+            OrderList = orderList;
 
             Foods = new OrderCategoryViewModel(products.Foods, "Eten");
             Beverages = new OrderCategoryViewModel(products.Beverages, "Drank");
@@ -68,8 +72,8 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
             if (paymentViewModel.IsConfirmed)
             {
-                //TODO save somewhere
-                //TODO clear the currenct order
+                OrderList.AddOrder(order);
+                ClearCurrentOrder();
             }
             
         }
@@ -81,8 +85,14 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
         private void Cancel()
         {
-            //Todo clear current order
+            ClearCurrentOrder();
         }
 
+        private void ClearCurrentOrder()
+        {
+            Foods.ClearOrder();
+            Beverages.ClearOrder();
+            Desserts.ClearOrder();
+        }
     }
 }

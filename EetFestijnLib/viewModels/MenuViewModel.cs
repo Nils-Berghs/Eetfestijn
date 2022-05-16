@@ -42,8 +42,6 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
         private void Confirm()
         {
-            //TODO
-
             ProductList productList = new ProductList(Foods.GetProducts(), Beverages.GetProducts(), Desserts.GetProducts());
             SaveProductList(productList);
             StackViewModel.PushViewModel(new SessionViewModel(StackViewModel, DialogService, productList));
@@ -92,8 +90,7 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
         /// <returns></returns>
         private string GetTempMenuPath()
         {
-            string path = System.Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            return Path.Combine(path, "EetFestijn", "Menu.json");
+            return FileSystemHelper.GetTempPath("Menu.json");
         }
     }
 }
