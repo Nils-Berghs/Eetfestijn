@@ -28,13 +28,48 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <ContentPresenter Grid.Row="0" Grid.Column="0" Content="{Binding Foods}"/>
-                <ContentPresenter Grid.Row="1" Grid.Column="0" Content="{Binding Desserts}"/>
-                <ContentPresenter Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Content="{Binding Beverages}"/>
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <ContentPresenter Grid.Row="0"  Content="{Binding Foods}"/>
+                    <ContentPresenter Grid.Row="1" Content="{Binding Desserts}"/>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <ContentPresenter Grid.Row="0" Content="{Binding Beverages}"/>
+
+                    <GroupBox Header="Opties" Margin="10" Grid.Row="1">
+                        <Grid Margin="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="Waardebonnen gebruiken" VerticalAlignment="Center"/>
+                            <!--<TextBlock Grid.Row="1" Text="Waarde" VerticalAlignment="Center" Margin="25,0,0,0"/>-->
+                            <TextBlock Grid.Row="1" Text="Mobiel betalen toestaan" VerticalAlignment="Center"/>
+
+                            <CheckBox Grid.Column="1" Grid.Row="0" IsChecked="{Binding UseVouchers}" VerticalAlignment="Center" Margin="10,0" />
+                            <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding VoucherValue}" HorizontalAlignment="Left"
+                                     VerticalAlignment="Center" materialDesign:HintAssist.Hint="waarde" materialDesign:TextFieldAssist.SuffixText="€" Width="100"/>
+                            <CheckBox Grid.Column="1" Grid.Row="1" IsChecked="{Binding UseMobilePayments}" VerticalAlignment="Center" Margin="10,10"/>
+
+
+                        </Grid>
+                    </GroupBox>
+                </Grid>
+               
+                
 
             </Grid>
 

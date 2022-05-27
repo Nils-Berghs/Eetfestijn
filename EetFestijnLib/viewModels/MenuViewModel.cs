@@ -19,6 +19,12 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
         public ProductCategoryViewModel Desserts { get; private set; }
 
+        public bool UseVouchers { get; set; }
+
+        public decimal VoucherValue { get; set; }
+
+        public bool UseMobilePayments { get; set; }
+
         public ICommand OkCommand { get; }
 
         public ICommand CancelCommand { get;  }
