@@ -19,13 +19,36 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
         public ProductCategoryViewModel Desserts { get; private set; }
 
-        public bool UseVouchers { get; set; }
+        private bool _UseVouchers;
+        public bool UseVouchers 
+        { 
+            get => _UseVouchers;
+            set
+            {
+                if (SetProperty(ref _UseVouchers, value))
+                    OkCommand.ChangeCanExecute();
+            }
+        }
 
-        public decimal VoucherValue { get; set; }
+        private string _VoucherValue;
+        public string VoucherValue 
+        { 
+            get => _VoucherValue; 
+            set
+            {
+                //get a corrected string
+                string newValue = StringToDecimalHelper.CheckDecimalString(value, _VoucherValue, "0.#", true);
+                //set the new price
+                if (SetProperty(ref _VoucherValue, newValue))
+                    OkCommand.ChangeCanExecute();
+                else if (newValue != value)
+                    OnPropertyChanged();
+            }
+        }
 
         public bool UseMobilePayments { get; set; }
 
-        public ICommand OkCommand { get; }
+        public Command OkCommand { get; }
 
         public ICommand CancelCommand { get;  }
 
@@ -36,7 +59,7 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             Beverages = new ProductCategoryViewModel(productList.Beverages, DialogService, "Drank");
             Desserts = new ProductCategoryViewModel(productList.Desserts, DialogService, "Dessert");
 
-            OkCommand = new Command(Confirm);
+            OkCommand = new Command(Confirm, CanConfirm);
             CancelCommand = new Command(Cancel);
             
         }
@@ -46,9 +69,19 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             StackViewModel.PopViewModel();
         }
 
+        private bool CanConfirm()
+        {
+            if (Foods.Products.Count == 0 && Beverages.Products.Count == 0 && Desserts.Products.Count == 0)
+                return false;
+            if (UseVouchers && (string.IsNullOrWhiteSpace(VoucherValue) || decimal.Parse(VoucherValue) <= 0))
+                return false;
+            return true;
+        }
+
         private void Confirm()
         {
             ProductList productList = new ProductList(Foods.GetProducts(), Beverages.GetProducts(), Desserts.GetProducts());
+            Options options = new Options(UseVouchers, VoucherValue, UseMobilePayments);
             SaveProductList(productList);
             StackViewModel.PushViewModel(new SessionViewModel(StackViewModel, DialogService, productList));
         }

@@ -18,9 +18,9 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
         public ObservableCollection<ProductViewModel> Products { get;  }
 
-        public ICommand MoveItemDownCommand { get; }
+        public Command<ProductViewModel> MoveItemDownCommand { get; }
 
-        public ICommand MoveItemUpCommand { get; }
+        public Command<ProductViewModel> MoveItemUpCommand { get; }
 
         public ICommand DeleteItemCommand { get; }
 
@@ -102,9 +102,8 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
         private void ProductCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             //if the number of items in our collection is updated, reevaluate the commands
-            //((Command)OkCommand).ChangeCanExecute();
-            ((Command<ProductViewModel>)MoveItemDownCommand).ChangeCanExecute();
-            ((Command<ProductViewModel>)MoveItemUpCommand).ChangeCanExecute();
+            MoveItemDownCommand.ChangeCanExecute();
+            MoveItemUpCommand.ChangeCanExecute();
 
 
         }
