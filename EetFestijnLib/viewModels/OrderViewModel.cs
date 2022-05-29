@@ -14,9 +14,7 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
     {
         private IDialogService DialogService { get; }
 
-        private ProductList ProductList { get; }
-
-        private OrderList OrderList { get; }
+        private Session Session { get; }
 
         public OrderCategoryViewModel Foods { get;  }
 
@@ -35,15 +33,14 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
         public Command CancelCommand { get;  }
 
-        public OrderViewModel(IDialogService dialogService, ProductList products, OrderList orderList)
+        public OrderViewModel(IDialogService dialogService, Session session)
         {
             DialogService = dialogService;
-            ProductList = products;
-            OrderList = orderList;
+            Session = session;
 
-            Foods = new OrderCategoryViewModel(products.Foods, "Eten");
-            Beverages = new OrderCategoryViewModel(products.Beverages, "Drank");
-            Desserts = new OrderCategoryViewModel(products.Desserts, "Dessert");
+            Foods = new OrderCategoryViewModel(Session.Products.Foods, "Eten");
+            Beverages = new OrderCategoryViewModel(Session.Products.Beverages, "Drank");
+            Desserts = new OrderCategoryViewModel(session.Products.Desserts, "Dessert");
 
             Foods.PropertyChanged += OrderCategoryPropertyChanged;
             Beverages.PropertyChanged += OrderCategoryPropertyChanged;
@@ -66,13 +63,13 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
         private async Task ConfirmOrder()
         {
             Order order = new Order(TotalPrice, Foods.GetOrderItems(), Beverages.GetOrderItems(), Desserts.GetOrderItems());
-            PaymentViewModel paymentViewModel = new PaymentViewModel(order, ProductList.VoucherValue);
+            PaymentViewModel paymentViewModel = new PaymentViewModel(order, Session.Options);
 
             await DialogService.ShowDialog(paymentViewModel);
 
             if (paymentViewModel.IsConfirmed)
             {
-                OrderList.AddOrder(order);
+                Session.OrderList.AddOrder(order);
                 ClearCurrentOrder();
             }
             

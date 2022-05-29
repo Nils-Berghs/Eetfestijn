@@ -1,6 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+                    xmlns:converters="clr-namespace:be.berghs.nils.EetFestijn.UI.WPF.Helpers.Converters">
 
+    <converters:InvertBooleanConverter x:Key="InvertBooleanConverterInstance"/>
+    <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverterInstance"/>
     <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
         <Setter Property="Margin" Value="8"/>
         <Setter Property="MinHeight" Value="50"/>

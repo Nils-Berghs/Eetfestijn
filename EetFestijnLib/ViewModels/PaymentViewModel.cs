@@ -11,7 +11,11 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
         private Order Order { get; }
 
-        private decimal VoucherValue { get; }
+        private Options Options { get; }
+                
+        public bool UseVouchers => Options.UseVouchers;
+
+        public bool UseMobilePayments => Options.UseMobilePayments;
 
         public decimal TotalPrice => Order.TotalPrice;
 
@@ -22,17 +26,31 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             set
             {
                 if (SetProperty(ref _VoucherCount, value))
+                {
+                    OnPropertyChanged(nameof(VoucherDiscount));
                     OnPropertyChanged(nameof(NettoPrice));
+                }
             }
+        }
+
+        public decimal? VoucherDiscount
+        {
+            get
+            {
+                if (VoucherCount == null)
+                    return null;
+                return VoucherCount.Value * Options.VoucherValue.Value;
+            }
+
         }
 
         public decimal NettoPrice
         {
             get
             {
-                if (VoucherCount == null)
+                if (VoucherDiscount == null)
                     return TotalPrice;
-                return TotalPrice - VoucherCount.Value * VoucherValue;
+                return TotalPrice - VoucherDiscount.Value;
             }
         }
 
@@ -63,15 +81,32 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
         /// </summary>
         public bool KeepChange { get; set; }
 
-        public PaymentViewModel(Order order, decimal voucherValue)
+        /// <summary>
+        /// Indicates if the order is payed with mobile
+        /// </summary>
+        private bool _IsMobilePayment;
+        public bool IsMobilePayment 
+        {
+            get => _IsMobilePayment;
+            set
+            {
+                if (SetProperty(ref _IsMobilePayment, value))
+                {
+                    Payed = null;
+                    OkCommand.ChangeCanExecute();
+                }
+            }
+        }
+
+        public PaymentViewModel(Order order, Options options)
         {
             Order = order;
-            VoucherValue = voucherValue;
+            Options = options;
         }
 
         protected override bool CanConfirm()
         {
-            return Payed.HasValue && Payed.Value >= NettoPrice;
+            return (Payed.HasValue && Payed.Value >= NettoPrice) || IsMobilePayment;
         }
     }
 }

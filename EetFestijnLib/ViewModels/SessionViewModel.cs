@@ -12,24 +12,19 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 {
     public class SessionViewModel : PageViewModel
     {
-
-        private ProductList ProductList { get; }
-
-        private Options Options { get; }
-
+        private Session Session { get; }
+        
         public OrderViewModel CurrentOrder { get; }
 
         public OrderList OrderList { get; }
 
-        public SessionViewModel(StackViewModel<PageViewModel> stackViewModel, IDialogService dialogService, ProductList productList, Options options):base(stackViewModel, dialogService)
+        public SessionViewModel(StackViewModel<PageViewModel> stackViewModel, IDialogService dialogService, Session session):base(stackViewModel, dialogService)
         {
-            ProductList = productList;
-            Options = Options;
+            Session = session;
 
-            OrderList = new OrderList();
-            OrderList.OrderAdded += OrderListOrderAdded;
+            Session.OrderList.OrderAdded += OrderListOrderAdded;
                         
-            CurrentOrder = new OrderViewModel(dialogService, ProductList, OrderList);
+            CurrentOrder = new OrderViewModel(dialogService, Session);
         }
 
        

@@ -95,7 +95,7 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             Options options = new Options(UseVouchers, VoucherValue, UseMobilePayments);
             SaveProductList(productList);
             SaveOptions(options);
-            StackViewModel.PushViewModel(new SessionViewModel(StackViewModel, DialogService, productList, options));
+            StackViewModel.PushViewModel(new SessionViewModel(StackViewModel, DialogService, new Session(productList, options)));
         }
 
         /// <summary>
