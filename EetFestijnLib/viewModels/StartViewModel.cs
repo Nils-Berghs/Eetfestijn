@@ -12,7 +12,7 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
         public StartViewModel(StackViewModel<PageViewModel> stackViewModel, IDialogService dialogService):base(stackViewModel, dialogService)
         {
-            NewSessionCommand = new Command(() => StackViewModel.PushViewModel(new MenuViewModel(StackViewModel, dialogService)));
+            NewSessionCommand = new Command(() => StackViewModel.PushViewModel(new CreateSessionViewModel(StackViewModel, dialogService)));
             OpenSessionCommand = new Command(() =>
             {
                 //test = !test;

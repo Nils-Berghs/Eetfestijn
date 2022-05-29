@@ -23,7 +23,7 @@ namespace be.berghs.nils.EetFestijnWPF.Classes
         public void CreateView(ViewModelBase viewModel)
         {
             Page page = null;
-            if (viewModel is MenuViewModel)
+            if (viewModel is CreateSessionViewModel)
                 page = new MenuPage();
             else if (viewModel is OrderViewModel)
                 page = new OrderPage();

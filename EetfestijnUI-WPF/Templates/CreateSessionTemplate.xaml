@@ -10,7 +10,7 @@
         <Setter Property="IsTabStop" Value="False"/>
     </Style>
 
-    <DataTemplate DataType="{x:Type viewmodels:MenuViewModel}">
+    <DataTemplate DataType="{x:Type viewmodels:CreateSessionViewModel}">
         
         <Grid  Margin="10" x:Name="MainGrid">
             <Grid.ColumnDefinitions>

@@ -31,7 +31,7 @@
 
                 <!-- Application specific data templates-->
                 <ResourceDictionary Source="./Templates/StartTemplate.xaml"/>
-                <ResourceDictionary Source="./Templates/MenuTemplate.xaml"/>
+                <ResourceDictionary Source="./Templates/CreateSessionTemplate.xaml"/>
                 <ResourceDictionary Source="./Templates/ProductTemplate.xaml"/>
                 <ResourceDictionary Source="./Templates/ProductCategoryTemplate.xaml"/>
                 <ResourceDictionary Source="./Templates/SessionTemplate.xaml"/>

@@ -11,7 +11,7 @@ using System.Windows.Input;
 
 namespace be.berghs.nils.EetFestijnLib.ViewModels
 {
-    public class MenuViewModel: PageViewModel
+    public class CreateSessionViewModel: PageViewModel
     {
         public ProductCategoryViewModel Foods { get; private set; }
 
@@ -58,7 +58,7 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
         public ICommand CancelCommand { get;  }
 
-        internal MenuViewModel(StackViewModel<PageViewModel> stackViewModel, IDialogService dialogService) : base(stackViewModel, dialogService)
+        internal CreateSessionViewModel(StackViewModel<PageViewModel> stackViewModel, IDialogService dialogService) : base(stackViewModel, dialogService)
         {
             Session session = ReadSession();
             Foods = new ProductCategoryViewModel(session.ProductList.Foods, DialogService, "Eten");
