@@ -26,7 +26,13 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             set
             {
                 if (SetProperty(ref _UseVouchers, value))
-                    OkCommand.ChangeCanExecute();
+                {
+                    OkCommand?.ChangeCanExecute();
+
+                    //if not using voucher, clear the voucher value
+                    if (!value)
+                        VoucherValue = null;
+                }
             }
         }
 
@@ -40,7 +46,7 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
                 string newValue = StringToDecimalHelper.CheckDecimalString(value, _VoucherValue, "0.#", true);
                 //set the new price
                 if (SetProperty(ref _VoucherValue, newValue))
-                    OkCommand.ChangeCanExecute();
+                    OkCommand?.ChangeCanExecute();
                 else if (newValue != value)
                     OnPropertyChanged();
             }
@@ -55,9 +61,14 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
         internal MenuViewModel(StackViewModel<PageViewModel> stackViewModel, IDialogService dialogService) : base(stackViewModel, dialogService)
         {
             ProductList productList = ReadProductList();
+            Options options = ReadOptions();
             Foods = new ProductCategoryViewModel(productList.Foods, DialogService, "Eten");
             Beverages = new ProductCategoryViewModel(productList.Beverages, DialogService, "Drank");
             Desserts = new ProductCategoryViewModel(productList.Desserts, DialogService, "Dessert");
+
+            UseVouchers = options.UseVouchers;
+            VoucherValue = options.VoucherValue?.ToString("0.#");
+            UseMobilePayments = options.UseMobilePayments;
 
             OkCommand = new Command(Confirm, CanConfirm);
             CancelCommand = new Command(Cancel);
@@ -83,7 +94,8 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             ProductList productList = new ProductList(Foods.GetProducts(), Beverages.GetProducts(), Desserts.GetProducts());
             Options options = new Options(UseVouchers, VoucherValue, UseMobilePayments);
             SaveProductList(productList);
-            StackViewModel.PushViewModel(new SessionViewModel(StackViewModel, DialogService, productList));
+            SaveOptions(options);
+            StackViewModel.PushViewModel(new SessionViewModel(StackViewModel, DialogService, productList, options));
         }
 
         /// <summary>
@@ -99,6 +111,15 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
         }
 
+        private void SaveOptions(Options options)
+        {
+            string path = GetTempOptionsPath();
+            FileInfo fileInfo = new FileInfo(path);
+            Directory.CreateDirectory(fileInfo.DirectoryName);
+
+            File.WriteAllText(path, JsonConvert.SerializeObject(options, Formatting.Indented));
+        }
+
         /// <summary>
         /// This function reads a product list from a temporary file from AppData
         /// </summary>
@@ -108,18 +129,30 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             try
             {
                 if (File.Exists(path))
-                {
                     return JsonConvert.DeserializeObject<ProductList>(File.ReadAllText(path));
-                }
-                else
-                {
-                    return new ProductList();
-                }
             }
             catch
+            {}
+            //fall back to a new product list
+            return new ProductList();
+
+        }
+
+        /// <summary>
+        /// This function reads the options from a temporary file from AppData
+        /// </summary>
+        private Options ReadOptions()
+        {
+            string path = GetTempOptionsPath();
+            try
             {
-                return new ProductList();
+                if (File.Exists(path))
+                    return JsonConvert.DeserializeObject<Options>(File.ReadAllText(path));
             }
+            catch
+            {}
+            //fall back to new options
+            return new Options();
         }
 
         /// <summary>
@@ -130,6 +163,11 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
         private string GetTempMenuPath()
         {
             return FileSystemHelper.GetTempPath("Menu.json");
+        }
+
+        private string GetTempOptionsPath()
+        {
+            return FileSystemHelper.GetTempPath("Options.json");
         }
     }
 }

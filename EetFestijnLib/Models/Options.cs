@@ -4,8 +4,12 @@ using System.Text;
 
 namespace be.berghs.nils.EetFestijnLib.Models
 {
-    internal class Options
+    public class Options
     {
+        public Options()
+        {
+        }
+
         public Options(bool useVouchers, string voucherValue, bool useMobilePayments)
         {
             UseVouchers = useVouchers;

@@ -15,16 +15,20 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
         private ProductList ProductList { get; }
 
+        private Options Options { get; }
+
         public OrderViewModel CurrentOrder { get; }
 
         public OrderList OrderList { get; }
 
-        public SessionViewModel(StackViewModel<PageViewModel> stackViewModel, IDialogService dialogService, ProductList productList):base(stackViewModel, dialogService)
+        public SessionViewModel(StackViewModel<PageViewModel> stackViewModel, IDialogService dialogService, ProductList productList, Options options):base(stackViewModel, dialogService)
         {
+            ProductList = productList;
+            Options = Options;
+
             OrderList = new OrderList();
             OrderList.OrderAdded += OrderListOrderAdded;
-
-            ProductList = productList;
+                        
             CurrentOrder = new OrderViewModel(dialogService, ProductList, OrderList);
         }
 
