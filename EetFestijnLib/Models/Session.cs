@@ -6,11 +6,16 @@ namespace be.berghs.nils.EetFestijnLib.Models
 {
     public class Session
     {
-        public ProductList Products { get; }
+        public ProductList ProductList { get; }
 
         public Options Options { get; }
 
         public OrderList OrderList { get; }
+
+        public Session():this(new ProductList(), new Options ())
+        {
+
+        }
 
         public Session(ProductList products, Options options):this(products, options, new OrderList())
         {
@@ -19,7 +24,7 @@ namespace be.berghs.nils.EetFestijnLib.Models
 
         public Session(ProductList products, Options options, OrderList orderList)
         {
-            Products = products;
+            ProductList = products;
             Options = options;
             OrderList = orderList;
         }

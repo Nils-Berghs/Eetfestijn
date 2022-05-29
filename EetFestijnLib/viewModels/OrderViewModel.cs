@@ -38,9 +38,9 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             DialogService = dialogService;
             Session = session;
 
-            Foods = new OrderCategoryViewModel(Session.Products.Foods, "Eten");
-            Beverages = new OrderCategoryViewModel(Session.Products.Beverages, "Drank");
-            Desserts = new OrderCategoryViewModel(session.Products.Desserts, "Dessert");
+            Foods = new OrderCategoryViewModel(Session.ProductList.Foods, "Eten");
+            Beverages = new OrderCategoryViewModel(Session.ProductList.Beverages, "Drank");
+            Desserts = new OrderCategoryViewModel(session.ProductList.Desserts, "Dessert");
 
             Foods.PropertyChanged += OrderCategoryPropertyChanged;
             Beverages.PropertyChanged += OrderCategoryPropertyChanged;

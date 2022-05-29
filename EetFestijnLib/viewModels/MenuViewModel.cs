@@ -60,15 +60,14 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
         internal MenuViewModel(StackViewModel<PageViewModel> stackViewModel, IDialogService dialogService) : base(stackViewModel, dialogService)
         {
-            ProductList productList = ReadProductList();
-            Options options = ReadOptions();
-            Foods = new ProductCategoryViewModel(productList.Foods, DialogService, "Eten");
-            Beverages = new ProductCategoryViewModel(productList.Beverages, DialogService, "Drank");
-            Desserts = new ProductCategoryViewModel(productList.Desserts, DialogService, "Dessert");
+            Session session = ReadSession();
+            Foods = new ProductCategoryViewModel(session.ProductList.Foods, DialogService, "Eten");
+            Beverages = new ProductCategoryViewModel(session.ProductList.Beverages, DialogService, "Drank");
+            Desserts = new ProductCategoryViewModel(session.ProductList.Desserts, DialogService, "Dessert");
 
-            UseVouchers = options.UseVouchers;
-            VoucherValue = options.VoucherValue?.ToString("0.#");
-            UseMobilePayments = options.UseMobilePayments;
+            UseVouchers = session.Options.UseVouchers;
+            VoucherValue = session.Options.VoucherValue?.ToString("0.#");
+            UseMobilePayments = session.Options.UseMobilePayments;
 
             OkCommand = new Command(Confirm, CanConfirm);
             CancelCommand = new Command(Cancel);
@@ -93,81 +92,53 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
         {
             ProductList productList = new ProductList(Foods.GetProducts(), Beverages.GetProducts(), Desserts.GetProducts());
             Options options = new Options(UseVouchers, VoucherValue, UseMobilePayments);
-            SaveProductList(productList);
-            SaveOptions(options);
-            StackViewModel.PushViewModel(new SessionViewModel(StackViewModel, DialogService, new Session(productList, options)));
+            Session session = new Session(productList, options);
+            SaveSession(session);
+           
+            StackViewModel.PushViewModel(new SessionViewModel(StackViewModel, DialogService, session));
         }
 
         /// <summary>
-        /// Saves the product list to appData
+        /// Saves the session to appData
         /// </summary>
-        private void SaveProductList(ProductList productList)
+        private void SaveSession(Session session)
         {
-            string path = GetTempMenuPath();
+            string path = GetTempSessionPath();
             FileInfo fileInfo = new FileInfo(path);
             Directory.CreateDirectory(fileInfo.DirectoryName);
 
-            File.WriteAllText(path, JsonConvert.SerializeObject(productList, Formatting.Indented));
+            File.WriteAllText(path, JsonConvert.SerializeObject(session, Formatting.Indented));
 
-        }
-
-        private void SaveOptions(Options options)
-        {
-            string path = GetTempOptionsPath();
-            FileInfo fileInfo = new FileInfo(path);
-            Directory.CreateDirectory(fileInfo.DirectoryName);
-
-            File.WriteAllText(path, JsonConvert.SerializeObject(options, Formatting.Indented));
         }
 
         /// <summary>
         /// This function reads a product list from a temporary file from AppData
         /// </summary>
-        private ProductList ReadProductList()
+        private Session ReadSession()
         {
-            string path = GetTempMenuPath();
+            string path = GetTempSessionPath();
             try
             {
                 if (File.Exists(path))
-                    return JsonConvert.DeserializeObject<ProductList>(File.ReadAllText(path));
+                    return JsonConvert.DeserializeObject<Session>(File.ReadAllText(path));
             }
             catch
-            {}
+            {
+            }
             //fall back to a new product list
-            return new ProductList();
+            return new Session();
 
         }
 
         /// <summary>
-        /// This function reads the options from a temporary file from AppData
-        /// </summary>
-        private Options ReadOptions()
-        {
-            string path = GetTempOptionsPath();
-            try
-            {
-                if (File.Exists(path))
-                    return JsonConvert.DeserializeObject<Options>(File.ReadAllText(path));
-            }
-            catch
-            {}
-            //fall back to new options
-            return new Options();
-        }
-
-        /// <summary>
-        /// Gets the path to temporarily save the menu.
+        /// Gets the path to temporarily save the session.
         /// This is AppData/Local/Eetfestijn
         /// </summary>
         /// <returns></returns>
-        private string GetTempMenuPath()
+        private string GetTempSessionPath()
         {
-            return FileSystemHelper.GetTempPath("Menu.json");
+            return FileSystemHelper.GetTempPath("Session.json");
         }
 
-        private string GetTempOptionsPath()
-        {
-            return FileSystemHelper.GetTempPath("Options.json");
-        }
     }
 }
