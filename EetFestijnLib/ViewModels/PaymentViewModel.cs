@@ -3,6 +3,7 @@ using be.berghs.nils.EetFestijnLib.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace be.berghs.nils.EetFestijnLib.ViewModels
 {
@@ -107,6 +108,19 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
         protected override bool CanConfirm()
         {
             return (Payed.HasValue && Payed.Value >= NettoPrice) || IsMobilePayment;
+        }
+
+        protected override Task Confirm()
+        {
+            Order.Payment = new Payment
+            {
+                TotalPrice = TotalPrice,
+                VoucherCount = (decimal)VoucherCount,
+                NettoPrice = NettoPrice,
+                MobilePayment = IsMobilePayment,
+                Tip = KeepChange ? (decimal)Change : 0
+            };
+            return base.Confirm();
         }
     }
 }
