@@ -13,6 +13,8 @@ namespace be.berghs.nils.EetFestijnLib.Models
 
         public IEnumerable<OrderItem> Desserts { get; set; }
 
+        public int OrderId { get; set; }
+
         public decimal TotalPrice { get; }
         public Payment Payment { get; set; }
 
