@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace be.berghs.nils.EetFestijnLib.ViewModels
 {
@@ -16,13 +17,8 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
         
         public OrderViewModel CurrentOrder { get; }
 
-        private int _OrderCount;
-        public int OrderCount 
-        { 
-            get => _OrderCount; 
-            private set => SetProperty(ref _OrderCount, value);
-        }
-
+        public int OrderCount => Session.OrderCount;
+        
         private int _PlateCount;
         public int PlateCount
         {
@@ -58,25 +54,33 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
         {
             RecalculateTotals();
 
-            //Todo save order to temp file async
+            _ = SaveOrder(e.Order);
+        }
+
+        private async Task SaveOrder(Order order)
+        {
+            string orderPath = FileSystemHelper.GetSessionPath(Session, "Order-"+order.OrderId+ ".json");
+            using (var sw = new StreamWriter(orderPath))
+            {
+                await sw.WriteAsync(JsonConvert.SerializeObject(order, Formatting.Indented));
+            }
         }
 
         private void RecalculateTotals()
         {
-            int orderCount = 0;
             int plateCount = 0;
             decimal totalIncome = 0;
             foreach (var order in Session.OrderList.Orders)
             {
-                orderCount++;
                 totalIncome += order.TotalPrice;
                 foreach (var item in order.Foods)
                     plateCount += item.Count;
             }
 
-            OrderCount = orderCount;
             PlateCount = plateCount;
             TotalIncome = totalIncome;
+
+            OnPropertyChanged(nameof(OrderCount));
         }
     }
 }

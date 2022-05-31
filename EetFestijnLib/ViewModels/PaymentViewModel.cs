@@ -115,7 +115,7 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             Order.Payment = new Payment
             {
                 TotalPrice = TotalPrice,
-                VoucherCount = (decimal)VoucherCount,
+                VoucherCount = VoucherCount?? 0,
                 NettoPrice = NettoPrice,
                 MobilePayment = IsMobilePayment,
                 Tip = KeepChange ? (decimal)Change : 0

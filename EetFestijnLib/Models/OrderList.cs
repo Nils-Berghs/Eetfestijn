@@ -20,7 +20,9 @@ namespace be.berghs.nils.EetFestijnLib.Models
 
         internal void AddOrder(Order order)
         {
+            
             OrdersList.Add(order);
+            order.OrderId = OrdersList.Count;
 
             OrderAdded?.Invoke(this, new OrderAddedEventArgs(order));
         }

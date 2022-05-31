@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Windows.Input;
@@ -13,6 +14,8 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 {
     public class CreateSessionViewModel: PageViewModel
     {
+        private const string SESSION_FILE_NAME = "Session.json";
+
         public ProductCategoryViewModel Foods { get; private set; }
 
         public ProductCategoryViewModel Beverages { get; private set; }
@@ -103,12 +106,16 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
         /// </summary>
         private void SaveSession(Session session)
         {
-            string path = GetTempSessionPath();
-            FileInfo fileInfo = new FileInfo(path);
+            //save the general setting file
+            string tempPath = FileSystemHelper.GetTempPath(SESSION_FILE_NAME);
+            FileInfo fileInfo = new FileInfo(tempPath);
             Directory.CreateDirectory(fileInfo.DirectoryName);
+            File.WriteAllText(tempPath, JsonConvert.SerializeObject(session, Formatting.Indented));
 
-            File.WriteAllText(path, JsonConvert.SerializeObject(session, Formatting.Indented));
-
+            //save the session to its own directory
+            FileSystemHelper.CreateSessionPath(session);
+            string sessionPath = FileSystemHelper.GetSessionPath(session, SESSION_FILE_NAME);
+            File.WriteAllText(sessionPath, JsonConvert.SerializeObject(session, Formatting.Indented));
         }
 
         /// <summary>
@@ -116,7 +123,7 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
         /// </summary>
         private Session ReadSession()
         {
-            string path = GetTempSessionPath();
+            string path = FileSystemHelper.GetTempPath(SESSION_FILE_NAME);
             try
             {
                 if (File.Exists(path))
@@ -130,15 +137,7 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
         }
 
-        /// <summary>
-        /// Gets the path to temporarily save the session.
-        /// This is AppData/Local/Eetfestijn
-        /// </summary>
-        /// <returns></returns>
-        private string GetTempSessionPath()
-        {
-            return FileSystemHelper.GetTempPath("Session.json");
-        }
+      
 
     }
 }
