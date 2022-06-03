@@ -47,23 +47,13 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             //recalculate the totals, this is usefull when opening an existing session
             RecalculateTotals();
         }
-
-       
+              
 
         private void OrderListOrderAdded(object sender, OrderAddedEventArgs e)
         {
             RecalculateTotals();
 
-            _ = SaveOrder(e.Order);
-        }
-
-        private async Task SaveOrder(Order order)
-        {
-            string orderPath = FileSystemHelper.GetSessionPath(Session, "Order-"+order.OrderId+ ".json");
-            using (var sw = new StreamWriter(orderPath))
-            {
-                await sw.WriteAsync(JsonConvert.SerializeObject(order, Formatting.Indented));
-            }
+            _ = FileSystemHelper.SaveOrder(Session, e.Order);
         }
 
         private void RecalculateTotals()

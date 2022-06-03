@@ -1,41 +1,140 @@
 ﻿using be.berghs.nils.EetFestijnLib.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace be.berghs.nils.EetFestijnLib.Helpers
 {
     internal static class FileSystemHelper
     {
+        private const string SESSION_FILE_NAME = "Session.json";
+        private const string SESSION_DIR_FORMAT = "yyyyMMdd_HHmm";
+
+        /// <summary>
+        /// Gets the root of the temp path
+        /// </summary>
+        /// <returns></returns>
+        private static string GetTempPath()
+        {
+            string path = System.Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            return Path.Combine(path, "EetFestijn");
+        }
+
         /// <summary>
         /// Gets a path to a file or directory with the given name in a temp directory
         /// This is AppData/Local/Eetfestijn
         /// </summary>
         /// <param name="name">The name for the file or directory</param>
         /// <returns></returns>
-        internal static string GetTempPath(string name)
+        private static string GetTempPath(string name)
         {
-            string path = System.Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            return Path.Combine(path, "EetFestijn", name);
+            return Path.Combine(GetTempPath(), name);
         }
 
-        internal static string GetSessionPath(Session session, string fileName)
+        private static string GetSessionPath(Session session, string fileName)
         {
-            
             return Path.Combine(GetSessionDirectory(session), fileName);
         }
 
-        internal static void CreateSessionPath(Session session)
+        private static void CreateSessionPath(Session session)
         {
             Directory.CreateDirectory(GetSessionDirectory(session));
-
         }
 
         private static string GetSessionDirectory(Session session)
         {
-            string path = System.Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            return Path.Combine(path, "EetFestijn", session.CreatedDateTime.ToString("yyyyMMdd_HHmm"));
+            return Path.Combine(GetTempPath(), session.CreatedDateTime.ToString(SESSION_DIR_FORMAT));
         }
+
+        /// <summary>
+        /// Saves general info about a session to its own folder
+        /// </summary>
+        /// <param name="session"></param>
+        internal static void SaveSession(Session session)
+        {
+            CreateSessionPath(session);
+            string sessionPath = GetSessionPath(session, SESSION_FILE_NAME);
+            File.WriteAllText(sessionPath, JsonConvert.SerializeObject(session, Formatting.Indented));
+        }
+
+        /// <summary>
+        /// Saves general info about a session to the global session file
+        /// </summary>
+        /// <param name="session"></param>
+        internal static void SaveGlobalSession(Session session)
+        {
+            string tempPath = FileSystemHelper.GetTempPath(SESSION_FILE_NAME);
+            FileInfo fileInfo = new FileInfo(tempPath);
+            Directory.CreateDirectory(fileInfo.DirectoryName);
+            File.WriteAllText(tempPath, JsonConvert.SerializeObject(session, Formatting.Indented));
+        }
+
+        /// <summary>
+        /// Saves an order to the given sessions, temp folder
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="order"></param>
+        /// <returns></returns>
+        internal static async Task SaveOrder(Session session, Order order)
+        {
+            string orderPath = GetSessionPath(session, "Order-"+order.OrderId+ ".json");
+            using (var sw = new StreamWriter(orderPath))
+            {
+                await sw.WriteAsync(JsonConvert.SerializeObject(order, Formatting.Indented));
+            }
+        }
+        
+        /// <summary>
+        /// This function reads the global session information
+        /// </summary>
+        internal static Session ReadGlobalSession()
+        {
+            try
+            {
+                return ReadSession(GetTempPath(SESSION_FILE_NAME));
+            }
+            catch
+            {
+            }
+            //fall back to a new product list
+            return new Session();
+            
+
+        }
+
+        /// <summary>
+        /// Reads a session from a given file.
+        /// Note that this method does not handle errors
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        private static Session ReadSession(string fileName)
+        {
+            return JsonConvert.DeserializeObject<Session>(File.ReadAllText(fileName));
+        }
+
+        internal static IEnumerable<Session> ReadAvailableSessions()
+        {
+            var sessions = new List<Session>();
+            var dirInfo = new DirectoryInfo(GetTempPath());
+            foreach(var dir in dirInfo.GetDirectories())
+            {
+                var sessionFiles = dir.GetFiles(SESSION_FILE_NAME);
+                if (sessionFiles.Length == 1)
+                {
+                    try
+                    {
+                        sessions.Add(ReadSession(sessionFiles[0].FullName));
+                    }
+                    catch { }
+                }
+            }
+            return sessions;
+        }
+
+
     }
 }

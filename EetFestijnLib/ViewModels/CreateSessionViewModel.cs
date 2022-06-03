@@ -14,8 +14,6 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 {
     public class CreateSessionViewModel: PageViewModel
     {
-        private const string SESSION_FILE_NAME = "Session.json";
-
         public ProductCategoryViewModel Foods { get; private set; }
 
         public ProductCategoryViewModel Beverages { get; private set; }
@@ -63,7 +61,7 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
         internal CreateSessionViewModel(StackViewModel<PageViewModel> stackViewModel, IDialogService dialogService) : base(stackViewModel, dialogService)
         {
-            Session session = ReadSession();
+            Session session = FileSystemHelper.ReadGlobalSession();
             Foods = new ProductCategoryViewModel(session.ProductList.Foods, DialogService, "Eten");
             Beverages = new ProductCategoryViewModel(session.ProductList.Beverages, DialogService, "Drank");
             Desserts = new ProductCategoryViewModel(session.ProductList.Desserts, DialogService, "Dessert");
@@ -107,35 +105,14 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
         private void SaveSession(Session session)
         {
             //save the general setting file
-            string tempPath = FileSystemHelper.GetTempPath(SESSION_FILE_NAME);
-            FileInfo fileInfo = new FileInfo(tempPath);
-            Directory.CreateDirectory(fileInfo.DirectoryName);
-            File.WriteAllText(tempPath, JsonConvert.SerializeObject(session, Formatting.Indented));
-
+            FileSystemHelper.SaveGlobalSession(session);
+            
             //save the session to its own directory
-            FileSystemHelper.CreateSessionPath(session);
-            string sessionPath = FileSystemHelper.GetSessionPath(session, SESSION_FILE_NAME);
-            File.WriteAllText(sessionPath, JsonConvert.SerializeObject(session, Formatting.Indented));
+            FileSystemHelper.SaveSession(session);
+            
         }
 
-        /// <summary>
-        /// This function reads a product list from a temporary file from AppData
-        /// </summary>
-        private Session ReadSession()
-        {
-            string path = FileSystemHelper.GetTempPath(SESSION_FILE_NAME);
-            try
-            {
-                if (File.Exists(path))
-                    return JsonConvert.DeserializeObject<Session>(File.ReadAllText(path));
-            }
-            catch
-            {
-            }
-            //fall back to a new product list
-            return new Session();
-
-        }
+        
 
       
 
