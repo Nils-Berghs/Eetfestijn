@@ -5,7 +5,7 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="600"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
@@ -14,8 +14,40 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Button Grid.Column="1" Grid.Row="1" Command="{Binding NewSessionCommand}" Content="Start nieuwe sessie"/>
-            <Button Grid.Column="1" Grid.Row="2" Command="{Binding OpenSessionCommand}" Content="Sessie laden"/>
+            <Button Grid.Column="1" Grid.Row="2" Command="{Binding NewSessionCommand}" Content="Start nieuwe sessie" Margin="0,10"/>
+            <!--<Button Grid.Column="1" Grid.Row="1" Command="{Binding OpenSessionCommand}" Content="Sessie laden"/>-->
+
+            <GroupBox Header="Bestaande sessies" Grid.Column="1" Grid.Row="1">
+            <ListView ItemsSource="{Binding Sessions}" Background="Red">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="{x:Type viewmodels:SessionViewModel}">
+                        <Border VerticalAlignment="Stretch" Padding="10,5" CornerRadius="3" BorderThickness="1" BorderBrush="{StaticResource MaterialDesignBodyLight}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Aantal bestellingen:" Margin="0,3"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Sessie datum:" Margin="0,3"/>
+
+                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding OrderCount}" FontWeight="Bold"  TextAlignment="Right"/>
+                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding StartDate, StringFormat='dd-MM-yyyy HH:mm'}" FontWeight="Bold"  TextAlignment="Right"/>
+                        </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ListView>
+            </GroupBox>
         </Grid>
     </DataTemplate>
 </ResourceDictionary>

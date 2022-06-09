@@ -18,6 +18,8 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
         public OrderViewModel CurrentOrder { get; }
 
         public int OrderCount => Session.OrderCount;
+
+        public DateTime StartDate => Session.CreatedDateTime;
         
         private int _PlateCount;
         public int PlateCount

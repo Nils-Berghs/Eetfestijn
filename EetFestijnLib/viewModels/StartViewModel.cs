@@ -2,6 +2,7 @@
 using be.berghs.nils.EetFestijnLib.Helpers.Dialog;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 
 namespace be.berghs.nils.EetFestijnLib.ViewModels
@@ -17,6 +18,7 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
         public StartViewModel(StackViewModel<PageViewModel> stackViewModel, IDialogService dialogService):base(stackViewModel, dialogService)
         {
             var sessions = FileSystemHelper.ReadAvailableSessions();
+            Sessions = new ObservableCollection<SessionViewModel>(sessions.Select(s => new SessionViewModel(stackViewModel, dialogService, s)));
 
             NewSessionCommand = new Command(() => StackViewModel.PushViewModel(new CreateSessionViewModel(StackViewModel, dialogService)));
             OpenSessionCommand = new Command(() =>
