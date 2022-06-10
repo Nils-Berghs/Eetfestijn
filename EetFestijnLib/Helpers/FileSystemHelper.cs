@@ -1,4 +1,5 @@
 ﻿using be.berghs.nils.EetFestijnLib.Models;
+using be.berghs.nils.EetFestijnLib.ViewModels;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace be.berghs.nils.EetFestijnLib.Helpers
     {
         private const string SESSION_FILE_NAME = "Session.json";
         private const string SESSION_DIR_FORMAT = "yyyyMMdd_HHmm";
+        private const string ORDER_FILE_START = "Order-";
 
         /// <summary>
         /// Gets the root of the temp path
@@ -33,7 +35,7 @@ namespace be.berghs.nils.EetFestijnLib.Helpers
         {
             return Path.Combine(GetTempPath(), name);
         }
-
+                
         private static string GetSessionPath(Session session, string fileName)
         {
             return Path.Combine(GetSessionDirectory(session), fileName);
@@ -53,11 +55,14 @@ namespace be.berghs.nils.EetFestijnLib.Helpers
         /// Saves general info about a session to its own folder
         /// </summary>
         /// <param name="session"></param>
-        internal static void SaveSession(Session session)
+        internal async static Task SaveSession(Session session)
         {
             CreateSessionPath(session);
             string sessionPath = GetSessionPath(session, SESSION_FILE_NAME);
-            File.WriteAllText(sessionPath, JsonConvert.SerializeObject(session, Formatting.Indented));
+            using (var sw = new StreamWriter(sessionPath))
+            {
+                await sw.WriteAsync(JsonConvert.SerializeObject(session, Formatting.Indented));
+            }
         }
 
         /// <summary>
@@ -78,9 +83,11 @@ namespace be.berghs.nils.EetFestijnLib.Helpers
         /// <param name="session"></param>
         /// <param name="order"></param>
         /// <returns></returns>
-        internal static async Task SaveOrder(Session session, Order order)
+        internal static async Task SaveSessionAndOrder(Session session, Order order)
         {
-            string orderPath = GetSessionPath(session, "Order-"+order.OrderId+ ".json");
+            await SaveSession(session);
+
+            string orderPath = GetSessionPath(session, ORDER_FILE_START+order.OrderId+ ".json");
             using (var sw = new StreamWriter(orderPath))
             {
                 await sw.WriteAsync(JsonConvert.SerializeObject(order, Formatting.Indented));
@@ -101,12 +108,11 @@ namespace be.berghs.nils.EetFestijnLib.Helpers
             }
             //fall back to a new product list
             return new Session();
-            
 
         }
 
         /// <summary>
-        /// Reads a session from a given file.
+        /// Reads basic info for a session from a given file.
         /// Note that this method does not handle errors
         /// </summary>
         /// <param name="fileName"></param>
@@ -135,6 +141,15 @@ namespace be.berghs.nils.EetFestijnLib.Helpers
             return sessions;
         }
 
+        internal static void ReadFullSession(Session session)
+        {
+            DirectoryInfo info = new DirectoryInfo(GetSessionDirectory(session));
+            foreach(var f in info.GetFiles(ORDER_FILE_START +"*"))
+            {
+                session.OrderList.AddOrder(JsonConvert.DeserializeObject<Order>(File.ReadAllText(f.FullName)));
+            }
+            
+        }
 
     }
 }

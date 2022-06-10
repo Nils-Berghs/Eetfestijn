@@ -21,10 +21,10 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             Sessions = new ObservableCollection<SessionViewModel>(sessions.Select(s => new SessionViewModel(stackViewModel, dialogService, s)));
 
             NewSessionCommand = new Command(() => StackViewModel.PushViewModel(new CreateSessionViewModel(StackViewModel, dialogService)));
-            OpenSessionCommand = new Command(() =>
+            OpenSessionCommand = new Command<SessionViewModel>(s =>
             {
-                //test = !test;
-                ((Command)NewSessionCommand).ChangeCanExecute();
+                FileSystemHelper.ReadFullSession(s);
+                StackViewModel.PushViewModel(s);
             });
 
         }

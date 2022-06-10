@@ -8,6 +8,7 @@ using System.Collections.Specialized;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace be.berghs.nils.EetFestijnLib.ViewModels
@@ -94,7 +95,7 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             ProductList productList = new ProductList(Foods.GetProducts(), Beverages.GetProducts(), Desserts.GetProducts());
             Options options = new Options(UseVouchers, VoucherValue, UseMobilePayments);
             Session session = new Session(productList, options);
-            SaveSession(session);
+            _ =SaveSession(session);
            
             StackViewModel.PushViewModel(new SessionViewModel(StackViewModel, DialogService, session));
         }
@@ -102,13 +103,13 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
         /// <summary>
         /// Saves the session to appData
         /// </summary>
-        private void SaveSession(Session session)
+        private async Task SaveSession(Session session)
         {
             //save the general setting file
             FileSystemHelper.SaveGlobalSession(session);
             
             //save the session to its own directory
-            FileSystemHelper.SaveSession(session);
+            await FileSystemHelper.SaveSession(session);
             
         }
 

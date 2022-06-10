@@ -1,52 +1,55 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:viewmodels="clr-namespace:be.berghs.nils.EetFestijnLib.ViewModels;assembly=EetFestijnLib">
+                    xmlns:viewmodels="clr-namespace:be.berghs.nils.EetFestijnLib.ViewModels;assembly=EetFestijnLib" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
     <DataTemplate DataType="{x:Type viewmodels:StartViewModel}">
-        <Grid>
+        <Grid Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="600"/>
+                <ColumnDefinition Width="auto" MinWidth="600"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="3*"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Button Grid.Column="1" Grid.Row="2" Command="{Binding NewSessionCommand}" Content="Start nieuwe sessie" Margin="0,10"/>
             <!--<Button Grid.Column="1" Grid.Row="1" Command="{Binding OpenSessionCommand}" Content="Sessie laden"/>-->
 
-            <GroupBox Header="Bestaande sessies" Grid.Column="1" Grid.Row="1">
-            <ListView ItemsSource="{Binding Sessions}" Background="Red">
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate DataType="{x:Type viewmodels:SessionViewModel}">
-                        <Border VerticalAlignment="Stretch" Padding="10,5" CornerRadius="3" BorderThickness="1" BorderBrush="{StaticResource MaterialDesignBodyLight}">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="3*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            
-                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Aantal bestellingen:" Margin="0,3"/>
-                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Sessie datum:" Margin="0,3"/>
+            <GroupBox Header="Bestaande sessies" Grid.Column="1" Grid.Row="1"  >
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden">
+                    <ItemsControl ItemsSource="{Binding Sessions}" Name="ItemList">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type viewmodels:SessionViewModel}">
+                                <Border VerticalAlignment="Stretch" Padding="10,5" Margin="5,5" CornerRadius="3" BorderThickness="1"  BorderBrush="{StaticResource MaterialDesignBodyLight}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="3*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="auto"/>
+                                        </Grid.ColumnDefinitions>
 
-                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding OrderCount}" FontWeight="Bold"  TextAlignment="Right"/>
-                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding StartDate, StringFormat='dd-MM-yyyy HH:mm'}" FontWeight="Bold"  TextAlignment="Right"/>
-                        </Grid>
-                        </Border>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ListView>
+                                        <TextBlock Grid.Row="1" Grid.Column="0" FontSize="20" Text="Aantal bestellingen:" Margin="0,3"/>
+                                        <TextBlock Grid.Row="0" Grid.Column="0" FontSize="20" Text="Sessie datum:" Margin="0,3"/>
+
+                                        <TextBlock Grid.Row="1" Grid.Column="1" FontSize="20" Text="{Binding OrderCount}" FontWeight="Bold"  TextAlignment="Right"/>
+                                        <TextBlock Grid.Row="0" Grid.Column="1" FontSize="20" Text="{Binding StartDate, StringFormat='dd-MM-yyyy HH:mm'}" FontWeight="Bold"  TextAlignment="Right" />
+                                        <Button Grid.Column="2" Grid.RowSpan="2" FontSize="20"  VerticalAlignment="Stretch" Margin="10,0,0,0" Style="{StaticResource MaterialDesignIconButton}"
+                                                Command="{Binding DataContext.OpenSessionCommand, ElementName=ItemList }" CommandParameter="{Binding .}">
+                                            <materialDesign:PackIcon Kind="FolderOpen"/>
+                                        </Button>
+
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
             </GroupBox>
         </Grid>
     </DataTemplate>

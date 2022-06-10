@@ -1,4 +1,6 @@
-﻿using System;
+﻿using be.berghs.nils.EetFestijnLib.Helpers;
+using be.berghs.nils.EetFestijnLib.Helpers.Events;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +9,9 @@ namespace be.berghs.nils.EetFestijnLib.Models
 {
     public class Session
     {
-        public DateTime CreatedDateTime { get; }
+        public event EventHandler OrderAdded;
+
+        public DateTime CreatedDateTime { get; set; }
 
         public string SessionName => "Session-" + CreatedDateTime.ToString("yyyy-MM-dd HH:mm");
 
@@ -18,6 +22,14 @@ namespace be.berghs.nils.EetFestijnLib.Models
         public Options Options { get; }
 
         public OrderList OrderList { get; }
+
+        /// <summary>
+        /// The theoretical income, vouchers included
+        /// </summary>
+        public decimal TotalIncome { get; set; }
+
+        
+        public int PlateCount { get; set; }
 
         public Session():this(new ProductList(), new Options ())
         {
@@ -35,15 +47,30 @@ namespace be.berghs.nils.EetFestijnLib.Models
             ProductList = products;
             Options = options;
             OrderList = orderList;
+            orderList.OrderAdded += OrderListOrderAdded;
         }
 
-        /// <summary>
-        /// Gets a name that is also a valid directoryName
-        /// </summary>
-        /// <returns></returns>
-        internal string GetSessionPathName()
+        private void OrderListOrderAdded(object sender, OrderAddedEventArgs e)
         {
-            return "Session-" + CreatedDateTime.ToString("yyyyMMdd_HHmm");
+            RecalculateTotals();
+            OrderAdded?.Invoke(this, e);
+            _ = FileSystemHelper.SaveSessionAndOrder(this, e.Order);
+        }
+
+        private void RecalculateTotals()
+        {
+            int plateCount = 0;
+            decimal totalIncome = 0;
+            foreach (var order in OrderList.Orders)
+            {
+                totalIncome += order.TotalPrice;
+                foreach (var item in order.Foods)
+                    plateCount += item.Count;
+            }
+
+            PlateCount = plateCount;
+            TotalIncome = totalIncome;
+
         }
                 
     }

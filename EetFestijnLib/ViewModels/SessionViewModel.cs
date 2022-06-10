@@ -20,59 +20,28 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
         public int OrderCount => Session.OrderCount;
 
         public DateTime StartDate => Session.CreatedDateTime;
-        
-        private int _PlateCount;
-        public int PlateCount
-        {
-            get => _PlateCount;
-            private set => SetProperty(ref _PlateCount, value);
-        }
+                
+        public int PlateCount => Session.PlateCount;
 
-        private decimal _TotalIncome;
         /// <summary>
         /// The theoretical income, vouchers included
         /// </summary>
-        public decimal TotalIncome
-        {
-            get => _TotalIncome;
-            private set => SetProperty(ref _TotalIncome, value);
-        }
+        public decimal TotalIncome => Session.TotalIncome;
 
         public SessionViewModel(StackViewModel<PageViewModel> stackViewModel, IDialogService dialogService, Session session):base(stackViewModel, dialogService)
         {
             Session = session;
-
-            Session.OrderList.OrderAdded += OrderListOrderAdded;
+            Session.OrderAdded += SessionOrderAdded;
                         
             CurrentOrder = new OrderViewModel(dialogService, Session);
 
-            //recalculate the totals, this is usefull when opening an existing session
-            RecalculateTotals();
-        }
-              
-
-        private void OrderListOrderAdded(object sender, OrderAddedEventArgs e)
-        {
-            RecalculateTotals();
-
-            _ = FileSystemHelper.SaveOrder(Session, e.Order);
         }
 
-        private void RecalculateTotals()
+        private void SessionOrderAdded(object sender, EventArgs e)
         {
-            int plateCount = 0;
-            decimal totalIncome = 0;
-            foreach (var order in Session.OrderList.Orders)
-            {
-                totalIncome += order.TotalPrice;
-                foreach (var item in order.Foods)
-                    plateCount += item.Count;
-            }
-
-            PlateCount = plateCount;
-            TotalIncome = totalIncome;
-
             OnPropertyChanged(nameof(OrderCount));
+            OnPropertyChanged(nameof(PlateCount));
+            OnPropertyChanged(nameof(TotalIncome));
         }
     }
 }
