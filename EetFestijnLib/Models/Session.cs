@@ -1,5 +1,6 @@
 ﻿using be.berghs.nils.EetFestijnLib.Helpers;
 using be.berghs.nils.EetFestijnLib.Helpers.Events;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace be.berghs.nils.EetFestijnLib.Models
 
         public Options Options { get; }
 
+        [JsonIgnore]
         public OrderList OrderList { get; }
 
         /// <summary>
@@ -48,6 +50,13 @@ namespace be.berghs.nils.EetFestijnLib.Models
             Options = options;
             OrderList = orderList;
             orderList.OrderAdded += OrderListOrderAdded;
+            orderList.OrdersAdded += OrdersListOrderAdded;
+        }
+
+        private void OrdersListOrderAdded(object sender, OrdersAddedEventArgs e)
+        {
+            RecalculateTotals();
+            OrderAdded?.Invoke(this, EventArgs.Empty);
         }
 
         private void OrderListOrderAdded(object sender, OrderAddedEventArgs e)

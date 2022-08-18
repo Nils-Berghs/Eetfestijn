@@ -53,7 +53,8 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
         internal IEnumerable<OrderItem> GetOrderItems()
         {
-            return Items.Where(i => i.Count > 0).Select(i => i.GetOrderItem());
+            //we must call ToList here, to avoid that the enumarable is already cleared by ClearOrder before it is used
+            return Items.Where(i => i.Count > 0).Select(i => i.GetOrderItem()).ToList();
         }
 
         /// <summary>

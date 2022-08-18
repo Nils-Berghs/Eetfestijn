@@ -8,6 +8,7 @@ namespace be.berghs.nils.EetFestijnLib.Models
     public class OrderList
     {
         public event EventHandler<OrderAddedEventArgs> OrderAdded;
+        public event EventHandler<OrdersAddedEventArgs> OrdersAdded;
 
         public IEnumerable<Order> Orders => OrdersList;
 
@@ -20,12 +21,23 @@ namespace be.berghs.nils.EetFestijnLib.Models
 
         internal void AddOrder(Order order)
         {
-            
             OrdersList.Add(order);
             order.OrderId = OrdersList.Count;
 
             OrderAdded?.Invoke(this, new OrderAddedEventArgs(order));
         }
 
+        /// <summary>
+        /// Use this function for reading existing orders
+        /// </summary>
+        /// <param name="orders"></param>
+        internal void AddOrders(IEnumerable<Order> orders)
+        {
+            foreach (var order in orders)
+                OrdersList.Add(order);
+            
+            OrdersAdded?.Invoke(this, new OrdersAddedEventArgs(orders));
+
+        }
     }
 }

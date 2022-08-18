@@ -23,7 +23,7 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             NewSessionCommand = new Command(() => StackViewModel.PushViewModel(new CreateSessionViewModel(StackViewModel, dialogService)));
             OpenSessionCommand = new Command<SessionViewModel>(s =>
             {
-                FileSystemHelper.ReadFullSession(s);
+                FileSystemHelper.ReadFullSession(s.Session);
                 StackViewModel.PushViewModel(s);
             });
 

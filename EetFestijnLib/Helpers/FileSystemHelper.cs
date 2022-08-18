@@ -141,14 +141,17 @@ namespace be.berghs.nils.EetFestijnLib.Helpers
             return sessions;
         }
 
+        /// <summary>
+        /// Reads the full session information into the given stession
+        /// </summary>
+        /// <param name="session"></param>
         internal static void ReadFullSession(Session session)
         {
             DirectoryInfo info = new DirectoryInfo(GetSessionDirectory(session));
+            List<Order> orders = new List<Order>();
             foreach(var f in info.GetFiles(ORDER_FILE_START +"*"))
-            {
-                session.OrderList.AddOrder(JsonConvert.DeserializeObject<Order>(File.ReadAllText(f.FullName)));
-            }
-            
+                orders.Add(JsonConvert.DeserializeObject<Order>(File.ReadAllText(f.FullName)));
+            session.OrderList.AddOrders(orders);
         }
 
     }

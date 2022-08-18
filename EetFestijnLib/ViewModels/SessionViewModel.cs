@@ -13,7 +13,7 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 {
     public class SessionViewModel : PageViewModel
     {
-        private Session Session { get; }
+        internal Session Session { get; }
         
         public OrderViewModel CurrentOrder { get; }
 
