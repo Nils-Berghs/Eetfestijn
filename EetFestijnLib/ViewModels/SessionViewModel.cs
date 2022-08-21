@@ -32,6 +32,7 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
         {
             Session = session;
             Session.OrderAdded += SessionOrderAdded;
+
                         
             CurrentOrder = new OrderViewModel(dialogService, Session);
 

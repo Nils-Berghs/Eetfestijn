@@ -16,7 +16,7 @@ namespace be.berghs.nils.EetFestijnLib.Models
 
         public string SessionName => "Session-" + CreatedDateTime.ToString("yyyy-MM-dd HH:mm");
 
-        public int OrderCount => OrderList.Orders.Count();
+        public int OrderCount { get; set; }
 
         public ProductList ProductList { get; }
 
@@ -50,10 +50,10 @@ namespace be.berghs.nils.EetFestijnLib.Models
             Options = options;
             OrderList = orderList;
             orderList.OrderAdded += OrderListOrderAdded;
-            orderList.OrdersAdded += OrdersListOrderAdded;
+            orderList.OrdersAdded += OrderListOrdersAdded;
         }
 
-        private void OrdersListOrderAdded(object sender, OrdersAddedEventArgs e)
+        private void OrderListOrdersAdded(object sender, OrdersAddedEventArgs e)
         {
             RecalculateTotals();
             OrderAdded?.Invoke(this, EventArgs.Empty);
@@ -76,7 +76,7 @@ namespace be.berghs.nils.EetFestijnLib.Models
                 foreach (var item in order.Foods)
                     plateCount += item.Count;
             }
-
+            OrderCount = OrderList.Orders.Count();
             PlateCount = plateCount;
             TotalIncome = totalIncome;
 
