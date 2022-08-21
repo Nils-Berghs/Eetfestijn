@@ -34,6 +34,13 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             }
         }
 
+        private bool _VoucherCountFocused;
+        public bool IsVoucherCountFocused
+        {
+            get => _VoucherCountFocused;
+            set => SetProperty(ref _VoucherCountFocused, value);
+        }
+
         public decimal? VoucherDiscount
         {
             get
@@ -103,6 +110,7 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
         {
             Order = order;
             Options = options;
+            IsVoucherCountFocused = true;
         }
 
         protected override bool CanConfirm()
