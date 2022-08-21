@@ -5,12 +5,6 @@
     <DataTemplate DataType="{x:Type viewmodels:OrderCategoryViewModel}">
         <GroupBox Header="{Binding Title}" Margin="10">
             <ItemsControl ItemsSource="{Binding Items}" IsTabStop="False">
-                <!--<ItemsControl.ItemContainerStyle>
-                    <Style TargetType="ItemsControl">
-                        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                    </Style>
-                </ItemsControl.ItemContainerStyle>-->
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Grid>
