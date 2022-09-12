@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Linq;
 
 namespace be.berghs.nils.EetFestijnLib.ViewModels
 {
@@ -87,9 +88,13 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
         private void ClearCurrentOrder()
         {
+            
             Foods.ClearOrder();
             Beverages.ClearOrder();
             Desserts.ClearOrder();
+
+            //perhaps run this as a task.
+            Foods.Items.First().Focused = true;
         }
     }
 }

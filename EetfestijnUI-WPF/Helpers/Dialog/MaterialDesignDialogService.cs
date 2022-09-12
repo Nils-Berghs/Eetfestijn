@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace be.berghs.nils.EetFestijn.UI.WPF.Helpers.Dialog
 {
@@ -19,7 +20,6 @@ namespace be.berghs.nils.EetFestijn.UI.WPF.Helpers.Dialog
                 {
                     viewModel.Close -= OnClose;
                     e.Session.Close();
-
                     // this call clears the session content, this avoids that behaviours defined in xaml are applied twice
                     // when the same dialog is shown multiple times in succession (e.g. on the confirm with badge screen)
                     e.Session.UpdateContent(null);

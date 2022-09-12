@@ -21,8 +21,9 @@ namespace be.berghs.nils.EetFestijnLib.Helpers
         /// <returns></returns>
         private static string GetTempPath()
         {
-            string path = System.Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            return Path.Combine(path, "EetFestijn");
+            string path = Path.Combine(System.Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "EetFestijn");
+            Directory.CreateDirectory(path);
+            return path;
         }
 
         /// <summary>

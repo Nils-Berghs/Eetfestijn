@@ -1,7 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:viewmodels="clr-namespace:be.berghs.nils.EetFestijnLib.ViewModels;assembly=EetFestijnLib" 
-                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+					xmlns:extensions="clr-namespace:be.berghs.nils.EetFestijn.UI.WPF.Helpers.Extensions" >
     <DataTemplate DataType="{x:Type viewmodels:OrderCategoryViewModel}">
         <GroupBox Header="{Binding Title}" Margin="10">
             <ItemsControl ItemsSource="{Binding Items}" IsTabStop="False">
@@ -15,7 +16,8 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0" Text="{Binding Name}" VerticalAlignment="Center" x:Name="txbName"/>
-                            <TextBox Grid.Column="1" Text="{Binding Count, UpdateSourceTrigger=PropertyChanged, TargetNullValue=''}" TextAlignment="Right" x:Name="txbCount"/>
+							<TextBox Grid.Column="1" Text="{Binding Count, UpdateSourceTrigger=PropertyChanged, TargetNullValue=''}" TextAlignment="Right" Name="txbCount"
+									 extensions:FocusExtension.IsFocused="{Binding Focused, Mode=TwoWay}" />
                             <TextBlock Grid.Column="2" Text="{Binding PriceText}" VerticalAlignment="Center" TextAlignment="Right"/>
                             <TextBlock Grid.Column="3" Text="{Binding TotalPriceText}" VerticalAlignment="Center" TextAlignment="Right"/>
 

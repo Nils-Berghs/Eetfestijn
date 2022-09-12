@@ -1,6 +1,7 @@
 ﻿using be.berghs.nils.EetFestijnLib.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Threading;
 
@@ -15,6 +16,17 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
         public decimal Price => Product.Price;
 
         public string PriceText => Price.ToString("0.0 €");
+
+        private bool _Focused;
+        public bool Focused 
+        {   
+            get => _Focused;
+            set
+            {
+                Debug.WriteLine("OrderItemViewModel, Setting Focused for {0} from {1} to {2}", Name, _Focused, value);
+                SetProperty(ref _Focused, value);
+            }
+        }
 
         private int? _Count;
         public int? Count
