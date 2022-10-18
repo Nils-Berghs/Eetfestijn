@@ -16,7 +16,9 @@ namespace be.berghs.nils.EetFestijnLib.Models
 
         public string SessionName => "Session-" + CreatedDateTime.ToString("yyyy-MM-dd HH:mm");
 
-        public int OrderCount { get; private set; }
+        
+        //setter can nop be private for json deserialization
+        public int OrderCount { get; set; }
 
         public ProductList ProductList { get; }
 
@@ -28,30 +30,30 @@ namespace be.berghs.nils.EetFestijnLib.Models
         /// <summary>
         /// The theoretical income, vouchers included
         /// </summary>
-        public decimal TotalIncome { get; private set; }
+        public decimal TotalIncome { get; set; }
 
         /// <summary>
         /// The net income without vouches
         /// </summary>
-        public decimal NetIncome { get; private set; }
+        public decimal NetIncome { get; set; }
 
         /// <summary>
         /// The cash income
         /// </summary>
-        public decimal CashIncome { get; private set; }
+        public decimal CashIncome { get; set; }
 
         /// <summary>
         /// The income via mobile payments
         /// </summary>
-        public decimal MobileIncome { get; private set; }
+        public decimal MobileIncome { get; set; }
 
         /// <summary>
         /// Total amount of tips
         /// </summary>
-        public decimal Tips { get; private set; }
+        public decimal Tips { get; set; }
 
         
-        public int PlateCount { get; private set; }
+        public int PlateCount { get; set; }
 
         public Session():this(new ProductList(), new Options ())
         {
