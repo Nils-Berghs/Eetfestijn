@@ -26,16 +26,33 @@
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
                             <RowDefinition Height="0"/>
                         </Grid.RowDefinitions>
 
                         <TextBlock Grid.Row="0" VerticalAlignment="Center" Text="Aantal bestellingen:"/>
                         <TextBlock Grid.Row="1" VerticalAlignment="Center" Text="Aantal maaltijden:"/>
                         <TextBlock Grid.Row="2" VerticalAlignment="Center" Text="Totale inkomsten (waardebonnen meegerekend):"/>
+                        <TextBlock Grid.Row="3" VerticalAlignment="Center" Text="Netto inkomsten (zonder waardebonnen):"/>
+                        <TextBlock Grid.Row="4" VerticalAlignment="Center" Text="Cash inkomsten:"/>
+                        <TextBlock Grid.Row="5" VerticalAlignment="Center" Text="Mobiele inkomsten:"/>
+                        <TextBlock Grid.Row="6" VerticalAlignment="Center" Text="Fooien ('T is just):"/>
+                        <TextBlock Grid.Row="7" VerticalAlignment="Center" Text="Start kassa:"/>
+                        <TextBlock Grid.Row="8" VerticalAlignment="Center" Text="Totaal in kassa:"/>
 
                         <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding OrderCount, Mode=OneWay}" IsEnabled="False" />
                         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding PlateCount, Mode=OneWay}" IsEnabled="False" />
                         <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding TotalIncome, Mode=OneWay}" IsEnabled="False" materialDesign:TextFieldAssist.SuffixText="€"/>
+                        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding NettoIncome, Mode=OneWay}" IsEnabled="False" materialDesign:TextFieldAssist.SuffixText="€"/>
+                        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding CashIncome, Mode=OneWay}" IsEnabled="False" materialDesign:TextFieldAssist.SuffixText="€"/>
+                        <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding MobileIncome, Mode=OneWay}" IsEnabled="False" materialDesign:TextFieldAssist.SuffixText="€"/>
+                        <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Tips, Mode=OneWay}" IsEnabled="False" materialDesign:TextFieldAssist.SuffixText="€"/>
+                        <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding StartCash, UpdateSourceTrigger=PropertyChanged, Delay=200}" materialDesign:TextFieldAssist.SuffixText="€"/>
+                        <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding TotalCash, Mode=OneWay}" IsEnabled="False" materialDesign:TextFieldAssist.SuffixText="€"/>
                     </Grid>
                     
                 </Grid>

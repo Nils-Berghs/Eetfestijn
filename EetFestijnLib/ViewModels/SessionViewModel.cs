@@ -28,12 +28,32 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
         /// </summary>
         public decimal TotalIncome => Session.TotalIncome;
 
+        public decimal NettoIncome => Session.NetIncome;
+
+        public decimal CashIncome => Session.CashIncome;
+
+        public decimal MobileIncome => Session.MobileIncome;
+
+        private decimal _StartCash;
+        public decimal StartCash 
+        { 
+            get => _StartCash; 
+            set
+            {
+                if (SetProperty(ref _StartCash, value))
+                    OnPropertyChanged(nameof(TotalCash));
+            }
+        }
+
+        public decimal Tips => Session.Tips;
+
+        public decimal TotalCash => CashIncome + Tips + StartCash;
+
         public SessionViewModel(StackViewModel<PageViewModel> stackViewModel, IDialogService dialogService, Session session):base(stackViewModel, dialogService)
         {
             Session = session;
             Session.OrderAdded += SessionOrderAdded;
-
-                        
+            
             CurrentOrder = new OrderViewModel(dialogService, Session);
 
         }
@@ -43,6 +63,11 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             OnPropertyChanged(nameof(OrderCount));
             OnPropertyChanged(nameof(PlateCount));
             OnPropertyChanged(nameof(TotalIncome));
+            OnPropertyChanged(nameof(NettoIncome));
+            OnPropertyChanged(nameof(CashIncome));
+            OnPropertyChanged(nameof(MobileIncome));
+            OnPropertyChanged(nameof(Tips));
+            OnPropertyChanged(nameof(TotalCash));
         }
     }
 }

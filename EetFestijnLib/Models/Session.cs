@@ -16,7 +16,7 @@ namespace be.berghs.nils.EetFestijnLib.Models
 
         public string SessionName => "Session-" + CreatedDateTime.ToString("yyyy-MM-dd HH:mm");
 
-        public int OrderCount { get; set; }
+        public int OrderCount { get; private set; }
 
         public ProductList ProductList { get; }
 
@@ -28,10 +28,30 @@ namespace be.berghs.nils.EetFestijnLib.Models
         /// <summary>
         /// The theoretical income, vouchers included
         /// </summary>
-        public decimal TotalIncome { get; set; }
+        public decimal TotalIncome { get; private set; }
+
+        /// <summary>
+        /// The net income without vouches
+        /// </summary>
+        public decimal NetIncome { get; private set; }
+
+        /// <summary>
+        /// The cash income
+        /// </summary>
+        public decimal CashIncome { get; private set; }
+
+        /// <summary>
+        /// The income via mobile payments
+        /// </summary>
+        public decimal MobileIncome { get; private set; }
+
+        /// <summary>
+        /// Total amount of tips
+        /// </summary>
+        public decimal Tips { get; private set; }
 
         
-        public int PlateCount { get; set; }
+        public int PlateCount { get; private set; }
 
         public Session():this(new ProductList(), new Options ())
         {
@@ -70,16 +90,33 @@ namespace be.berghs.nils.EetFestijnLib.Models
         {
             int plateCount = 0;
             decimal totalIncome = 0;
+            decimal mobileIncome = 0;
+            decimal cashIncome = 0;
+            decimal netIncome = 0;
+            decimal tips = 0;
             foreach (var order in OrderList.Orders)
             {
                 totalIncome += order.TotalPrice;
+                netIncome +=order.Payment.NettoPrice;
+                tips += order.Payment.Tip;
+
+                if (order.Payment.MobilePayment)
+                    mobileIncome += order.Payment.NettoPrice;
+                else
+                    cashIncome += order.Payment.NettoPrice;
+
+
+
                 foreach (var item in order.Foods)
                     plateCount += item.Count;
             }
             OrderCount = OrderList.Orders.Count();
             PlateCount = plateCount;
             TotalIncome = totalIncome;
-
+            MobileIncome = mobileIncome;
+            CashIncome = cashIncome;
+            NetIncome = netIncome;
+            Tips = tips;
         }
                 
     }
