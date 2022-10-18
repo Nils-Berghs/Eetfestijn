@@ -19,7 +19,7 @@ namespace EetfestijnUI_WPF
         {
 
             MainViewModel mainViewModel = new();
-            mainViewModel.PushViewModel(new StartViewModel(mainViewModel, new MaterialDesignDialogService()));
+            mainViewModel.PushViewModel(new StartViewModel(mainViewModel, new MaterialDesignDialogService(), new WpfWindowService()));
 
             MainWindow window = new();
             window.DataContext = mainViewModel;

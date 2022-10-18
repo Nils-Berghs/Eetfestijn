@@ -15,12 +15,12 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
         public ObservableCollection<SessionViewModel> Sessions { get; }
 
-        public StartViewModel(StackViewModel<PageViewModel> stackViewModel, IDialogService dialogService):base(stackViewModel, dialogService)
+        public StartViewModel(StackViewModel<PageViewModel> stackViewModel, IDialogService dialogService, IWindowService windowService) :base(stackViewModel, dialogService)
         {
             var sessions = FileSystemHelper.ReadAvailableSessions();
             Sessions = new ObservableCollection<SessionViewModel>(sessions.Select(s => new SessionViewModel(stackViewModel, dialogService, s)));
 
-            NewSessionCommand = new Command(() => StackViewModel.PushViewModel(new CreateSessionViewModel(StackViewModel, dialogService)));
+            NewSessionCommand = new Command(() => StackViewModel.PushViewModel(new CreateSessionViewModel(StackViewModel, dialogService, windowService)));
             OpenSessionCommand = new Command<SessionViewModel>(s =>
             {
                 FileSystemHelper.ReadFullSession(s.Session);

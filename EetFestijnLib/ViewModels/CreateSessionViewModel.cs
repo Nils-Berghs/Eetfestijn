@@ -15,6 +15,8 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 {
     public class CreateSessionViewModel: PageViewModel
     {
+        private IWindowService WindowService { get; }
+
         public ProductCategoryViewModel Foods { get; private set; }
 
         public ProductCategoryViewModel Beverages { get; private set; }
@@ -56,12 +58,15 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
         public bool UseMobilePayments { get; set; }
 
+        public bool UseSecondaryScreen { get; set; }
+
         public Command OkCommand { get; }
 
         public ICommand CancelCommand { get;  }
 
-        internal CreateSessionViewModel(StackViewModel<PageViewModel> stackViewModel, IDialogService dialogService) : base(stackViewModel, dialogService)
+        internal CreateSessionViewModel(StackViewModel<PageViewModel> stackViewModel, IDialogService dialogService, IWindowService windowService) : base(stackViewModel, dialogService)
         {
+            WindowService = windowService;
             Session session = FileSystemHelper.ReadGlobalSession();
             Foods = new ProductCategoryViewModel(session.ProductList.Foods, DialogService, "Eten");
             Beverages = new ProductCategoryViewModel(session.ProductList.Beverages, DialogService, "Drank");
@@ -98,6 +103,10 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             _ =SaveSession(session);
            
             StackViewModel.PushViewModel(new SessionViewModel(StackViewModel, DialogService, session));
+            if (UseSecondaryScreen)
+            {
+                WindowService.ShowWindow(new OrderSummaryViewModel());
+            }
         }
 
         /// <summary>
