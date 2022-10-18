@@ -8,7 +8,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
-        Title="Eetfestijn" WindowState="Maximized" IsKeyboardFocusedChanged="Window_IsKeyboardFocusedChanged" IsKeyboardFocusWithinChanged="Window_IsKeyboardFocusWithinChanged"
+        Title="Eetfestijn" WindowState="Maximized" 
         
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Medium"

@@ -93,7 +93,20 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             Beverages.ClearOrder();
             Desserts.ClearOrder();
 
-            //perhaps run this as a task.
+            _ = FocusFirst();
+            
+        }
+
+        private async Task FocusFirst()
+        {
+            /* Important: due to the nature of the Material Design in Xaml popups the window gets focus after the popup is closed
+             * This focussing is somehow delayed untill after the 'ClearCurrentOrders is called.
+             * By delaying the focusing of the first food item by 100ms this is fixed, but even then I still have to set focus to false
+             * before being able to visually focus the element
+             * */
+
+            await Task.Delay(100);
+            Foods.Items.First().Focused = false;
             Foods.Items.First().Focused = true;
         }
     }

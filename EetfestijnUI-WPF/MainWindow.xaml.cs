@@ -25,18 +25,6 @@ namespace EetfestijnUI_WPF
         {
             InitializeComponent();
         }
-
-        private void Window_IsKeyboardFocusedChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            //probably this is the error after closing the dialog the window obtains focus..
-            //we must somehow revert this
-
-            Debug.WriteLine("Window Focus changed to "+e.NewValue);
-        }
-
-        private void Window_IsKeyboardFocusWithinChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            Debug.WriteLine("Window Focus Within changed to "+e.NewValue);
-        }
+                
     }
 }

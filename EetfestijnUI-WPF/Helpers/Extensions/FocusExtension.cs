@@ -27,25 +27,14 @@ namespace be.berghs.nils.EetFestijn.UI.WPF.Helpers.Extensions
 
         private static void OnIsFocusedPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var uie = (UIElement)d;
-            if (uie is TextBox txb)
-            {
-                Debug.WriteLine("FocusExtension: Setting focused for textbox {0} to {1}", txb.Name, e.NewValue);
-            }
-            else
-                Debug.WriteLine("FocusExtension: Setting focused for {0} to {}1", uie.GetType(), e.NewValue);
             if ((bool)e.NewValue) // Don't care about false values.
             {
+                var uie = (UIElement)d;
                 var f = FocusManager.GetFocusScope(uie);
                 
-                
-                var result = uie.Focus(); 
+                uie.Focus(); 
                 Keyboard.Focus(uie);
                 FocusManager.SetFocusedElement(f, uie);
-            }
-            else
-            {
-
             }
         }
 
