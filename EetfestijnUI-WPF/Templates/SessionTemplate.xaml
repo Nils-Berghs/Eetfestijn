@@ -31,7 +31,8 @@
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
-                            <RowDefinition Height="0"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
 
                         <TextBlock Grid.Row="0" VerticalAlignment="Center" Text="Aantal bestellingen:"/>
@@ -53,6 +54,12 @@
                         <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Tips, Mode=OneWay}" IsEnabled="False" materialDesign:TextFieldAssist.SuffixText="€"/>
                         <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding StartCash, UpdateSourceTrigger=PropertyChanged, Delay=200}" materialDesign:TextFieldAssist.SuffixText="€"/>
                         <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding TotalCash, Mode=OneWay}" IsEnabled="False" materialDesign:TextFieldAssist.SuffixText="€"/>
+
+                        <!--<UniformGrid Grid.Row="10" Grid.ColumnSpan="2" Columns="3">
+                            <Button Content="Export Menu"/>
+                            <Button Content="Export Session"/>
+                            <Button Content="Import Session"/>
+                        </UniformGrid>-->
                     </Grid>
                     
                 </Grid>
