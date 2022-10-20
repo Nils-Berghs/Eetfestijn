@@ -28,6 +28,8 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             }
         }
 
+        public bool HasValue => Count.HasValue && Count.Value > 0;
+
         private int? _Count;
         public int? Count
         {
@@ -35,7 +37,10 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             set
             {
                 if (SetProperty(ref _Count, value))
+                {
                     TotalPrice = _Count * Price;
+                    OnPropertyChanged(nameof(HasValue));
+                }
                     
             }
         }

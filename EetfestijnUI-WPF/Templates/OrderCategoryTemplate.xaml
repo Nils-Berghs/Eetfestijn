@@ -3,6 +3,7 @@
                     xmlns:viewmodels="clr-namespace:be.berghs.nils.EetFestijnLib.ViewModels;assembly=EetFestijnLib" 
                     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
 					xmlns:extensions="clr-namespace:be.berghs.nils.EetFestijn.UI.WPF.Helpers.Extensions" >
+    <BooleanToVisibilityConverter x:Key="systemBoolToVisibilityConverter"/>
     <DataTemplate DataType="{x:Type viewmodels:OrderCategoryViewModel}">
         <GroupBox Header="{Binding Title}" Margin="10">
             <ItemsControl ItemsSource="{Binding Items}" IsTabStop="False">
@@ -41,7 +42,7 @@
             <ItemsControl ItemsSource="{Binding Items}" IsTabStop="False">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Grid>
+                        <Grid Visibility="{Binding HasValue, Converter={StaticResource systemBoolToVisibilityConverter}}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="3*"/>
                                 <ColumnDefinition Width="*"/>

@@ -45,7 +45,7 @@
                     <TextBlock Text="{Binding TotalPrice, StringFormat='{}{0} €'}" FontSize="36" FontWeight="Bold" TextAlignment="Right" Grid.Column="1" Margin="3,0,0,0"/>
                     <TextBlock Text="Waardebonnen:" HorizontalAlignment="Right" FontSize="36" Grid.Row="1"/>
                     <TextBlock Text="{Binding PaymentViewModel.VoucherDiscount, StringFormat='-{0:#.0} €'}" FontSize="36" FontWeight="Bold" TextAlignment="Right" Grid.Column="1"  Grid.Row="1" Margin="3,0,0,0"/>
-                    <TextBlock Text="Te Betalen:" HorizontalAlignment="Right" FontSize="36"  Grid.Row="2"/>
+                    <TextBlock Text="Te Betalen:" HorizontalAlignment="Right" FontSize="36" Grid.Row="2"/>
                     <TextBlock Text="{Binding PaymentViewModel.NettoPrice, StringFormat='{}{0} €'}" FontSize="36" FontWeight="Bold" TextAlignment="Right" Grid.Column="1" Grid.Row="2" Margin="3,0,0,0"/>
                 </Grid>
             </Border>
