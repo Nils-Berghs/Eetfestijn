@@ -49,12 +49,12 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
         public decimal TotalCash => CashIncome + Tips + StartCash;
 
-        public SessionViewModel(StackViewModel<PageViewModel> stackViewModel, IDialogService dialogService, Session session):base(stackViewModel, dialogService)
+        public SessionViewModel(StackViewModel<PageViewModel> stackViewModel, IDialogService dialogService, IWindowService windowService, Session session):base(stackViewModel, dialogService, windowService)
         {
             Session = session;
             Session.OrderAdded += SessionOrderAdded;
             
-            CurrentOrder = new OrderViewModel(dialogService, Session);
+            CurrentOrder = new OrderViewModel(dialogService, windowService, Session);
 
         }
 

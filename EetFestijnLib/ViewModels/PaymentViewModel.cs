@@ -62,16 +62,18 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             }
         }
 
-        private decimal? _Payed;
-        /// <summary>
-        /// The amount payed by the customer
-        /// </summary>
-        public decimal? Payed
+        public decimal? PayedValue => string.IsNullOrWhiteSpace(Payed)? null: decimal.Parse(Payed) as decimal?;
+
+        private string _Payed;
+        public string Payed
         {
             get => _Payed;
             set
             {
-                if (SetProperty(ref _Payed, value))
+                //get a corrected string
+                string newValue = StringToDecimalHelper.CheckDecimalString(value, _Payed, "0.#", true);
+                //set the new price
+                if (SetProperty(ref _Payed, newValue))
                 {
                     OnPropertyChanged(nameof(Change));
                     OkCommand.ChangeCanExecute();
@@ -82,7 +84,7 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
         /// <summary>
         /// The change the customer gets
         /// </summary>
-        public decimal? Change => Payed - NettoPrice;
+        public decimal? Change => PayedValue - NettoPrice;
 
         /// <summary>
         /// True if the customer says we can keep the change
@@ -115,7 +117,7 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
         protected override bool CanConfirm()
         {
-            return (Payed.HasValue && Payed.Value >= NettoPrice) || IsMobilePayment;
+            return (PayedValue.HasValue && PayedValue.Value >= NettoPrice) || IsMobilePayment;
         }
 
         protected override Task Confirm()

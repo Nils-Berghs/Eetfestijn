@@ -15,8 +15,6 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 {
     public class CreateSessionViewModel: PageViewModel
     {
-        private IWindowService WindowService { get; }
-
         public ProductCategoryViewModel Foods { get; private set; }
 
         public ProductCategoryViewModel Beverages { get; private set; }
@@ -58,15 +56,17 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
         public bool UseMobilePayments { get; set; }
 
-        public bool UseSecondaryScreen { get; set; }
+        /// <summary>
+        /// True to show the order summary on a secondary screen
+        /// </summary>
+        public bool ShowOrderSummary { get; set; }
 
         public Command OkCommand { get; }
 
         public ICommand CancelCommand { get;  }
 
-        internal CreateSessionViewModel(StackViewModel<PageViewModel> stackViewModel, IDialogService dialogService, IWindowService windowService) : base(stackViewModel, dialogService)
+        internal CreateSessionViewModel(StackViewModel<PageViewModel> stackViewModel, IDialogService dialogService, IWindowService windowService) : base(stackViewModel, dialogService, windowService)
         {
-            WindowService = windowService;
             Session session = FileSystemHelper.ReadGlobalSession();
             Foods = new ProductCategoryViewModel(session.ProductList.Foods, DialogService, "Eten");
             Beverages = new ProductCategoryViewModel(session.ProductList.Beverages, DialogService, "Drank");
@@ -98,15 +98,12 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
         private void Confirm()
         {
             ProductList productList = new ProductList(Foods.GetProducts(), Beverages.GetProducts(), Desserts.GetProducts());
-            Options options = new Options(UseVouchers, VoucherValue, UseMobilePayments);
+            Options options = new Options(UseVouchers, VoucherValue, UseMobilePayments, ShowOrderSummary);
             Session session = new Session(productList, options);
             _ =SaveSession(session);
            
-            StackViewModel.PushViewModel(new SessionViewModel(StackViewModel, DialogService, session));
-            if (UseSecondaryScreen)
-            {
-                WindowService.ShowWindow(new OrderSummaryViewModel());
-            }
+            StackViewModel.PushViewModel(new SessionViewModel(StackViewModel, DialogService, WindowService, session));
+            
         }
 
         /// <summary>

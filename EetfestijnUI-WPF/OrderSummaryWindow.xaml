@@ -4,10 +4,52 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:viewmodels="clr-namespace:be.berghs.nils.EetFestijnLib.ViewModels;assembly=EetFestijnLib"
         xmlns:local="clr-namespace:be.berghs.nils.EetFestijn.UI.WPF"
         mc:Ignorable="d"
-        Title="OrderSummaryWindow" WindowStyle="None" WindowStartupLocation="Manual">
+        Title="Bestelling" WindowStyle="None" WindowStartupLocation="Manual"
+        d:DataContext="{d:DesignInstance Type=viewmodels:OrderViewModel}"
+        >
     <Grid>
-        <Border Margin="10" BorderBrush="Red" BorderThickness="5"/>
+        <Grid Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Column="0" Orientation="Vertical">
+                <ContentPresenter Content="{Binding Foods}" ContentTemplate="{StaticResource OrderCategorySummaryTemplate}"/>
+                <ContentPresenter Content="{Binding Desserts}" ContentTemplate="{StaticResource OrderCategorySummaryTemplate}"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Vertical">
+                <ContentPresenter Content="{Binding Beverages}" ContentTemplate="{StaticResource OrderCategorySummaryTemplate}"/>
+            </StackPanel>
+
+            <Border HorizontalAlignment="Stretch" VerticalAlignment="Top"  Margin="10" Padding="5" BorderBrush="Black" BorderThickness="1" Grid.Column="1" Grid.Row="1" x:Name="SummaryGrid">
+                <Grid  >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="200"  />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Totaal:" HorizontalAlignment="Right" FontSize="36"/>
+                    <TextBlock Text="{Binding TotalPrice, StringFormat='{}{0} €'}" FontSize="36" FontWeight="Bold" TextAlignment="Right" Grid.Column="1" Margin="3,0,0,0"/>
+                    <TextBlock Text="Waardebonnen:" HorizontalAlignment="Right" FontSize="36" Grid.Row="1"/>
+                    <TextBlock Text="{Binding PaymentViewModel.VoucherDiscount, StringFormat='-{0:#.0} €'}" FontSize="36" FontWeight="Bold" TextAlignment="Right" Grid.Column="1"  Grid.Row="1" Margin="3,0,0,0"/>
+                    <TextBlock Text="Te Betalen:" HorizontalAlignment="Right" FontSize="36"  Grid.Row="2"/>
+                    <TextBlock Text="{Binding PaymentViewModel.NettoPrice, StringFormat='{}{0} €'}" FontSize="36" FontWeight="Bold" TextAlignment="Right" Grid.Column="1" Grid.Row="2" Margin="3,0,0,0"/>
+                </Grid>
+            </Border>
+
+        </Grid>
     </Grid>
 </Window>

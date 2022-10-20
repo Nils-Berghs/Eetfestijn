@@ -67,7 +67,7 @@
                             <CheckBox Grid.Column="1" Grid.Row="1" IsChecked="{Binding UseMobilePayments}" VerticalAlignment="Center" Margin="10,10"/>
 
                             <TextBlock Grid.Row="2" Text="Tweede scherm gebruiken" VerticalAlignment="Center"/>
-                            <CheckBox Grid.Column="1" Grid.Row="2" IsChecked="{Binding UseSecondaryScreen}" VerticalAlignment="Center" Margin="10,4" />
+                            <CheckBox Grid.Column="1" Grid.Row="2" IsChecked="{Binding ShowOrderSummary}" VerticalAlignment="Center" Margin="10,4" />
 
                         </Grid>
                     </GroupBox>

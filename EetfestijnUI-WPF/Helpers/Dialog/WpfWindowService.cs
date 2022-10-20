@@ -7,10 +7,12 @@ namespace be.berghs.nils.EetFestijn.UI.WPF.Helpers.Dialog
     {
         public void ShowWindow(ViewModelBase viewModel)
         {
-            OrderSummaryWindow orderSummaryWindow = new OrderSummaryWindow();
-            orderSummaryWindow.Show();
-            //orderSummaryWindow.MaximizeToSecondScreen();
-
+            if (viewModel is OrderViewModel)
+            {
+                OrderSummaryWindow orderSummaryWindow = new OrderSummaryWindow();
+                orderSummaryWindow.DataContext = viewModel;
+                orderSummaryWindow.Show();
+            }
         }
     }
 }

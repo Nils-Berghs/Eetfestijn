@@ -15,7 +15,16 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
     {
         private IDialogService DialogService { get; }
 
+        private IWindowService WindowService { get; }
+
         private Session Session { get; }
+
+        private PaymentViewModel _PaymentViewModel;
+        public PaymentViewModel PaymentViewModel 
+        { 
+            get => _PaymentViewModel;
+            set => SetProperty(ref _PaymentViewModel, value); 
+        }
 
         public OrderCategoryViewModel Foods { get;  }
 
@@ -34,9 +43,10 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
         public Command CancelCommand { get;  }
 
-        public OrderViewModel(IDialogService dialogService, Session session)
+        public OrderViewModel(IDialogService dialogService, IWindowService windowService, Session session)
         {
             DialogService = dialogService;
+            WindowService = windowService;
             Session = session;
 
             Foods = new OrderCategoryViewModel(Session.ProductList.Foods, "Eten");
@@ -50,6 +60,16 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             OkCommand = new Command(async ()=> await ConfirmOrder(), CanConfirmOrder);
             CancelCommand = new Command(Cancel);
 
+            if (session.Options.ShowOrderSummary)
+                ShowOrderSummary();
+
+        }
+
+        private void ShowOrderSummary()
+        {
+            //OrderSummaryViewModel = new OrderSummaryViewModel(this);
+            WindowService.ShowWindow(this);
+            
         }
 
         private void OrderCategoryPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -64,11 +84,11 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
         private async Task ConfirmOrder()
         {
             Order order = new Order(TotalPrice, Foods.GetOrderItems(), Beverages.GetOrderItems(), Desserts.GetOrderItems());
-            PaymentViewModel paymentViewModel = new PaymentViewModel(order, Session.Options);
+            PaymentViewModel = new PaymentViewModel(order, Session.Options);
 
-            await DialogService.ShowDialog(paymentViewModel);
+            await DialogService.ShowDialog(PaymentViewModel);
 
-            if (paymentViewModel.IsConfirmed)
+            if (PaymentViewModel.IsConfirmed)
             {
                 Session.OrderList.AddOrder(order);
                 ClearCurrentOrder();
@@ -92,6 +112,7 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             Foods.ClearOrder();
             Beverages.ClearOrder();
             Desserts.ClearOrder();
+            PaymentViewModel = null;
 
             _ = FocusFirst();
             
