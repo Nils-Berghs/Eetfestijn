@@ -38,7 +38,8 @@
     </DataTemplate>
 
     <DataTemplate x:Key="OrderCategorySummaryTemplate" DataType="{x:Type viewmodels:OrderCategoryViewModel}">
-        <GroupBox Header="{Binding Title}" Margin="10">
+        <GroupBox Header="{Binding Title}" Margin="10" MinHeight="100">
+            
             <ItemsControl ItemsSource="{Binding Items}" IsTabStop="False">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>

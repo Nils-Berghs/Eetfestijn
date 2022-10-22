@@ -10,6 +10,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Logo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Logo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="H6-icon.ico" />
   </ItemGroup>
 
