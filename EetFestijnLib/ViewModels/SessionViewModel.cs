@@ -73,15 +73,26 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
             ShowOrderSummaryCommandImplementation = new Command(ShowOrderSummary, CanShowOrderSummary);
             ExportMenuCommand = new Command(ExportMenu);
+            ExportSessionCommand = new Command(ExportSession);
         }
 
         private void ExportMenu()
         {
-            var exportOptions = new ExportOptions("", "JSON file|.json");
+            var exportOptions = new ExportOptions("menu", "JSON file|*.json");
             DialogService.ShowSaveFileDialog(exportOptions);
             if (exportOptions.IsConfirmed)
             {
                 Session.ExportMenu(exportOptions.FileName);
+            }
+        }
+
+        private void ExportSession()
+        {
+            var exportOptions = new ExportOptions(Session.SessionName, "Session file|*.session");
+            DialogService.ShowSaveFileDialog(exportOptions);
+            if(exportOptions.IsConfirmed)
+            {
+                Session.Export(exportOptions.FileName);
             }
         }
 

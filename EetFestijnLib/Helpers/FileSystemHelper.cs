@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -161,6 +162,12 @@ namespace be.berghs.nils.EetFestijnLib.Helpers
             FileInfo fileInfo = new FileInfo(fileName);
             Directory.CreateDirectory(fileInfo.DirectoryName);
             File.WriteAllText(fileName, JsonConvert.SerializeObject(session.ProductList, Formatting.Indented));
+        }
+
+        internal static void Export(Session session, string fileName)
+        {
+            string path = GetSessionDirectory(session);
+            ZipFile.CreateFromDirectory(path, fileName);
         }
     }
 }

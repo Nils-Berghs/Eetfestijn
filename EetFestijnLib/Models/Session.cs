@@ -127,5 +127,10 @@ namespace be.berghs.nils.EetFestijnLib.Models
         {
             FileSystemHelper.ExportMenu(this, fileName);
         }
+
+        internal void Export(string fileName)
+        {
+            FileSystemHelper.Export(this, fileName);
+        }
     }
 }

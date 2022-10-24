@@ -36,6 +36,7 @@ namespace be.berghs.nils.EetFestijn.UI.WPF.Helpers.Dialog
             saveFileDialog.Filter = exportOptions.Filter;
             saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             saveFileDialog.AddExtension= true;
+            saveFileDialog.FileName = exportOptions.FileName;
 
             var result = saveFileDialog.ShowDialog();
 
