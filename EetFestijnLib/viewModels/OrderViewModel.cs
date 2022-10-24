@@ -13,6 +13,10 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 {
     public class OrderViewModel : ViewModelBase
     {
+        public event EventHandler SecondScreenClosed;
+
+        public ICommand CloseOrderSummaryCommand { get; }
+
         private IDialogService DialogService { get; }
 
         private IWindowService WindowService { get; }
@@ -63,13 +67,20 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             if (session.Options.ShowOrderSummary)
                 ShowOrderSummary();
 
+            CloseOrderSummaryCommand = new Command(CloseOrderSummary);
+
         }
 
-        private void ShowOrderSummary()
+        private void CloseOrderSummary()
         {
-            //OrderSummaryViewModel = new OrderSummaryViewModel(this);
+            Session.Options.ShowOrderSummary = false;
+            WindowService.CloseWindow(this);
+            SecondScreenClosed?.Invoke(this, EventArgs.Empty);
+        }
+
+        internal void ShowOrderSummary()
+        {
             WindowService.ShowWindow(this);
-            
         }
 
         private void OrderCategoryPropertyChanged(object sender, PropertyChangedEventArgs e)

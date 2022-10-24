@@ -12,5 +12,11 @@ namespace be.berghs.nils.EetFestijnLib.Helpers.Dialog
         /// </summary>
         /// <param name="viewModel"></param>
         void ShowWindow(ViewModelBase viewModel);
+
+        /// <summary>
+        /// Closes a window linked to the given viewmodel
+        /// </summary>
+        /// <param name="viewModel"></param>
+        void CloseWindow(ViewModelBase viewModel);
     }
 }

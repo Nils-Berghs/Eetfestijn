@@ -8,13 +8,24 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace be.berghs.nils.EetFestijnLib.ViewModels
 {
     public class SessionViewModel : PageViewModel
     {
         internal Session Session { get; }
-        
+
+        public ICommand ExportSessionCommand { get; }
+
+        public ICommand ExportMenuCommand { get; }
+
+        public ICommand ImportSessionCommand { get; }
+
+        public ICommand ShowOrderSummaryCommand => ShowOrderSummaryCommandImplementation;
+
+        private Command ShowOrderSummaryCommandImplementation { get; }
+
         public OrderViewModel CurrentOrder { get; }
 
         public int OrderCount => Session.OrderCount;
@@ -58,7 +69,27 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             Session.OrdersAdded += SessionOrdersAdded;
             ConsumptionViewModel = new ConsumptionViewModel(session);
             CurrentOrder = new OrderViewModel(dialogService, windowService, Session);
+            CurrentOrder.SecondScreenClosed += OrderViewModelSecondScreenClosed;
 
+            ShowOrderSummaryCommandImplementation = new Command(ShowOrderSummary, CanShowOrderSummary);
+
+        }
+
+        private void OrderViewModelSecondScreenClosed(object sender, EventArgs e)
+        {
+            ShowOrderSummaryCommandImplementation.ChangeCanExecute();
+        }
+
+        private void ShowOrderSummary()
+        {
+            Session.Options.ShowOrderSummary = true;
+            ShowOrderSummaryCommandImplementation.ChangeCanExecute();
+            CurrentOrder.ShowOrderSummary();
+        }
+
+        private bool CanShowOrderSummary()
+        {
+            return !Session.Options.ShowOrderSummary;
         }
 
         private void SessionOrdersAdded(object sender, OrdersAddedEventArgs e)

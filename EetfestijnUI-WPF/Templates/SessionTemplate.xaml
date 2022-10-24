@@ -55,11 +55,13 @@
                         <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding StartCash, UpdateSourceTrigger=PropertyChanged, Delay=200}" materialDesign:TextFieldAssist.SuffixText="€"/>
                         <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding TotalCash, Mode=OneWay}" IsEnabled="False" materialDesign:TextFieldAssist.SuffixText="€"/>
 
-                        <!--<UniformGrid Grid.Row="10" Grid.ColumnSpan="2" Columns="3">
-                            <Button Content="Export Menu"/>
-                            <Button Content="Export Session"/>
-                            <Button Content="Import Session"/>
-                        </UniformGrid>-->
+                        <UniformGrid Grid.Row="10" Grid.ColumnSpan="2" Columns="2" Rows="2">
+
+                            <Button Content="Export Menu" Grid.Row="0" Grid.Column="0" Command="{Binding ExportMenuCommand}"/>
+                            <Button Content="Export Sessie" Grid.Row="0" Grid.Column="1" Command="{Binding ExportSessionCommand}"/>
+                            <Button Content="Import Sessie" Grid.Row="1" Grid.Column="0" Command="{Binding ImportSessionCommand}"/>
+                            <Button Content="Toon tweede scherm" Grid.Row="1" Grid.Column="1" Command="{Binding ShowOrderSummaryCommand}"/>
+                        </UniformGrid>
                     </Grid>
 
                     <Grid Grid.Column="1" Margin="10,0">

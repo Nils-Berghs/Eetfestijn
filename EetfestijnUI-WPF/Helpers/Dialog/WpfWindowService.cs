@@ -5,13 +5,24 @@ namespace be.berghs.nils.EetFestijn.UI.WPF.Helpers.Dialog
 {
     internal class WpfWindowService : IWindowService
     {
+        private OrderSummaryWindow? OrderSummaryWindow { get; set; }
+
         public void ShowWindow(ViewModelBase viewModel)
         {
-            if (viewModel is OrderViewModel)
+            if (viewModel is OrderViewModel && OrderSummaryWindow == null)
             {
-                OrderSummaryWindow orderSummaryWindow = new OrderSummaryWindow();
-                orderSummaryWindow.DataContext = viewModel;
-                orderSummaryWindow.Show();
+                OrderSummaryWindow = new OrderSummaryWindow();
+                OrderSummaryWindow.DataContext = viewModel;
+                OrderSummaryWindow.Show();
+            }
+        }
+
+        public void CloseWindow(ViewModelBase viewModel)
+        {
+            if (viewModel is OrderViewModel && OrderSummaryWindow != null)
+            {
+                OrderSummaryWindow.Close();
+                OrderSummaryWindow = null;
             }
         }
     }
