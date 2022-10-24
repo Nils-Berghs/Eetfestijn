@@ -61,7 +61,16 @@
                             <Button Content="Import Session"/>
                         </UniformGrid>-->
                     </Grid>
-                    
+
+                    <Grid Grid.Column="1" Margin="10,0">
+                        <ScrollViewer>
+                            <StackPanel Orientation="Vertical">
+                                <ContentPresenter Content="{Binding ConsumptionViewModel.Foods}"/>
+                                <ContentPresenter Content="{Binding ConsumptionViewModel.Desserts}"/>
+                                <ContentPresenter Content="{Binding ConsumptionViewModel.Beverages}"/>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Grid>
                 </Grid>
             </TabItem>
         </TabControl>

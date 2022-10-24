@@ -38,6 +38,7 @@
                 <ResourceDictionary Source="./Templates/OrderCategoryTemplate.xaml"/>
                 <ResourceDictionary Source="./Templates/OrderTemplate.xaml"/>
                 <ResourceDictionary Source="./Templates/PaymentTemplate.xaml"/>
+                <ResourceDictionary Source="./Templates/ConsumptionCategoryTemplate.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
         </ResourceDictionary>

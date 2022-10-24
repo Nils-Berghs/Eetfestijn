@@ -10,7 +10,9 @@ namespace be.berghs.nils.EetFestijnLib.Models
 {
     public class Session
     {
-        public event EventHandler OrderAdded;
+        public event EventHandler<OrderAddedEventArgs> OrderAdded;
+
+        public event EventHandler<OrdersAddedEventArgs> OrdersAdded;
 
         public DateTime CreatedDateTime { get; set; }
 
@@ -78,7 +80,7 @@ namespace be.berghs.nils.EetFestijnLib.Models
         private void OrderListOrdersAdded(object sender, OrdersAddedEventArgs e)
         {
             RecalculateTotals();
-            OrderAdded?.Invoke(this, EventArgs.Empty);
+            OrdersAdded?.Invoke(this, e);
         }
 
         private void OrderListOrderAdded(object sender, OrderAddedEventArgs e)

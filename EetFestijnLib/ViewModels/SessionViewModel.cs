@@ -49,16 +49,33 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
         public decimal TotalCash => CashIncome + Tips + StartCash;
 
+        public ConsumptionViewModel ConsumptionViewModel { get; }
+
         public SessionViewModel(StackViewModel<PageViewModel> stackViewModel, IDialogService dialogService, IWindowService windowService, Session session):base(stackViewModel, dialogService, windowService)
         {
             Session = session;
             Session.OrderAdded += SessionOrderAdded;
-            
+            Session.OrdersAdded += SessionOrdersAdded;
+            ConsumptionViewModel = new ConsumptionViewModel(session);
             CurrentOrder = new OrderViewModel(dialogService, windowService, Session);
 
         }
 
-        private void SessionOrderAdded(object sender, EventArgs e)
+        private void SessionOrdersAdded(object sender, OrdersAddedEventArgs e)
+        {
+            RaisePropertyChanges();
+            foreach (Order o in e.Orders)
+                ConsumptionViewModel.AddOrder(o);
+        }
+
+        private void SessionOrderAdded(object sender, OrderAddedEventArgs e)
+        {
+            RaisePropertyChanges();
+
+            ConsumptionViewModel.AddOrder(e.Order);
+        }
+
+        private void RaisePropertyChanges()
         {
             OnPropertyChanged(nameof(OrderCount));
             OnPropertyChanged(nameof(PlateCount));
