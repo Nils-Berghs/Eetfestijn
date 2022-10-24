@@ -72,7 +72,17 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             CurrentOrder.SecondScreenClosed += OrderViewModelSecondScreenClosed;
 
             ShowOrderSummaryCommandImplementation = new Command(ShowOrderSummary, CanShowOrderSummary);
+            ExportMenuCommand = new Command(ExportMenu);
+        }
 
+        private void ExportMenu()
+        {
+            var exportOptions = new ExportOptions("", "JSON file|.json");
+            DialogService.ShowSaveFileDialog(exportOptions);
+            if (exportOptions.IsConfirmed)
+            {
+                Session.ExportMenu(exportOptions.FileName);
+            }
         }
 
         private void OrderViewModelSecondScreenClosed(object sender, EventArgs e)

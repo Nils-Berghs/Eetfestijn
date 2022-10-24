@@ -122,6 +122,10 @@ namespace be.berghs.nils.EetFestijnLib.Models
             NetIncome = netIncome;
             Tips = tips;
         }
-                
+
+        internal void ExportMenu(string fileName)
+        {
+            FileSystemHelper.ExportMenu(this, fileName);
+        }
     }
 }

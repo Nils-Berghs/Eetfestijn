@@ -1,6 +1,8 @@
 ﻿using be.berghs.nils.EetFestijnLib.Helpers.Dialog;
+using be.berghs.nils.EetFestijnLib.Models;
 using be.berghs.nils.EetFestijnLib.ViewModels;
 using MaterialDesignThemes.Wpf;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,5 +29,23 @@ namespace be.berghs.nils.EetFestijn.UI.WPF.Helpers.Dialog
                 viewModel.Close += OnClose;
             });
         }
+
+        public void ShowSaveFileDialog(ExportOptions exportOptions)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = exportOptions.Filter;
+            saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            saveFileDialog.AddExtension= true;
+
+            var result = saveFileDialog.ShowDialog();
+
+            if (result == true)
+            {
+                exportOptions.IsConfirmed = true;
+                exportOptions.FileName = saveFileDialog.FileName;
+            }
+
+        }
+
     }
 }

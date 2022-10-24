@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -155,5 +156,11 @@ namespace be.berghs.nils.EetFestijnLib.Helpers
             session.OrderList.AddOrders(orders);
         }
 
+        internal static void ExportMenu(Session session, string fileName)
+        {
+            FileInfo fileInfo = new FileInfo(fileName);
+            Directory.CreateDirectory(fileInfo.DirectoryName);
+            File.WriteAllText(fileName, JsonConvert.SerializeObject(session.ProductList, Formatting.Indented));
+        }
     }
 }
