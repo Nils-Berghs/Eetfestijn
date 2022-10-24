@@ -10,6 +10,7 @@ namespace be.berghs.nils.EetFestijnLib.Helpers.Dialog
     public interface IDialogService
     {
         Task ShowDialog(DialogViewModelBase viewModel, string dialogHostIdentifier = null);
-        void ShowSaveFileDialog(ExportOptions exportOptions);
+        void ShowOpenFileDialog(ImportExportOptions importOptions);
+        void ShowSaveFileDialog(ImportExportOptions exportOptions);
     }
 }

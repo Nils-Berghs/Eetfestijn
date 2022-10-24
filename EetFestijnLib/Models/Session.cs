@@ -132,5 +132,11 @@ namespace be.berghs.nils.EetFestijnLib.Models
         {
             FileSystemHelper.Export(this, fileName);
         }
+
+        internal void Import(string fileName)
+        {
+            Session session = FileSystemHelper.Import(fileName);
+            Todo implement
+        }
     }
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace be.berghs.nils.EetFestijnLib.Models
 {
-    public class ExportOptions
+    public class ImportExportOptions
     {
         public string FileName { get; set; }
 
@@ -12,9 +12,14 @@ namespace be.berghs.nils.EetFestijnLib.Models
 
         public bool IsConfirmed { get; set; }
 
-        public ExportOptions(string fileName, string filter)
+        public ImportExportOptions(string fileName, string filter):this(filter)
         {
             FileName = fileName;
+            
+        }
+
+        public ImportExportOptions(string filter)
+        {
             Filter = filter;
         }
     }

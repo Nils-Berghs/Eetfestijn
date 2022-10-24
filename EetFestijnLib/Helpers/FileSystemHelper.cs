@@ -169,5 +169,21 @@ namespace be.berghs.nils.EetFestijnLib.Helpers
             string path = GetSessionDirectory(session);
             ZipFile.CreateFromDirectory(path, fileName);
         }
+
+        internal static Session Import(string fileName)
+        {
+            string tempPath = GetTempPath("import");
+            if (Directory.Exists(tempPath))
+                Directory.Delete(tempPath, true);
+            Directory.CreateDirectory(tempPath);
+            ZipFile.ExtractToDirectory(fileName, tempPath);
+            string sessionPath = Path.Combine(tempPath, SESSION_FILE_NAME);
+            Session session = ReadSession(sessionPath);
+            ReadFullSession(session);
+
+            Directory.Delete(GetTempPath("import"), true);
+            return session;
+            
+        }
     }
 }

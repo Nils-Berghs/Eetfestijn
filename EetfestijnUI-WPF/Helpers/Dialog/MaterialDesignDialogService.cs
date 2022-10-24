@@ -30,7 +30,7 @@ namespace be.berghs.nils.EetFestijn.UI.WPF.Helpers.Dialog
             });
         }
 
-        public void ShowSaveFileDialog(ExportOptions exportOptions)
+        public void ShowSaveFileDialog(ImportExportOptions exportOptions)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = exportOptions.Filter;
@@ -47,6 +47,22 @@ namespace be.berghs.nils.EetFestijn.UI.WPF.Helpers.Dialog
             }
 
         }
+
+        public void ShowOpenFileDialog(ImportExportOptions importOptions)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = importOptions.Filter;
+            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+            var result = openFileDialog.ShowDialog();  
+            if(result == true)
+            {
+                importOptions.IsConfirmed = true;
+                importOptions.FileName = openFileDialog.FileName;
+            }
+        }
+
+
 
     }
 }
