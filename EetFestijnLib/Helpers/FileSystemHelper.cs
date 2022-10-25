@@ -189,6 +189,8 @@ namespace be.berghs.nils.EetFestijnLib.Helpers
             File.WriteAllText(fileName, JsonConvert.SerializeObject(session.ProductList, Formatting.Indented));
         }
 
+
+
         internal static void Export(Session session, string fileName)
         {
             string path = GetSessionDirectory(session);
@@ -209,6 +211,11 @@ namespace be.berghs.nils.EetFestijnLib.Helpers
             Directory.Delete(GetTempPath("import"), true);
             return session;
             
+        }
+
+        internal static ProductList ImportProductList(string fileName)
+        {
+            return JsonConvert.DeserializeObject<ProductList>(File.ReadAllText(fileName));
         }
     }
 }

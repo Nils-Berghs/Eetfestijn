@@ -107,5 +107,12 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
 
         }
+
+        internal void SetProducts(IEnumerable<Product> products)
+        {
+            Products.Clear();
+            foreach (var product in products)
+                Products.Add(new ProductViewModel(product));
+        }
     }
 }

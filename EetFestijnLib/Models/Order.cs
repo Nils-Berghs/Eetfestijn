@@ -13,17 +13,20 @@ namespace be.berghs.nils.EetFestijnLib.Models
 
         public IEnumerable<OrderItem> Desserts { get; set; }
 
+        public DateTime? OrderDate { get; set; } = DateTime.Today;
+
         public int OrderId { get; set; }
 
         public decimal TotalPrice { get; }
         public Payment Payment { get; set; }
 
-        public Order(decimal totalPrice, IEnumerable<OrderItem> foods, IEnumerable<OrderItem> beverages, IEnumerable<OrderItem> desserts)
+        public Order(decimal totalPrice, IEnumerable<OrderItem> foods, IEnumerable<OrderItem> beverages, IEnumerable<OrderItem> desserts, DateTime date)
         {
             TotalPrice = totalPrice;
             Foods = foods;
             Beverages = beverages;
             Desserts = desserts;
+            OrderDate = date.Date;
         }
 
     }

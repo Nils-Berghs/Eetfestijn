@@ -13,7 +13,7 @@ using System.Windows.Input;
 
 namespace be.berghs.nils.EetFestijnLib.ViewModels
 {
-    public class CreateSessionViewModel: PageViewModel
+    public class CreateSessionViewModel : PageViewModel
     {
         public ProductCategoryViewModel Foods { get; private set; }
 
@@ -22,8 +22,8 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
         public ProductCategoryViewModel Desserts { get; private set; }
 
         private bool _UseVouchers;
-        public bool UseVouchers 
-        { 
+        public bool UseVouchers
+        {
             get => _UseVouchers;
             set
             {
@@ -39,9 +39,9 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
         }
 
         private string _VoucherValue;
-        public string VoucherValue 
-        { 
-            get => _VoucherValue; 
+        public string VoucherValue
+        {
+            get => _VoucherValue;
             set
             {
                 //get a corrected string
@@ -63,7 +63,9 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
         public Command OkCommand { get; }
 
-        public ICommand CancelCommand { get;  }
+        public ICommand CancelCommand { get; }
+
+        public ICommand ImportMenuCommand {get;}
 
         internal CreateSessionViewModel(StackViewModel<PageViewModel> stackViewModel, IDialogService dialogService, IWindowService windowService) : base(stackViewModel, dialogService, windowService)
         {
@@ -78,7 +80,23 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
             OkCommand = new Command(Confirm, CanConfirm);
             CancelCommand = new Command(Cancel);
+            ImportMenuCommand = new Command(ImportMenu);
             
+        }
+
+        private void ImportMenu()
+        {
+            var importOptions = new ImportExportOptions("JSON file|*.json");
+            DialogService.ShowOpenFileDialog(importOptions);
+            if (importOptions.IsConfirmed)
+            {
+                ProductList productList = FileSystemHelper.ImportProductList(importOptions.FileName);
+                Foods.SetProducts(productList.Foods);
+                Beverages.SetProducts(productList.Beverages);
+                Desserts.SetProducts(productList.Desserts);
+
+            }
+
         }
 
         private void Cancel()
