@@ -94,7 +94,7 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
         private async Task ConfirmOrder()
         {
-            Order order = new Order(TotalPrice, Foods.GetOrderItems(), Beverages.GetOrderItems(), Desserts.GetOrderItems());
+            Order order = new Order(TotalPrice, Foods.GetOrderItems(), Beverages.GetOrderItems(), Desserts.GetOrderItems(), DateTime.Today);
             PaymentViewModel = new PaymentViewModel(order, Session.Options);
 
             await DialogService.ShowDialog(PaymentViewModel);

@@ -1,6 +1,7 @@
 ﻿using be.berghs.nils.EetFestijnLib.Helpers;
 using be.berghs.nils.EetFestijnLib.Helpers.Events;
 using be.berghs.nils.EetFestijnLib.Helpers.Exceptions;
+using ClosedXML.Excel;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -170,6 +171,82 @@ namespace be.berghs.nils.EetFestijnLib.Models
                     return false;
             }
             return true;
+        }
+
+        internal void ExportToExcel(string fileName)
+        {
+            using (var workbook = new XLWorkbook())
+            {
+                var workSheet = workbook.Worksheets.Add("Consumptie");
+                int rowIndex = 2;
+                int firstColIndex = 2;
+                int colIndex = firstColIndex;
+
+                //first get all the dates
+                var dates = OrderList.Orders.Select(o => o.OrderDate).Distinct().OrderBy(o => o);
+
+                //build a list for each product by day
+                var consumptionByDate = AddConsumptions(dates);
+
+                workSheet.Cell(rowIndex, colIndex).Value = "Product";
+                foreach (var date in dates)
+                {
+                    colIndex++;
+                    workSheet.Cell(rowIndex, colIndex).Value = date.Value.ToString("ddd");
+                    
+                }
+                colIndex++;
+                workSheet.Cell(rowIndex, colIndex).Value = "Totaal";
+                                
+                foreach(var productConsumption in consumptionByDate)
+                {
+                    rowIndex++;
+                    colIndex = firstColIndex;
+                    workSheet.Cell(rowIndex, colIndex).Value = productConsumption.Key;
+                    foreach(var item in productConsumption.Value)
+                    {
+                        colIndex++;
+                        workSheet.Cell(rowIndex, colIndex).Value = item.Value;
+                    }
+                    colIndex++;
+                    workSheet.Cell(rowIndex, colIndex).FormulaR1C1 = "SUM(RC[-" +productConsumption.Value.Count +"]:RC[-1])";
+                }
+
+                workbook.SaveAs(fileName);
+            }
+        }
+
+        private Dictionary<string, Dictionary<DateTime, int>> AddConsumptions(IOrderedEnumerable<DateTime?> dates)
+        {
+            var consumptionByDate = new Dictionary<string, Dictionary<DateTime, int>>();
+            AddConsumptions(consumptionByDate, dates, ProductList.Foods);
+            AddConsumptions(consumptionByDate, dates, ProductList.Beverages);
+            AddConsumptions(consumptionByDate, dates, ProductList.Desserts);
+            
+            foreach (var order in OrderList.Orders)
+            {
+                foreach (var food in order.Foods)
+                    consumptionByDate[food.Product.Name][order.OrderDate.Value]+= food.Count;
+                foreach (var food in order.Beverages)
+                    consumptionByDate[food.Product.Name][order.OrderDate.Value] += food.Count;
+                foreach (var food in order.Desserts)
+                    consumptionByDate[food.Product.Name][order.OrderDate.Value] += food.Count;
+            }
+            return consumptionByDate;
+        }
+
+        private void AddConsumptions(Dictionary<string, Dictionary<DateTime, int>> consumptionByDate, IOrderedEnumerable<DateTime?> dates, IEnumerable<Product> products)
+        {
+            foreach (var product in products)
+            {
+                var productConsumptionByDate = new Dictionary<DateTime, int>();
+                foreach (var date in dates)
+                {
+                    if (date.HasValue)
+                        productConsumptionByDate.Add(date.Value, 0);
+                }
+                consumptionByDate.Add(product.Name, productConsumptionByDate);
+            }
         }
     }
 }

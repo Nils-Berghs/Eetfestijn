@@ -34,7 +34,9 @@ namespace be.berghs.nils.EetFestijnLib.Models
         internal void AddOrders(IEnumerable<Order> orders)
         {
             foreach (var order in orders)
+            {
                 OrdersList.Add(order);
+            }
             
             OrdersAdded?.Invoke(this, new OrdersAddedEventArgs(orders));
 

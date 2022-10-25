@@ -80,6 +80,15 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             ExportMenuCommand = new Command(ExportMenu);
             ExportSessionCommand = new Command(ExportSession);
             ImportSessionCommand = new Command(ImportSession);
+            ExportToExcelCommand = new Command(ExportToExcel);
+        }
+
+        private void ExportToExcel()
+        {
+            var exportOptions = new ImportExportOptions(Session.SessionName.Replace(':', '_'), "Excel file|*.xlsx");
+            DialogService.ShowSaveFileDialog(exportOptions);
+            if (exportOptions.IsConfirmed)
+                Session.ExportToExcel(exportOptions.FileName);
         }
 
         private void ExportMenu()
