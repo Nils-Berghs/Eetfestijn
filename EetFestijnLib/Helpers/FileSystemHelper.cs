@@ -89,14 +89,39 @@ namespace be.berghs.nils.EetFestijnLib.Helpers
         internal static async Task SaveSessionAndOrder(Session session, Order order)
         {
             await SaveSession(session);
+            await SaveOrder(session, order);
+        }
 
-            string orderPath = GetSessionPath(session, ORDER_FILE_START+order.OrderId+ ".json");
-            using (var sw = new StreamWriter(orderPath))
+        /// <summary>
+        /// Saves an order to the given sessions, temp folder
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="order"></param>
+        /// <returns></returns>
+        internal static async Task SaveSessionAndOrders(Session session, IEnumerable<Order> orders)
+        {
+            await SaveSession(session);
+
+            foreach (var order in orders)
+                await SaveOrder(session, order);
+        }
+
+        private static async Task SaveOrder(Session session, Order order)
+        {
+            try
             {
-                await sw.WriteAsync(JsonConvert.SerializeObject(order, Formatting.Indented));
+                string orderPath = GetSessionPath(session, ORDER_FILE_START + order.OrderId + ".json");
+                using (var sw = new StreamWriter(orderPath))
+                {
+                    await sw.WriteAsync(JsonConvert.SerializeObject(order, Formatting.Indented));
+                }
+            }
+            catch(Exception e)
+            {
+               
             }
         }
-        
+
         /// <summary>
         /// This function reads the global session information
         /// </summary>

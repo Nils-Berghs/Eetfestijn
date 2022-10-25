@@ -28,7 +28,7 @@ namespace be.berghs.nils.EetFestijnLib.Models
         }
 
         /// <summary>
-        /// Use this function for reading existing orders
+        /// Use this function for reading existing orders (open session)
         /// </summary>
         /// <param name="orders"></param>
         internal void AddOrders(IEnumerable<Order> orders)
@@ -38,6 +38,22 @@ namespace be.berghs.nils.EetFestijnLib.Models
             
             OrdersAdded?.Invoke(this, new OrdersAddedEventArgs(orders));
 
+        }
+
+        /// <summary>
+        /// Use this function for importing existing orders
+        /// </summary>
+        /// <param name="orders"></param>
+        internal void ImportOrders(IEnumerable<Order> orders)
+        {
+            foreach (var order in orders)
+            {
+                OrdersList.Add(order);
+                order.OrderId = OrdersList.Count;
+            }
+
+
+            OrdersAdded?.Invoke(this, new OrdersAddedEventArgs(orders));
         }
     }
 }

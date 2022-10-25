@@ -1,10 +1,12 @@
 ﻿using be.berghs.nils.EetFestijnLib.Helpers;
 using be.berghs.nils.EetFestijnLib.Helpers.Events;
+using be.berghs.nils.EetFestijnLib.Helpers.Exceptions;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using static System.Collections.Specialized.BitVector32;
 
 namespace be.berghs.nils.EetFestijnLib.Models
 {
@@ -135,8 +137,39 @@ namespace be.berghs.nils.EetFestijnLib.Models
 
         internal void Import(string fileName)
         {
+            //first load the othes session in memory
             Session session = FileSystemHelper.Import(fileName);
-            Todo implement
+
+            //check if the sessions menu is compatible
+            if (!CheckProductListsCompatible(session))
+                throw new IncompatibleMenuException();
+
+            OrderList.AddOrders(session.OrderList.Orders);
+
+            _ = FileSystemHelper.SaveSessionAndOrders(this, session.OrderList.Orders);
+        }
+
+        private bool CheckProductListsCompatible(Session session)
+        {
+            if (!CheckProductListsCompatible(session.ProductList.Foods, ProductList.Foods))
+                return false;
+            if (!CheckProductListsCompatible(session.ProductList.Beverages, ProductList.Beverages))
+                return false;
+            if (!CheckProductListsCompatible(session.ProductList.Desserts, ProductList.Desserts))
+                return false;
+
+            return true;
+        }
+
+        private bool CheckProductListsCompatible(IEnumerable<Product> importList, IEnumerable<Product> currentList)
+        {
+            foreach (var importItem in importList)
+            {
+                Product currentItem = currentList.Where(c => string.Equals(importItem.Name, c.Name, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+                if (currentItem == null || currentItem.Price != importItem.Price)
+                    return false;
+            }
+            return true;
         }
     }
 }
