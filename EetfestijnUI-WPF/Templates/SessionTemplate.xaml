@@ -11,72 +11,74 @@
             <TabItem Header="Sessie" IsTabStop="False">
                 <materialDesign:DialogHost>
                     <Grid Margin="10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <!-- A grid for some general totals-->
-                    <Grid Grid.Column="0" Margin="10,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="auto"/>
-                        </Grid.RowDefinitions>
 
-                        <TextBlock Grid.Row="0" VerticalAlignment="Center" Text="Aantal bestellingen:"/>
-                        <TextBlock Grid.Row="1" VerticalAlignment="Center" Text="Aantal maaltijden:"/>
-                        <TextBlock Grid.Row="2" VerticalAlignment="Center" Text="Totale inkomsten (waardebonnen meegerekend):"/>
-                        <TextBlock Grid.Row="3" VerticalAlignment="Center" Text="Netto inkomsten (zonder waardebonnen):"/>
-                        <TextBlock Grid.Row="4" VerticalAlignment="Center" Text="Cash inkomsten:"/>
-                        <TextBlock Grid.Row="5" VerticalAlignment="Center" Text="Mobiele inkomsten:"/>
-                        <TextBlock Grid.Row="6" VerticalAlignment="Center" Text="Fooien ('T is just):"/>
-                        <TextBlock Grid.Row="7" VerticalAlignment="Center" Text="Start kassa:"/>
-                        <TextBlock Grid.Row="8" VerticalAlignment="Center" Text="Totaal in kassa:"/>
+                        <!-- A grid for some general totals-->
+                        <Grid Grid.Column="0" Margin="10,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="120"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
 
-                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding OrderCount, Mode=OneWay}" IsEnabled="False" />
-                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding PlateCount, Mode=OneWay}" IsEnabled="False" />
-                        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding TotalIncome, Mode=OneWay}" IsEnabled="False" materialDesign:TextFieldAssist.SuffixText="€"/>
-                        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding NettoIncome, Mode=OneWay}" IsEnabled="False" materialDesign:TextFieldAssist.SuffixText="€"/>
-                        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding CashIncome, Mode=OneWay}" IsEnabled="False" materialDesign:TextFieldAssist.SuffixText="€"/>
-                        <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding MobileIncome, Mode=OneWay}" IsEnabled="False" materialDesign:TextFieldAssist.SuffixText="€"/>
-                        <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Tips, Mode=OneWay}" IsEnabled="False" materialDesign:TextFieldAssist.SuffixText="€"/>
-                        <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding StartCash, UpdateSourceTrigger=PropertyChanged, Delay=200}" materialDesign:TextFieldAssist.SuffixText="€"/>
-                        <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding TotalCash, Mode=OneWay}" IsEnabled="False" materialDesign:TextFieldAssist.SuffixText="€"/>
+                            <TextBlock Grid.Row="0" VerticalAlignment="Center" Text="Aantal bestellingen:"/>
+                            <TextBlock Grid.Row="1" VerticalAlignment="Center" Text="Aantal maaltijden:"/>
+                            <TextBlock Grid.Row="2" VerticalAlignment="Center" Text="Totale inkomsten (waardebonnen meegerekend):"/>
+                            <TextBlock Grid.Row="3" VerticalAlignment="Center" Text="Netto inkomsten (zonder waardebonnen):"/>
+                            <TextBlock Grid.Row="4" VerticalAlignment="Center" Text="Cash inkomsten:"/>
+                            <TextBlock Grid.Row="5" VerticalAlignment="Center" Text="Mobiele inkomsten:"/>
+                            <TextBlock Grid.Row="6" VerticalAlignment="Center" Text="Fooien ('T is just):"/>
+                            <TextBlock Grid.Row="7" VerticalAlignment="Center" Text="Start kassa:"/>
+                            <TextBlock Grid.Row="8" VerticalAlignment="Center" Text="Totaal in kassa:"/>
 
-                        <UniformGrid Grid.Row="10" Grid.ColumnSpan="2" Columns="2" Rows="2">
-                            <Button Content="Export Menu" Grid.Row="0" Grid.Column="0" Command="{Binding ExportMenuCommand}"/>
-                            <Button Content="Export Sessie" Grid.Row="0" Grid.Column="1" Command="{Binding ExportSessionCommand}"/>
-                            <Button Content="Import Sessie" Grid.Row="1" Grid.Column="0" Command="{Binding ImportSessionCommand}"/>
-                            <Button Content="Toon tweede scherm" Grid.Row="1" Grid.Column="1" Command="{Binding ShowOrderSummaryCommand}"/>
-                        </UniformGrid>
+                            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding OrderCount, Mode=OneWay}" IsEnabled="False" />
+                            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding PlateCount, Mode=OneWay}" IsEnabled="False" />
+                            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding TotalIncome, Mode=OneWay}" IsEnabled="False" materialDesign:TextFieldAssist.SuffixText="€"/>
+                            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding NettoIncome, Mode=OneWay}" IsEnabled="False" materialDesign:TextFieldAssist.SuffixText="€"/>
+                            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding CashIncome, Mode=OneWay}" IsEnabled="False" materialDesign:TextFieldAssist.SuffixText="€"/>
+                            <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding MobileIncome, Mode=OneWay}" IsEnabled="False" materialDesign:TextFieldAssist.SuffixText="€"/>
+                            <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Tips, Mode=OneWay}" IsEnabled="False" materialDesign:TextFieldAssist.SuffixText="€"/>
+                            <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding StartCash, UpdateSourceTrigger=PropertyChanged, Delay=200}" materialDesign:TextFieldAssist.SuffixText="€"/>
+                            <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding TotalCash, Mode=OneWay}" IsEnabled="False" materialDesign:TextFieldAssist.SuffixText="€"/>
+
+                            <UniformGrid Grid.Row="10" Grid.ColumnSpan="2" Columns="2" Rows="3">
+                                <Button Content="Exporteer Menu" Grid.Row="0" Grid.Column="0" Command="{Binding ExportMenuCommand}"/>
+                                <Button Content="Exporteer Sessie" Grid.Row="0" Grid.Column="1" Command="{Binding ExportSessionCommand}"/>
+                                <Button Content="Exporteer Excel" Grid.Row="1" Grid.Column="0" Command="{Binding ExportToExcelCommand}"/>
+                                <Button Content="Importeer Sessie" Grid.Row="1" Grid.Column="1" Command="{Binding ImportSessionCommand}"/>
+                                <Button Content="Open help" Grid.Row="2" Grid.Column="0" Command="{Binding ShowHelpCommand}"/>
+                                <Button Content="Toon tweede scherm" Grid.Row="2" Grid.Column="1" Command="{Binding ShowOrderSummaryCommand}"/>
+                            </UniformGrid>
+                        </Grid>
+
+                        <Grid Grid.Column="1" Margin="10,0">
+                            <ScrollViewer>
+                                <StackPanel Orientation="Vertical">
+                                    <ContentPresenter Content="{Binding ConsumptionViewModel.Foods}"/>
+                                    <ContentPresenter Content="{Binding ConsumptionViewModel.Desserts}"/>
+                                    <ContentPresenter Content="{Binding ConsumptionViewModel.Beverages}"/>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </Grid>
                     </Grid>
-
-                    <Grid Grid.Column="1" Margin="10,0">
-                        <ScrollViewer>
-                            <StackPanel Orientation="Vertical">
-                                <ContentPresenter Content="{Binding ConsumptionViewModel.Foods}"/>
-                                <ContentPresenter Content="{Binding ConsumptionViewModel.Desserts}"/>
-                                <ContentPresenter Content="{Binding ConsumptionViewModel.Beverages}"/>
-                            </StackPanel>
-                        </ScrollViewer>
-                    </Grid>
-                </Grid>
                 </materialDesign:DialogHost>
             </TabItem>
         </TabControl>
-                  
+
     </DataTemplate>
 </ResourceDictionary>

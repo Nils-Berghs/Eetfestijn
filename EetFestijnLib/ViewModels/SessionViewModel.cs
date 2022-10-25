@@ -1,6 +1,7 @@
 ﻿using be.berghs.nils.EetFestijnLib.Helpers;
 using be.berghs.nils.EetFestijnLib.Helpers.Dialog;
 using be.berghs.nils.EetFestijnLib.Helpers.Events;
+using be.berghs.nils.EetFestijnLib.Helpers.Exceptions;
 using be.berghs.nils.EetFestijnLib.Models;
 using Newtonsoft.Json;
 using System;
@@ -18,6 +19,8 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
         public ICommand ExportSessionCommand { get; }
 
+        public ICommand ExportToExcelCommand { get; }
+
         public ICommand ExportMenuCommand { get; }
 
         public ICommand ImportSessionCommand { get; }
@@ -25,6 +28,8 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
         public ICommand ShowOrderSummaryCommand => ShowOrderSummaryCommandImplementation;
 
         private Command ShowOrderSummaryCommandImplementation { get; }
+
+        public ICommand ShowHelpCommand { get; }
 
         public OrderViewModel CurrentOrder { get; }
 
@@ -95,10 +100,22 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 
         private void ImportSession()
         {
-            var importOptions = new ImportExportOptions("Session file|*.session");
-            DialogService.ShowOpenFileDialog(importOptions);
-            if (importOptions.IsConfirmed)
-                Session.Import(importOptions.FileName);
+            try
+            {
+                var confirmation = new MessageBoxViewModel("Het importeren van de sessie is permanent, de geïmporteerde sessie kan niet opniew verwijderd worden.\nWilt u doorgaan?", false);
+                DialogService.ShowDialog(confirmation);
+                if (!confirmation.IsConfirmed)
+                    return;
+
+                var importOptions = new ImportExportOptions("Session file|*.session");
+                DialogService.ShowOpenFileDialog(importOptions);
+                if (importOptions.IsConfirmed)
+                    Session.Import(importOptions.FileName);
+            }
+            catch(IncompatibleMenuException)
+            {
+                DialogService.ShowDialog(new MessageBoxViewModel("De sessie importeren is mislukt omdat de menu's niet hetzelfde zijn."));
+            }
         }
 
         private void OrderViewModelSecondScreenClosed(object sender, EventArgs e)
