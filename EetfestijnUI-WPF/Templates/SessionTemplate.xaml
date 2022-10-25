@@ -57,12 +57,12 @@
                             <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding TotalCash, Mode=OneWay}" IsEnabled="False" materialDesign:TextFieldAssist.SuffixText="€"/>
 
                             <UniformGrid Grid.Row="10" Grid.ColumnSpan="2" Columns="2" Rows="3">
-                                <Button Content="Exporteer Menu" Grid.Row="0" Grid.Column="0" Command="{Binding ExportMenuCommand}"/>
-                                <Button Content="Exporteer Sessie" Grid.Row="0" Grid.Column="1" Command="{Binding ExportSessionCommand}"/>
-                                <Button Content="Exporteer Excel" Grid.Row="1" Grid.Column="0" Command="{Binding ExportToExcelCommand}"/>
-                                <Button Content="Importeer Sessie" Grid.Row="1" Grid.Column="1" Command="{Binding ImportSessionCommand}"/>
-                                <Button Content="Open help" Grid.Row="2" Grid.Column="0" Command="{Binding ShowHelpCommand}"/>
-                                <Button Content="Toon tweede scherm" Grid.Row="2" Grid.Column="1" Command="{Binding ShowOrderSummaryCommand}"/>
+                                <Button Style="{StaticResource LargeOutlinedButton}" Content="Exporteer Menu" Grid.Row="0" Grid.Column="0" Command="{Binding ExportMenuCommand}"/>
+                                <Button Style="{StaticResource LargeOutlinedButton}" Content="Exporteer Sessie" Grid.Row="0" Grid.Column="1" Command="{Binding ExportSessionCommand}"/>
+                                <Button Style="{StaticResource LargeOutlinedButton}" Content="Exporteer Excel" Grid.Row="1" Grid.Column="0" Command="{Binding ExportToExcelCommand}"/>
+                                <Button Style="{StaticResource LargeOutlinedButton}" Content="Importeer Sessie" Grid.Row="1" Grid.Column="1" Command="{Binding ImportSessionCommand}"/>
+                                <Button Style="{StaticResource LargeOutlinedButton}" Content="Open help" Grid.Row="2" Grid.Column="0" Command="{Binding ShowHelpCommand}"/>
+                                <Button Style="{StaticResource LargeOutlinedButton}" Content="Toon tweede scherm" Grid.Row="2" Grid.Column="1" Command="{Binding ShowOrderSummaryCommand}"/>
                             </UniformGrid>
                         </Grid>
 
