@@ -9,7 +9,6 @@
             </TabItem>
 
             <TabItem Header="Sessie" IsTabStop="False">
-                <materialDesign:DialogHost>
                     <Grid Margin="10">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -76,7 +75,6 @@
                             </ScrollViewer>
                         </Grid>
                     </Grid>
-                </materialDesign:DialogHost>
             </TabItem>
         </TabControl>
 
