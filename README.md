@@ -4,5 +4,7 @@ quick and dirty implementation. The current implementation is a .net 5 project, 
 
 As the none profit organization is in flanders, the UI of the project is completely in dutch (though source code is in English).
 
+This project is licensed under the GNU General Public License v3.0
+
 
 
