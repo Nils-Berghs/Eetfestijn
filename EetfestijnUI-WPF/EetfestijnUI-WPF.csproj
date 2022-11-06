@@ -34,4 +34,10 @@
     <ProjectReference Include="..\EetFestijnLib\EetFestijnLib.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Assets\Manual.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

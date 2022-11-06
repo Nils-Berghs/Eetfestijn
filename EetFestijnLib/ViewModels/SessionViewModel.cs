@@ -3,9 +3,11 @@ using be.berghs.nils.EetFestijnLib.Helpers.Dialog;
 using be.berghs.nils.EetFestijnLib.Helpers.Events;
 using be.berghs.nils.EetFestijnLib.Helpers.Exceptions;
 using be.berghs.nils.EetFestijnLib.Models;
+using DocumentFormat.OpenXml.Wordprocessing;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
@@ -81,6 +83,24 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             ExportSessionCommand = new Command(ExportSession);
             ImportSessionCommand = new Command(ImportSession);
             ExportToExcelCommand = new Command(ExportToExcel);
+            ShowHelpCommand = new Command(ShowHelp);
+        }
+
+        private void ShowHelp()
+        {
+            try
+            {
+                ProcessStartInfo info = new ProcessStartInfo
+                {
+                    FileName = @"Assets\Manual.pdf",
+                    UseShellExecute = true,
+                };
+                Process.Start(info);
+            }
+            catch
+            {
+
+            }
         }
 
         private void ExportToExcel()
