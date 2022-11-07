@@ -31,14 +31,15 @@
                 <ContentPresenter Content="{Binding Beverages}" ContentTemplate="{StaticResource OrderCategorySummaryTemplate}"/>
             </StackPanel>
 
-            <Button Grid.Row="1" Height="auto" Command="{Binding CloseOrderSummaryCommand}">
+            <Button Grid.Row="1" Height="auto" Command="{Binding CloseOrderSummaryCommand}" >
                 <Button.Template>
                     <ControlTemplate>
-                        <Image Source="/Assets/Logo.png" Stretch="Uniform" Height="150" HorizontalAlignment="Left"/>
+                        <Image Source="/Assets/LogoWide.png" Height="200" HorizontalAlignment="Left" />
+                        <!--<Image Source="/Assets/LogoWide.png" Stretch="UniformToFill"  HorizontalAlignment="Left"/>-->
                     </ControlTemplate>
                 </Button.Template>
             </Button>
-            <GroupBox Header="Rekening" Margin="10" Padding="5" Grid.Column="1" Grid.Row="1" >
+            <GroupBox Header="Rekening" Margin="10,30,10,10" Padding="5" Grid.Column="1" Grid.Row="1" >
                 <!--<Border HorizontalAlignment="Stretch" VerticalAlignment="Top"  Margin="10" Padding="5" BorderBrush="Black" BorderThickness="1" Grid.Column="1" Grid.Row="1">-->
                 <Grid  >
                     <Grid.ColumnDefinitions>

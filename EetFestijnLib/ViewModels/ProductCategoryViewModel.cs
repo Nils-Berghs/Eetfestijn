@@ -14,6 +14,11 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
 {
     public class ProductCategoryViewModel:ViewModelBase
     {
+        /// <summary>
+        /// Occurs when a product is added or removed
+        /// </summary>
+        public event EventHandler ProductCountChanged;
+
         IDialogService DialogService { get; }
 
         public ObservableCollection<ProductViewModel> Products { get;  }
@@ -105,7 +110,8 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             MoveItemDownCommand.ChangeCanExecute();
             MoveItemUpCommand.ChangeCanExecute();
 
-
+            //pass on to parent
+            ProductCountChanged?.Invoke(this, EventArgs.Empty);
         }
 
         internal void SetProducts(IEnumerable<Product> products)

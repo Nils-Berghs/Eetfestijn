@@ -74,6 +74,10 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             Beverages = new ProductCategoryViewModel(session.ProductList.Beverages, DialogService, "Drank");
             Desserts = new ProductCategoryViewModel(session.ProductList.Desserts, DialogService, "Dessert");
 
+            Foods.ProductCountChanged += ProductCategoryCountChanged;
+            Beverages.ProductCountChanged += ProductCategoryCountChanged;
+            Desserts.ProductCountChanged += ProductCategoryCountChanged;
+
             UseVouchers = session.Options.UseVouchers;
             VoucherValue = session.Options.VoucherValue?.ToString("0.#");
             UseMobilePayments = session.Options.UseMobilePayments;
@@ -82,6 +86,11 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             CancelCommand = new Command(Cancel);
             ImportMenuCommand = new Command(ImportMenu);
             
+        }
+
+        private void ProductCategoryCountChanged(object sender, EventArgs e)
+        {
+            OkCommand.ChangeCanExecute();
         }
 
         private void ImportMenu()

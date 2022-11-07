@@ -64,11 +64,10 @@ namespace be.berghs.nils.EetFestijnLib.ViewModels
             OkCommand = new Command(async ()=> await ConfirmOrder(), CanConfirmOrder);
             CancelCommand = new Command(Cancel);
 
-            if (session.Options.ShowOrderSummary)
-                ShowOrderSummary();
-
             CloseOrderSummaryCommand = new Command(CloseOrderSummary);
 
+            if (session.Options.ShowOrderSummary)
+                ShowOrderSummary();
         }
 
         private void CloseOrderSummary()
