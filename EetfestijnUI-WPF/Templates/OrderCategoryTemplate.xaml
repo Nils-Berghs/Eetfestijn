@@ -6,33 +6,35 @@
     <BooleanToVisibilityConverter x:Key="systemBoolToVisibilityConverter"/>
     <DataTemplate DataType="{x:Type viewmodels:OrderCategoryViewModel}">
         <GroupBox Header="{Binding Title}" Margin="10">
-            <ItemsControl ItemsSource="{Binding Items}" IsTabStop="False">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="3*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="{Binding Name}" VerticalAlignment="Center" x:Name="txbName"/>
-							<TextBox Grid.Column="1" Text="{Binding Count, UpdateSourceTrigger=PropertyChanged, TargetNullValue=''}" TextAlignment="Right" Name="txbCount"
-									 extensions:FocusExtension.IsFocused="{Binding Focused, Mode=TwoWay}" />
-                            <TextBlock Grid.Column="2" Text="{Binding PriceText}" VerticalAlignment="Center" TextAlignment="Right"/>
-                            <TextBlock Grid.Column="3" Text="{Binding TotalPriceText}" VerticalAlignment="Center" TextAlignment="Right"/>
+            <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding Items}" IsTabStop="False" Margin="10,0">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{Binding Name}" VerticalAlignment="Center" x:Name="txbName"/>
+                                <TextBox Grid.Column="1" Text="{Binding Count, UpdateSourceTrigger=PropertyChanged, TargetNullValue=''}" TextAlignment="Right" Name="txbCount"
+									     extensions:FocusExtension.IsFocused="{Binding Focused, Mode=TwoWay}" />
+                                <TextBlock Grid.Column="2" Text="{Binding PriceText}" VerticalAlignment="Center" TextAlignment="Right"/>
+                                <TextBlock Grid.Column="3" Text="{Binding TotalPriceText}" VerticalAlignment="Center" TextAlignment="Right"/>
 
-                        </Grid>
+                            </Grid>
 
-                        <DataTemplate.Triggers>
-                            <DataTrigger Binding="{Binding ElementName=txbCount, Path=IsFocused}" Value="True">
-                                <Setter TargetName="txbName" Property="Foreground" Value="Red" />
-                            </DataTrigger>
-                        </DataTemplate.Triggers>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-                
-            </ItemsControl>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=txbCount, Path=IsFocused}" Value="True">
+                                    <Setter TargetName="txbName" Property="Foreground" Value="Red" />
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+
+                </ItemsControl>
+            </ScrollViewer>
         </GroupBox>
         
     </DataTemplate>
